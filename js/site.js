@@ -179,15 +179,34 @@ function extractYoutubeId(url) {
   return match ? match[1] : null;
 }
 
+// 노션 "사이트 콘텐츠" DB(/api/items)가 설정돼 있으면 노션을, 아니면 구글시트 CSV를 사용합니다.
+async function fetchNotionItems(type) {
+  try {
+    const res = await fetch(`/api/items?type=${encodeURIComponent(type)}`, { cache: "no-store" });
+    const data = await res.json();
+    return data.configured ? data.items : null;
+  } catch (e) {
+    return null;
+  }
+}
+
 async function loadVideos() {
-  const rows = await fetchCsvRows(VIDEOS_CSV_URL);
-  const videos = rows
-    .map((row) => ({
-      title: (row[0] || "").trim(),
-      url: (row[1] || "").trim(),
-      description: (row[2] || "").trim(),
-    }))
-    .filter((v) => v.title && v.url);
+  const notionItems = await fetchNotionItems("영상");
+  let videos;
+  if (notionItems) {
+    videos = notionItems
+      .map((i) => ({ title: i.title, url: i.link, description: i.description }))
+      .filter((v) => v.url);
+  } else {
+    const rows = await fetchCsvRows(VIDEOS_CSV_URL);
+    videos = rows
+      .map((row) => ({
+        title: (row[0] || "").trim(),
+        url: (row[1] || "").trim(),
+        description: (row[2] || "").trim(),
+      }))
+      .filter((v) => v.title && v.url);
+  }
 
   videoGridEl.innerHTML = "";
   if (videos.length === 0) {
@@ -248,14 +267,22 @@ async function loadLectures() {
 const materialListEl = document.getElementById("materialList");
 
 async function loadMaterials() {
-  const rows = await fetchCsvRows(MATERIALS_CSV_URL);
-  const materials = rows
-    .map((row) => ({
-      title: (row[0] || "").trim(),
-      link: (row[1] || "").trim(),
-      description: (row[2] || "").trim(),
-    }))
-    .filter((m) => m.title && m.link);
+  const notionItems = await fetchNotionItems("자료");
+  let materials;
+  if (notionItems) {
+    materials = notionItems
+      .map((i) => ({ title: i.title, link: i.link, description: i.description }))
+      .filter((m) => m.link);
+  } else {
+    const rows = await fetchCsvRows(MATERIALS_CSV_URL);
+    materials = rows
+      .map((row) => ({
+        title: (row[0] || "").trim(),
+        link: (row[1] || "").trim(),
+        description: (row[2] || "").trim(),
+      }))
+      .filter((m) => m.title && m.link);
+  }
 
   materialListEl.innerHTML = "";
   if (materials.length === 0) {
