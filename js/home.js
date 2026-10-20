@@ -1,15 +1,60 @@
-// 홈 개편: 강의·프로그램 목록(노션) + 대상별 필터 + 문의 폼
-
-let PROGRAMS = [];
-let programFilter = "";
-
-const programGridEl = document.getElementById("programGrid");
-const homeProgramsEl = document.getElementById("homePrograms");
-const programFiltersEl = document.getElementById("programFilters");
-const programChecksEl = document.getElementById("programChecks");
+// 홈: 최신 블로그·강의 영상·자료 미리보기 / 문의 탭: 제공 프로그램(노션) + 문의 폼
 
 const hEsc = (v) =>
   String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+// ── 홈 미리보기 ──────────────────────────────────────────────────────
+const homeBlogEl = document.getElementById("homeBlog");
+const homeVideosEl = document.getElementById("homeVideos");
+const homeMaterialsEl = document.getElementById("homeMaterials");
+
+function homeEmpty(el, text) {
+  el.innerHTML = `<p class="home-empty">${text}</p>`;
+}
+
+async function loadHomeBlog() {
+  dataLoaded.blog = true;
+  await loadBlogPosts();
+  homeBlogEl.innerHTML = "";
+  if (BLOG_POSTS.length === 0) return homeEmpty(homeBlogEl, "새 글을 준비하고 있어요.");
+  BLOG_POSTS.slice(0, 3).forEach((post, idx) => {
+    const card = document.createElement("button");
+    card.className = "home-post";
+    card.innerHTML = `
+      <div class="home-post-thumb">${post.cover ? `<img src="${hEsc(post.cover)}" alt="" loading="lazy" />` : `<span>${hEsc((post.category || "BLOG").slice(0, 8))}</span>`}</div>
+      <div class="home-post-body">
+        <span class="home-post-meta">${[post.date, post.category].filter(Boolean).map(hEsc).join(" · ")}</span>
+        <h3 class="home-post-title">${hEsc(post.title)}</h3>
+        <p class="home-post-summary">${hEsc(post.summary || "")}</p>
+      </div>`;
+    card.addEventListener("click", () => {
+      switchTab("blog");
+      openBlogPost(idx);
+    });
+    homeBlogEl.appendChild(card);
+  });
+}
+
+// 영상·자료 탭이 그린 카드를 홈에 앞에서 3개만 복제해 보여줍니다.
+async function loadHomeCopy(loader, flag, sourceSel, cardSel, target, emptyText) {
+  dataLoaded[flag] = true;
+  await loader();
+  const cards = [...document.querySelectorAll(`${sourceSel} ${cardSel}`)].slice(0, 3);
+  target.innerHTML = "";
+  if (cards.length === 0) return homeEmpty(target, emptyText);
+  cards.forEach((c) => target.appendChild(c.cloneNode(true)));
+}
+
+loadHomeBlog();
+loadHomeCopy(loadVideos, "videos", "#videoGrid", ".video-card", homeVideosEl, "강의 영상을 준비하고 있어요.");
+loadHomeCopy(loadMaterials, "materials", "#materialList", ".material-card", homeMaterialsEl, "공유할 자료를 준비하고 있어요.");
+
+// ── 문의 탭: 제공 프로그램 ───────────────────────────────────────────
+let PROGRAMS = [];
+let programFilter = "";
+const programGridEl = document.getElementById("programGrid");
+const programFiltersEl = document.getElementById("programFilters");
+const programChecksEl = document.getElementById("programChecks");
 
 const groupsOf = (p) => (p.subCategory || "").split(",").map((g) => g.trim()).filter(Boolean);
 
@@ -41,7 +86,6 @@ function programCardHtml(p) {
 }
 
 function renderPrograms() {
-  if (!programGridEl) return;
   const list = programFilter ? PROGRAMS.filter((p) => groupsOf(p).includes(programFilter)) : PROGRAMS;
   programGridEl.innerHTML = "";
   if (list.length === 0) {
@@ -56,25 +100,7 @@ function renderPrograms() {
   });
 }
 
-function renderHomePrograms() {
-  if (!homeProgramsEl) return;
-  homeProgramsEl.innerHTML = "";
-  PROGRAMS.slice(0, 6).forEach((p) => {
-    const card = document.createElement("article");
-    card.className = "program-card";
-    card.innerHTML = programCardHtml(p);
-    card.addEventListener("click", () => {
-      programFilter = "";
-      setFilterChip("");
-      renderPrograms();
-      switchTab("programs");
-    });
-    homeProgramsEl.appendChild(card);
-  });
-}
-
 function renderProgramChecks() {
-  if (!programChecksEl) return;
   const names = PROGRAMS.map((p) => p.title).concat(["기타·잘 모르겠어요"]);
   programChecksEl.innerHTML = names
     .map(
@@ -84,43 +110,28 @@ function renderProgramChecks() {
     .join("");
 }
 
-function setFilterChip(value) {
-  programFiltersEl?.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c.dataset.filter === value));
-}
-
 async function loadPrograms() {
-  const items = await fetchNotionItems("프로그램");
-  PROGRAMS = items || [];
-  renderHomePrograms();
+  PROGRAMS = (await fetchNotionItems("프로그램")) || [];
   renderPrograms();
   renderProgramChecks();
 }
 
-programFiltersEl?.addEventListener("click", (e) => {
+programFiltersEl.addEventListener("click", (e) => {
   const chip = e.target.closest(".chip");
   if (!chip) return;
   programFilter = chip.dataset.filter;
-  setFilterChip(programFilter);
+  programFiltersEl.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c === chip));
   renderPrograms();
 });
 
-// 대상별 입구 카드: 프로그램 탭으로 이동하면서 필터 적용
-document.querySelectorAll(".audience-card").forEach((card) => {
-  card.addEventListener("click", () => {
-    programFilter = card.dataset.filter || "";
-    setFilterChip(programFilter);
-    renderPrograms();
-  });
-});
-
-// "이 프로그램으로 문의하기": 문의 폼으로 이동하며 해당 프로그램 선택
-programGridEl?.addEventListener("click", (e) => {
+// "이 프로그램으로 문의하기": 아래 폼으로 이동하며 해당 프로그램을 체크
+programGridEl.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-ask]");
   if (!btn) return;
-  switchTab("contact");
   document.querySelectorAll('#programChecks input[type="checkbox"]').forEach((c) => {
     if (c.value === btn.dataset.ask) c.checked = true;
   });
+  document.getElementById("contactFormAnchor").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
 // ── 문의 폼 ──────────────────────────────────────────────────────────
@@ -128,7 +139,7 @@ const inquiryForm = document.getElementById("inquiryForm");
 const inquiryStatus = document.getElementById("inquiryStatus");
 const inquirySubmit = document.getElementById("inquirySubmit");
 
-inquiryForm?.addEventListener("submit", async (e) => {
+inquiryForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const f = inquiryForm.elements;
   const programs = [...inquiryForm.querySelectorAll('input[name="programs"]:checked')].map((c) => c.value).join(", ");
