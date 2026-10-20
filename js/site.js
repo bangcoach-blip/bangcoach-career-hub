@@ -127,10 +127,14 @@ function renderBlogList() {
   BLOG_POSTS.forEach((post, idx) => {
     const card = document.createElement("button");
     card.className = "blog-card";
+    const meta = [post.date, post.category].filter(Boolean).map(escHtml).join(" · ");
     card.innerHTML = `
-      <span class="blog-card-date">${post.date}</span>
-      <h3 class="blog-card-title">${post.title}</h3>
-      <p class="blog-card-summary">${post.summary}</p>
+      <div class="blog-card-text">
+        <h3 class="blog-card-title">${escHtml(post.title)}</h3>
+        <p class="blog-card-summary">${escHtml(post.summary || "")}</p>
+        <span class="blog-card-date">${meta}</span>
+      </div>
+      ${post.cover ? `<div class="blog-card-thumb"><img src="${escHtml(post.cover)}" alt="" loading="lazy" /></div>` : ""}
     `;
     card.addEventListener("click", () => openBlogPost(idx));
     blogListEl.appendChild(card);

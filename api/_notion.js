@@ -148,6 +148,7 @@ function pageMeta(page) {
     date: dateProp,
     summary,
     category,
+    cover: page.cover ? (page.cover.type === "external" ? page.cover.external.url : page.cover.file.url) : "",
     published: status === null ? true : status === "발행",
   };
 }
