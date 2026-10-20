@@ -235,28 +235,59 @@ async function loadVideos() {
 // ── 강의 이력 (소개 탭) ──────────────────────────────────────────────
 const lectureListEl = document.getElementById("lectureList");
 
+const escHtml = (v) =>
+  String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+// 노션 "프로필" 행이 있으면 소개 상단(이름·한 줄 문구·소개글·배지)을 노션 내용으로 바꿉니다.
+async function loadProfile() {
+  const items = await fetchNotionItems("프로필");
+  const p = items && items[0];
+  if (!p) return;
+  document.getElementById("aboutName").textContent = p.title;
+  if (p.subCategory) document.getElementById("aboutTagline").textContent = p.subCategory;
+  if (p.description) document.getElementById("aboutBio").textContent = p.description;
+  const badges = (p.audience || "").split(",").map((b) => b.trim()).filter(Boolean);
+  if (badges.length) {
+    document.getElementById("aboutBadges").innerHTML = badges
+      .map((b) => `<span class="about-badge">${escHtml(b)}</span>`)
+      .join("");
+  }
+}
+
 async function loadLectures() {
-  const rows = await fetchCsvRows(LECTURES_CSV_URL);
-  const fromSheet = rows
-    .map((row) => ({
-      period: (row[0] || "").trim(),
-      org: (row[1] || "").trim(),
-      title: (row[2] || "").trim(),
-      audience: (row[3] || "").trim(),
-    }))
-    .filter((l) => l.org || l.title);
-  const lectures = fromSheet.length > 0 ? fromSheet : DEFAULT_LECTURES;
+  loadProfile();
+  const notionItems = await fetchNotionItems("강의이력");
+  let lectures;
+  if (notionItems && notionItems.length > 0) {
+    lectures = notionItems.map((i) => ({
+      period: i.period,
+      org: i.title,
+      title: i.description,
+      audience: i.audience,
+    }));
+  } else {
+    const rows = await fetchCsvRows(LECTURES_CSV_URL);
+    const fromSheet = rows
+      .map((row) => ({
+        period: (row[0] || "").trim(),
+        org: (row[1] || "").trim(),
+        title: (row[2] || "").trim(),
+        audience: (row[3] || "").trim(),
+      }))
+      .filter((l) => l.org || l.title);
+    lectures = fromSheet.length > 0 ? fromSheet : DEFAULT_LECTURES;
+  }
 
   lectureListEl.innerHTML = "";
   lectures.forEach((l) => {
     const row = document.createElement("div");
     row.className = "lecture-row";
     row.innerHTML = `
-      <span class="lecture-period">${l.period}</span>
+      <span class="lecture-period">${escHtml(l.period)}</span>
       <div class="lecture-body">
-        <h3 class="lecture-org">${l.org}</h3>
-        <p class="lecture-title">${l.title}</p>
-        ${l.audience ? `<span class="lecture-audience">${l.audience}</span>` : ""}
+        <h3 class="lecture-org">${escHtml(l.org)}</h3>
+        <p class="lecture-title">${escHtml(l.title)}</p>
+        ${l.audience ? `<span class="lecture-audience">${escHtml(l.audience)}</span>` : ""}
       </div>
     `;
     lectureListEl.appendChild(row);

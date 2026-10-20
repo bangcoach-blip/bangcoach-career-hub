@@ -44,6 +44,8 @@ module.exports = async function handler(req, res) {
         items.push({
           id: page.id,
           subCategory: text(p["소분류"]?.rich_text),
+          period: text(p["기간"]?.rich_text),
+          audience: text(p["대상"]?.rich_text),
           title,
           type: p["유형"]?.select?.name || "",
           link: p["링크"]?.url || "",
