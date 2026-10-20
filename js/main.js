@@ -109,7 +109,34 @@ function buildFormattedPromptNodes(promptText) {
   return fragment;
 }
 
+// 노션 "사이트 콘텐츠" DB(/api/items)가 설정돼 있으면 노션에서, 아니면 구글시트에서 불러옵니다.
+// 노션 방식은 목록만 먼저 받고, 프롬프트 본문은 카드를 열 때 불러옵니다.
+async function loadPromptsFromNotion() {
+  try {
+    const res = await fetch("/api/items?type=" + encodeURIComponent("프롬프트"), { cache: "no-store" });
+    const data = await res.json();
+    if (!data.configured) return null;
+    return data.items.map((i) => ({
+      id: i.id,
+      category: i.category,
+      title: i.title,
+      description: i.description,
+      subCategory: i.subCategory,
+      prompt: null,
+      notion: true,
+    }));
+  } catch (e) {
+    return null;
+  }
+}
+
 async function loadPrompts() {
+  const fromNotion = await loadPromptsFromNotion();
+  if (fromNotion) {
+    PROMPTS = fromNotion;
+    renderCategoryGrid();
+    return;
+  }
   try {
     const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
     const csvText = await res.text();
@@ -289,19 +316,32 @@ searchInput.addEventListener("input", (e) => {
   }
 });
 
-function openModal(p) {
+async function openModal(p) {
   modalTag.textContent = p.category;
   modalTag.style.setProperty("--cat-color", getCategoryColor(p.category));
   modalTitle.textContent = p.title;
   modalDesc.textContent = p.description;
 
-  modalPromptSections.innerHTML = "";
-  modalPromptSections.appendChild(buildFormattedPromptNodes(p.prompt));
-
   copyBtn.textContent = "프롬프트 복사";
   copyBtn.classList.remove("copied");
-  copyBtn.onclick = () => copyPrompt(p.prompt);
   modalOverlay.classList.add("visible");
+
+  if (p.notion && p.prompt == null) {
+    modalPromptSections.textContent = "불러오는 중...";
+    copyBtn.onclick = null;
+    try {
+      const res = await fetch("/api/items?id=" + encodeURIComponent(p.id));
+      const data = await res.json();
+      p.prompt = data.body || "";
+    } catch (e) {
+      modalPromptSections.textContent = "프롬프트를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.";
+      return;
+    }
+  }
+
+  modalPromptSections.innerHTML = "";
+  modalPromptSections.appendChild(buildFormattedPromptNodes(p.prompt));
+  copyBtn.onclick = () => copyPrompt(p.prompt);
 }
 
 function closeModal() {

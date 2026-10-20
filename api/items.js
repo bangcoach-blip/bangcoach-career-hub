@@ -1,4 +1,4 @@
-const { notion } = require("./_notion");
+const { notion, listChildren } = require("./_notion");
 
 const text = (arr = []) => arr.map((t) => t.plain_text).join("");
 
@@ -10,6 +10,22 @@ module.exports = async function handler(req, res) {
   }
   try {
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=60");
+
+    if (req.query.id) {
+      const page = await notion(`/pages/${encodeURIComponent(req.query.id)}`);
+      if ((page.properties["상태"]?.select?.name || null) !== "발행") {
+        res.status(404).json({ error: "not found" });
+        return;
+      }
+      const blocks = await listChildren(page.id);
+      const body = blocks
+        .map((b) => text(b[b.type]?.rich_text))
+        .join("\n")
+        .trim();
+      res.status(200).json({ body });
+      return;
+    }
+
     const type = req.query.type;
     const items = [];
     let cursor;
@@ -26,6 +42,8 @@ module.exports = async function handler(req, res) {
         const title = text(Object.values(p).find((v) => v.type === "title")?.title);
         if (!title) continue;
         items.push({
+          id: page.id,
+          subCategory: text(p["소분류"]?.rich_text),
           title,
           type: p["유형"]?.select?.name || "",
           link: p["링크"]?.url || "",
