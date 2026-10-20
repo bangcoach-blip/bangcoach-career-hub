@@ -35,9 +35,27 @@ const navTabs = document.querySelectorAll(".nav-tab");
 const tabPanels = document.querySelectorAll(".tab-panel");
 let dataLoaded = { blog: false, videos: false, materials: false, about: false };
 
+const HUB_TABS = ["blog", "videos", "materials", "prompts"];
+let lastHubTab = "blog";
+const hubSubnav = document.getElementById("hubSubnav");
+
 function switchTab(tabName) {
-  navTabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tabName));
+  if (tabName === "hub") tabName = lastHubTab;
+  const inHub = HUB_TABS.includes(tabName);
+  if (inHub) lastHubTab = tabName;
+  navTabs.forEach((btn) =>
+    btn.classList.toggle(
+      "active",
+      btn.dataset.tab === tabName || (btn.dataset.tab === "hub" && inHub)
+    )
+  );
   tabPanels.forEach((panel) => panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`));
+  if (hubSubnav) {
+    hubSubnav.classList.toggle("hidden", !inHub);
+    hubSubnav.querySelectorAll(".hub-tab").forEach((b) =>
+      b.classList.toggle("active", b.dataset.goto === tabName)
+    );
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (tabName === "blog" && !dataLoaded.blog) {
