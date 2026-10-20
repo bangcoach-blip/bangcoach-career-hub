@@ -671,6 +671,113 @@ a {
   margin: 0 0 18px;
 }
 
+.blog-detail-body h2,
+.blog-detail-body h3,
+.blog-detail-body h4 {
+  margin: 32px 0 12px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.blog-detail-body h2 { font-size: 22px; }
+.blog-detail-body h3 { font-size: 18px; }
+.blog-detail-body h4 { font-size: 16px; }
+
+.blog-detail-body ul,
+.blog-detail-body ol {
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+
+.blog-detail-body li { margin: 4px 0; }
+
+.blog-detail-body a { color: var(--accent); text-decoration: underline; }
+
+.blog-detail-body figure {
+  margin: 24px 0;
+}
+
+.blog-detail-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+
+.blog-detail-body figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.blog-detail-body .table-wrap {
+  margin: 0 0 18px;
+  overflow-x: auto;
+}
+
+.blog-detail-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.blog-detail-body th,
+.blog-detail-body td {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-detail-body th {
+  background: var(--bg-subtle);
+  font-weight: 600;
+}
+
+.blog-detail-body blockquote {
+  margin: 0 0 18px;
+  padding: 4px 16px;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+.blog-detail-body .callout {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border-radius: var(--radius-md);
+}
+
+.blog-detail-body pre {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.blog-detail-body code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+.blog-detail-body hr {
+  margin: 28px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.blog-detail-body details {
+  margin: 0 0 18px;
+}
+
 /* ============================================================
    강의 영상
    ============================================================ */

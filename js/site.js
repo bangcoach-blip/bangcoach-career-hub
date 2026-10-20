@@ -90,7 +90,20 @@ const blogDetailDateEl = document.getElementById("blogDetailDate");
 const blogDetailTitleEl = document.getElementById("blogDetailTitle");
 const blogDetailBodyEl = document.getElementById("blogDetailBody");
 
+// 노션 DB 연동(/api/posts)이 설정돼 있으면 노션 글을, 아니면 구글시트 CSV를 사용합니다.
 async function loadBlogPosts() {
+  try {
+    const res = await fetch("/api/posts", { cache: "no-store" });
+    const data = await res.json();
+    if (data.configured) {
+      BLOG_POSTS = data.posts.map((p) => ({ ...p, notion: true }));
+      renderBlogList();
+      return;
+    }
+  } catch (e) {
+    // API가 없는 환경(로컬 정적 서버 등)에서는 CSV 방식으로 대체
+  }
+
   const rows = await fetchCsvRows(BLOG_CSV_URL);
   BLOG_POSTS = rows
     .map((row) => ({
@@ -124,17 +137,31 @@ function renderBlogList() {
   });
 }
 
-function openBlogPost(idx) {
+async function openBlogPost(idx) {
   const post = BLOG_POSTS[idx];
   if (!post) return;
   blogDetailDateEl.textContent = post.date;
   blogDetailTitleEl.textContent = post.title;
+  blogListViewEl.classList.add("hidden");
+  blogDetailViewEl.classList.remove("hidden");
+  window.scrollTo({ top: 0 });
+
+  if (post.notion) {
+    blogDetailBodyEl.innerHTML = '<p class="empty-state">불러오는 중...</p>';
+    try {
+      const res = await fetch(`/api/posts?id=${encodeURIComponent(post.id)}`);
+      const data = await res.json();
+      blogDetailBodyEl.innerHTML = data.html || '<p class="empty-state">내용을 불러오지 못했어요.</p>';
+    } catch (e) {
+      blogDetailBodyEl.innerHTML = '<p class="empty-state">내용을 불러오지 못했어요.</p>';
+    }
+    return;
+  }
+
   blogDetailBodyEl.innerHTML = post.body
     .split(/\n{2,}/)
     .map((para) => `<p>${para.replace(/\n/g, "<br>")}</p>`)
     .join("");
-  blogListViewEl.classList.add("hidden");
-  blogDetailViewEl.classList.remove("hidden");
 }
 
 blogBackBtn.addEventListener("click", () => {
