@@ -1,2 +1,5 @@
 .DS_Store
 Thumbs.db
+
+# 사이트와 무관한 로컬 파일
+public/
