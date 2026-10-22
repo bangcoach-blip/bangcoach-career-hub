@@ -193,3 +193,18 @@ inquiryForm.addEventListener("submit", async (e) => {
 });
 
 loadPrograms();
+
+// ── 소개 탭 이력 필터 (전체 / 취업 교육 / AI 교육) ─────────────
+const historyTimeline = document.getElementById("historyTimeline");
+document.querySelectorAll(".tl-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const kind = chip.dataset.filter;
+    document.querySelectorAll(".tl-chip").forEach((c) => c.classList.toggle("is-active", c === chip));
+    historyTimeline.querySelectorAll(".tl-item").forEach((item) => {
+      item.hidden = kind !== "all" && item.dataset.kind !== kind;
+    });
+    historyTimeline.querySelectorAll("li").forEach((li) => {
+      li.hidden = ![...li.querySelectorAll(".tl-item")].some((item) => !item.hidden);
+    });
+  });
+});
