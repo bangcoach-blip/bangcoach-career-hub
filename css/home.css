@@ -989,3 +989,100 @@
   transform: scaleX(0);
   pointer-events: none;
 }
+
+/* ── 소개 탭 지구본 (js/globe.js) ────────────────────────── */
+.about-reach {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 48px;
+}
+
+.reach-globe {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.reach-globe::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.12), transparent 70%);
+  filter: blur(24px);
+}
+
+#globeCanvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+  opacity: 0;
+  transition: opacity 900ms var(--ease);
+}
+
+#globeCanvas.is-ready {
+  opacity: 1;
+}
+
+.reach-copy .panel-title {
+  margin-top: 10px;
+}
+
+.reach-stats {
+  display: flex;
+  gap: 28px;
+  margin: 28px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.reach-stats dt {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.reach-stats dd {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.reach-stats small {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 2px;
+}
+
+.reach-hint {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .about-reach {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .reach-globe {
+    max-width: 340px;
+  }
+
+  .reach-stats {
+    gap: 18px;
+  }
+
+  .reach-stats dd {
+    font-size: 22px;
+  }
+}
