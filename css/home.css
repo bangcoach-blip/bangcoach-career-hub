@@ -990,7 +990,7 @@
   pointer-events: none;
 }
 
-/* ── 소개 탭 지구본 (js/globe.js) ────────────────────────── */
+/* ── 소개 탭 한국 점 지도 (js/korea-map.js) ──────────────── */
 .about-reach {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -998,35 +998,119 @@
   gap: 48px;
 }
 
-.reach-globe {
+.reach-map {
   position: relative;
   width: 100%;
-  max-width: 480px;
-  aspect-ratio: 1;
+  max-width: 460px;
   margin: 0 auto;
 }
 
-.reach-globe::before {
-  content: "";
-  position: absolute;
-  inset: 12%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.12), transparent 70%);
-  filter: blur(24px);
-}
-
-#globeCanvas {
-  position: relative;
+.reach-map svg {
+  display: block;
   width: 100%;
-  height: 100%;
-  cursor: grab;
-  touch-action: pan-y;
-  opacity: 0;
-  transition: opacity 900ms var(--ease);
+  height: auto;
+  overflow: visible;
 }
 
-#globeCanvas.is-ready {
+.km-dot {
+  fill: #cbd5e1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.2);
+}
+
+.km-dot.is-near {
+  fill: #a5b4fc;
+}
+
+.reach-map.is-in .km-dot {
+  animation: km-dot-in 700ms var(--ease) var(--d) forwards;
+}
+
+@keyframes km-dot-in {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.km-pin {
+  opacity: 0;
+  cursor: default;
+}
+
+.reach-map.is-in .km-pin {
+  animation: km-pin-in 500ms var(--ease) var(--d) forwards;
+}
+
+@keyframes km-pin-in {
+  to {
+    opacity: 1;
+  }
+}
+
+.km-hit {
+  fill: transparent;
+}
+
+.km-core {
+  fill: #4f46e5;
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.km-ring {
+  fill: #4f46e5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.reach-map.is-in .km-ring {
+  animation: km-ring 2.4s ease-out calc(var(--d) + 0.4s) infinite;
+}
+
+@keyframes km-ring {
+  0% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+.km-label {
+  font-size: 17px;
+  font-weight: 700;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+
+.km-pin.is-main .km-label,
+.km-pin:hover .km-label {
   opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .km-dot,
+  .km-pin {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+
+  .km-ring {
+    display: none;
+  }
 }
 
 .reach-copy .panel-title {
@@ -1074,8 +1158,8 @@
     gap: 8px;
   }
 
-  .reach-globe {
-    max-width: 340px;
+  .reach-map {
+    max-width: 360px;
   }
 
   .reach-stats {
