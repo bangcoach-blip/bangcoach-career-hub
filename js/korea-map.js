@@ -9,6 +9,7 @@ const CITIES = [
   { name: "인천", lat: 37.4563, lon: 126.7052 },
   { name: "수원", lat: 37.2636, lon: 127.0286 },
   { name: "춘천", lat: 37.8813, lon: 127.7298 },
+  { name: "강원", lat: 37.6, lon: 128.55 },
   { name: "대전", lat: 36.3504, lon: 127.3845 },
   { name: "청주", lat: 36.6424, lon: 127.489 },
   { name: "전주", lat: 35.8242, lon: 127.148 },
@@ -36,7 +37,7 @@ function el(tag, attrs) {
 if (wrap) {
   const svg = el("svg", { viewBox: `0 0 ${MAP.w} ${MAP.h}`, role: "img", "aria-label": "강의 지역을 표시한 한국 지도" });
   const cities = CITIES.map((c) => ({ ...c, xy: project(c.lat, c.lon) }));
-  const [sx, sy] = cities[0].xy;
+  const [sx, sy] = cities.find((c) => c.main).xy;
   const maxDist = Math.hypot(MAP.w, MAP.h) * 0.7;
 
   // 바탕 점: 강의 지역 가까운 점은 연한 파랑으로
