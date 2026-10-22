@@ -3,6 +3,11 @@
 // 슬라이드 배열로 직접 관리합니다. 가이드를 추가하려면 TOOL_GUIDES 배열에
 // { id, title, description, color, slides } 객체를 하나 더 넣으면 됩니다.
 
+// 축하 효과 요청: 실제 폭죽은 js/confetti-fx.js가 그린다 (없으면 조용히 무시)
+function celebrate(kind, el) {
+  document.dispatchEvent(new CustomEvent("site:celebrate", { detail: { kind, el } }));
+}
+
 const TOOL_GUIDES = [
   {
     id: "notebooklm-extensions",
@@ -275,6 +280,7 @@ function copyToClipboard(text, btnEl) {
   const done = () => {
     btnEl.textContent = "복사됨!";
     btnEl.classList.add("copied");
+    celebrate("copy", btnEl);
     setTimeout(() => {
       btnEl.textContent = original;
       btnEl.classList.remove("copied");

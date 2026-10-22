@@ -351,6 +351,7 @@ function closeModal() {
 function showCopied() {
   copyBtn.textContent = "복사됨!";
   copyBtn.classList.add("copied");
+  celebrate("copy", copyBtn);
   setTimeout(() => {
     copyBtn.textContent = "프롬프트 복사";
     copyBtn.classList.remove("copied");

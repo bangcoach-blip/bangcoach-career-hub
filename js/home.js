@@ -181,6 +181,7 @@ inquiryForm.addEventListener("submit", async (e) => {
     inquiryForm.reset();
     inquiryStatus.textContent = "문의가 접수되었습니다. 확인 후 연락드리겠습니다. 급하시면 010-2587-3528로 연락해 주세요.";
     inquiryStatus.classList.add("ok");
+    celebrate("inquiry", inquiryStatus);
   } catch (err) {
     inquiryStatus.textContent =
       (err.message || "접수 중 오류가 발생했습니다.") + " 전화(010-2587-3528)나 이메일(bang125@naver.com)로도 문의하실 수 있어요.";
