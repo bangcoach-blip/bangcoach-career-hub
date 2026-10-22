@@ -82,7 +82,7 @@ if (!reduce) {
   });
 
   // ── 3. 스크롤하면 떠오르는 블록 ───────────────────────────────
-  const BLOCKS = ".section-sub, .link-more, .photo-strip, .prompt-banner, .about-hero, .pillar-card, .process-step, .contact-form, .external-link-card";
+  const BLOCKS = ".section-sub, .link-more, .photo-strip, .prompt-banner, .about-hero, .about-numbers, .expertise-col, .signature-card, .client-group, .ai-timeline li, .pillar-card, .process-step, .contact-form, .external-link-card";
   document.querySelectorAll(BLOCKS).forEach((el) => {
     el.style.opacity = "0";
     onceSeen(el, () => rise(el, 0.05));

@@ -1170,3 +1170,276 @@
     font-size: 22px;
   }
 }
+
+/* ── 소개 탭 전문가 프로필 ───────────────────────────────── */
+.about-edu {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.about-numbers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #f8faff, #ffffff 55%, #f5f3ff);
+  overflow: hidden;
+}
+
+.about-numbers div {
+  padding: 26px 24px;
+  border-right: 1px solid var(--line);
+}
+
+.about-numbers div:last-child {
+  border-right: none;
+}
+
+.about-numbers dd {
+  margin: 0 0 6px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.about-numbers small {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-left: 2px;
+}
+
+.about-numbers dt {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.expertise {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.expertise-col {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 28px 28px 24px;
+  background: var(--panel);
+}
+
+.expertise-col.is-ai {
+  background: linear-gradient(160deg, #eef2ff, #ffffff 70%);
+  border-color: #c7d2fe;
+}
+
+.expertise-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.expertise-col h3 {
+  margin: 8px 0 16px;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.expertise-col ul,
+.signature-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.expertise-col li {
+  position: relative;
+  padding: 9px 0 9px 18px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line-soft);
+}
+
+.expertise-col li::before,
+.signature-card li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 17px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.signature-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 26px;
+  background: var(--panel);
+  box-shadow: var(--shadow-xs);
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease), border-color 180ms var(--ease);
+}
+
+.signature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: #c7d2fe;
+}
+
+.signature-meta {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+}
+
+.signature-card h3 {
+  margin: 14px 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.signature-card > p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.signature-card li {
+  position: relative;
+  padding: 5px 0 5px 18px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.signature-card li::before {
+  top: 13px;
+}
+
+.signature-cta {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.client-groups {
+  display: grid;
+  gap: 12px;
+}
+
+.client-group {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+}
+
+.client-group h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.client-group p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.ai-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid #e0e7ff;
+  margin-left: 8px;
+}
+
+.ai-timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 16px;
+  padding: 4px 0 26px 24px;
+}
+
+.ai-timeline li::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--accent);
+}
+
+.ai-year {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.ai-timeline p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .about-numbers {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-numbers div:nth-child(2) {
+    border-right: none;
+  }
+
+  .about-numbers div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about-numbers dd {
+    font-size: 26px;
+  }
+
+  .expertise,
+  .signature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-group {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .ai-timeline li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
