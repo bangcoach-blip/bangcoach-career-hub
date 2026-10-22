@@ -208,3 +208,17 @@ document.querySelectorAll(".tl-chip").forEach((chip) => {
     });
   });
 });
+
+// ── 소개 탭 펼치기: 출강 대학 전체, 2021년 이전 이력 ───────────
+function bindMore(btnId, listId, openLabel, closeLabel) {
+  const btn = document.getElementById(btnId);
+  const list = document.getElementById(listId);
+  if (!btn || !list) return;
+  btn.addEventListener("click", () => {
+    const open = list.classList.toggle("is-collapsed") === false;
+    btn.setAttribute("aria-expanded", String(open));
+    btn.textContent = open ? closeLabel : openLabel;
+  });
+}
+bindMore("uniMore", "uniWall", "68곳 모두 보기", "접기");
+bindMore("historyMore", "historyTimeline", "2009~2021년 이력 더 보기", "접기");
