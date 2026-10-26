@@ -48,6 +48,10 @@ function switchTab(tabName) {
     dataLoaded.videos = true;
     loadVideos();
   }
+  if (tabName === "materials") {
+    materialDetailViewEl?.classList.add("hidden");
+    materialListEl?.classList.remove("hidden");
+  }
   if (tabName === "materials" && !dataLoaded.materials) {
     dataLoaded.materials = true;
     loadMaterials();
@@ -301,12 +305,14 @@ async function loadLectures() {
 // ── 강의안 자료 ──────────────────────────────────────────────────────
 const materialListEl = document.getElementById("materialList");
 
+let MATERIALS = [];
+
 async function loadMaterials() {
   const notionItems = await fetchNotionItems("자료");
   let materials;
   if (notionItems) {
     materials = notionItems
-      .map((i) => ({ title: i.title, link: i.link, description: i.description }))
+      .map((i) => ({ id: i.id, notion: true, title: i.title, link: i.link, description: i.description }))
       .filter((m) => m.link);
   } else {
     const rows = await fetchCsvRows(MATERIALS_CSV_URL);
@@ -319,24 +325,68 @@ async function loadMaterials() {
       .filter((m) => m.title && m.link);
   }
 
+  MATERIALS = materials;
   materialListEl.innerHTML = "";
   if (materials.length === 0) {
     materialListEl.innerHTML = '<p class="empty-state">아직 등록된 자료가 없어요.</p>';
     return;
   }
-  materials.forEach((m) => {
-    const card = document.createElement("a");
+  materials.forEach((m, idx) => {
+    const card = document.createElement("button");
+    card.type = "button";
     card.className = "material-card";
-    card.href = m.link;
-    card.target = "_blank";
-    card.rel = "noopener";
+    card.dataset.material = idx;
     card.innerHTML = `
       <div class="material-card-text">
-        <h3 class="material-card-title">${m.title}</h3>
-        <p class="material-card-desc">${m.description}</p>
+        <h3 class="material-card-title">${escHtml(m.title)}</h3>
+        <p class="material-card-desc">${escHtml(m.description || "")}</p>
       </div>
-      <span class="material-card-arrow">자료 받기 →</span>
+      <span class="material-card-arrow">자세히 보기 →</span>
     `;
     materialListEl.appendChild(card);
   });
 }
+
+// 자료 상세: 노션 본문(설명 글)을 보여주고, 본문에 올린 파일이나 링크로 내려받기
+const materialDetailViewEl = document.getElementById("materialDetailView");
+const materialDetailTitleEl = document.getElementById("materialDetailTitle");
+const materialDetailBodyEl = document.getElementById("materialDetailBody");
+const materialDownloadEl = document.getElementById("materialDownload");
+
+async function openMaterial(idx) {
+  const m = MATERIALS[idx];
+  if (!m) return;
+  materialDetailTitleEl.textContent = m.title;
+  materialListEl.classList.add("hidden");
+  materialDetailViewEl.classList.remove("hidden");
+  materialDownloadEl.href = m.link;
+  materialDownloadEl.classList.add("hidden");
+  window.scrollTo({ top: 0 });
+
+  let html = "";
+  if (m.notion) {
+    materialDetailBodyEl.innerHTML = '<p class="empty-state">불러오는 중...</p>';
+    try {
+      const res = await fetch(`/api/items?id=${encodeURIComponent(m.id)}&html=1`);
+      html = (await res.json()).html || "";
+    } catch (e) {
+      html = "";
+    }
+  }
+  if (!html.trim() && m.description) html = `<p>${escHtml(m.description)}</p>`;
+  materialDetailBodyEl.innerHTML = html;
+  // 본문에 올린 파일이 있으면 그 버튼으로 내려받고, 없으면(구글드라이브 링크 등) 아래 버튼을 보여줌
+  if (!materialDetailBodyEl.querySelector(".file-download")) materialDownloadEl.classList.remove("hidden");
+}
+
+document.addEventListener("click", (e) => {
+  const card = e.target.closest("[data-material]");
+  if (!card) return;
+  if (!card.closest("#tab-materials")) switchTab("materials");
+  openMaterial(Number(card.dataset.material));
+});
+
+document.getElementById("materialBackBtn").addEventListener("click", () => {
+  materialDetailViewEl.classList.add("hidden");
+  materialListEl.classList.remove("hidden");
+});

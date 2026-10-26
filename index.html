@@ -554,9 +554,15 @@
 <section id="tab-materials" class="tab-panel hidden">
   <div class="panel-header">
     <h2 class="panel-title">자료 공유</h2>
-    <p class="panel-subtitle">강의에서 사용한 PPT·PDF 자료를 구글드라이브 링크로 내려받으세요.</p>
+    <p class="panel-subtitle">강의에서 사용한 PPT·PDF 자료입니다. 자료를 누르면 설명을 보고 내려받을 수 있어요.</p>
   </div>
   <div class="material-list" id="materialList"></div>
+  <div id="materialDetailView" class="detail-view hidden">
+    <button class="back-btn" id="materialBackBtn">← 목록으로</button>
+    <h2 class="blog-detail-title" id="materialDetailTitle"></h2>
+    <div class="blog-detail-body" id="materialDetailBody"></div>
+    <a class="cta-primary material-download hidden" id="materialDownload" target="_blank" rel="noopener">자료 내려받기 <span aria-hidden="true">↓</span></a>
+  </div>
 </section>
 
 <!-- ===================== 프롬프트 도구 ===================== -->

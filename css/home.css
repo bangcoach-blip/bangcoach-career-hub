@@ -1698,3 +1698,53 @@
 .ai-timeline [hidden] {
   display: none !important;
 }
+
+/* ── 자료 공유: 카드 → 상세(설명 글 + 내려받기) ────────────── */
+button.material-card {
+  width: 100%;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.detail-view {
+  max-width: 720px;
+  margin: 0 auto 64px;
+  padding: 0 24px;
+}
+
+.blog-detail-body a.file-download,
+.file-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid #c7d2fe;
+  border-radius: var(--radius-lg);
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+
+.file-download:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.file-download span {
+  flex-shrink: 0;
+  font-size: 13.5px;
+  color: #fff;
+  background: var(--accent);
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+}
+
+.material-download {
+  display: inline-flex;
+  margin-top: 8px;
+  text-decoration: none;
+}

@@ -111,6 +111,15 @@ async function renderBlocks(blocks) {
         html += `<figure><img src="${esc(url)}" alt="${esc(v.caption.map((t) => t.plain_text).join(""))}" loading="lazy">${cap ? `<figcaption>${cap}</figcaption>` : ""}</figure>`;
         break;
       }
+      case "pdf":
+      case "file":
+      case "video":
+      case "audio": {
+        const url = v.type === "external" ? v.external.url : v.file.url;
+        const name = v.name || v.caption.map((t) => t.plain_text).join("") || decodeURIComponent(url.split("?")[0].split("/").pop());
+        html += `<p><a class="file-download" href="${esc(url)}" target="_blank" rel="noopener">${esc(name)}<span>내려받기</span></a></p>`;
+        break;
+      }
       case "bookmark":
         html += `<p><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.url)}</a></p>`;
         break;

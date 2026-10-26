@@ -38,9 +38,9 @@
     else pop(el);
   });
 
-  // 자료 받기: 카드의 화살표 자리에서 터뜨린다 (새 탭은 그대로 열림)
+  // 자료 내려받기: 누른 버튼 자리에서 터뜨린다 (새 탭은 그대로 열림)
   document.addEventListener("click", (e) => {
-    const card = e.target.closest(".material-card");
-    if (card) pop(card.querySelector(".material-card-arrow") || card);
+    const btn = e.target.closest(".file-download, .material-download");
+    if (btn) pop(btn);
   });
 })();

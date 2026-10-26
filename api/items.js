@@ -1,4 +1,4 @@
-const { notion, listChildren } = require("./_notion");
+const { notion, listChildren, renderBlocks } = require("./_notion");
 
 const text = (arr = []) => arr.map((t) => t.plain_text).join("");
 
@@ -23,7 +23,8 @@ module.exports = async function handler(req, res) {
         .map((b) => text(b[b.type]?.rich_text))
         .join("\n")
         .trim();
-      res.status(200).json({ body });
+      const html = req.query.html ? await renderBlocks(blocks) : undefined;
+      res.status(200).json({ body, html });
       return;
     }
 
