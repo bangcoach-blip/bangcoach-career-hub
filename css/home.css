@@ -1786,3 +1786,16 @@ video.video-thumb {
   margin-top: 4px;
   text-decoration: none;
 }
+
+/* 썸네일은 유튜브·업로드 영상 모두 16:9 칸에 꽉 채움 */
+.video-thumb-wrap {
+  overflow: hidden;
+}
+
+.video-thumb-wrap .video-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
