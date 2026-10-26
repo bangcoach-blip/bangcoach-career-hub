@@ -45,9 +45,11 @@ module.exports = async function handler(req, res) {
         if (!title) continue;
         const itemType = p["유형"]?.select?.name || "";
         let link = p["링크"]?.url || "";
-        // 자료: 링크 칸이 비어 있으면 페이지 본문에 올린 파일로 연결
-        if (itemType === "자료" && (!link || link.replace(/\/$/, "") === "https://drive.google.com")) {
+        // 자료·영상: 링크 칸이 비어 있으면 페이지 본문에 올린 파일로 연결
+        let uploaded = false;
+        if ((itemType === "자료" || itemType === "영상") && (!link || link.replace(/\/$/, "") === "https://drive.google.com")) {
           link = `/api/file?id=${page.id}`;
+          uploaded = true;
         }
         items.push({
           id: page.id,
@@ -61,6 +63,7 @@ module.exports = async function handler(req, res) {
           title,
           type: itemType,
           link,
+          uploaded,
           description: text(p["설명"]?.rich_text),
           category: p["카테고리"]?.select?.name || "",
           order: p["순서"]?.number ?? 9999,

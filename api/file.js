@@ -17,7 +17,9 @@ module.exports = async function handler(req, res) {
       res.status(404).send("공개되지 않은 자료입니다.");
       return;
     }
-    const block = (await listChildren(page.id)).find((b) => FILE_TYPES.includes(b.type));
+    const blocks = await listChildren(page.id);
+    const wanted = req.query.kind === "video" ? ["video", ...FILE_TYPES] : FILE_TYPES;
+    const block = wanted.map((t) => blocks.find((b) => b.type === t)).find(Boolean);
     const v = block && block[block.type];
     const url = v && (v.type === "external" ? v.external?.url : v.file?.url);
     if (!url) {

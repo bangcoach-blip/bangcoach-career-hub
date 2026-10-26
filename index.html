@@ -545,9 +545,16 @@
 <section id="tab-videos" class="tab-panel hidden">
   <div class="panel-header">
     <h2 class="panel-title">강의 영상</h2>
-    <p class="panel-subtitle">유튜브에 올라온 강의 영상을 주제별로 모아뒀습니다.</p>
+    <p class="panel-subtitle">유튜브에 올라온 강의 영상을 주제별로 모아뒀습니다. 영상을 누르면 설명과 함께 볼 수 있어요.</p>
   </div>
   <div class="video-grid" id="videoGrid"></div>
+  <div id="videoDetailView" class="detail-view hidden">
+    <button class="back-btn" id="videoBackBtn">← 목록으로</button>
+    <h2 class="blog-detail-title" id="videoDetailTitle"></h2>
+    <div class="video-embed" id="videoEmbed"></div>
+    <div class="blog-detail-body" id="videoDetailBody"></div>
+    <a class="cta-ghost video-external" id="videoExternal" target="_blank" rel="noopener">유튜브에서 보기 ↗</a>
+  </div>
 </section>
 
 <!-- ===================== 강의안 자료 ===================== -->

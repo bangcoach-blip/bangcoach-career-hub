@@ -48,6 +48,7 @@ function switchTab(tabName) {
     dataLoaded.videos = true;
     loadVideos();
   }
+  closeVideoDetail();
   if (tabName === "materials") {
     materialDetailViewEl?.classList.add("hidden");
     materialListEl?.classList.remove("hidden");
@@ -198,12 +199,21 @@ async function fetchNotionItems(type) {
   }
 }
 
+let VIDEOS = [];
+
 async function loadVideos() {
   const notionItems = await fetchNotionItems("영상");
   let videos;
   if (notionItems) {
     videos = notionItems
-      .map((i) => ({ title: i.title, url: i.link, description: i.description }))
+      .map((i) => ({
+        id: i.id,
+        notion: true,
+        title: i.title,
+        url: i.uploaded ? `${i.link}&kind=video` : i.link,
+        uploaded: i.uploaded,
+        description: i.description,
+      }))
       .filter((v) => v.url);
   } else {
     const rows = await fetchCsvRows(VIDEOS_CSV_URL);
@@ -216,29 +226,88 @@ async function loadVideos() {
       .filter((v) => v.title && v.url);
   }
 
+  VIDEOS = videos;
   videoGridEl.innerHTML = "";
   if (videos.length === 0) {
     videoGridEl.innerHTML = '<p class="empty-state">아직 등록된 영상이 없어요.</p>';
     return;
   }
-  videos.forEach((v) => {
+  videos.forEach((v, idx) => {
     const id = extractYoutubeId(v.url);
     const thumb = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
-    const card = document.createElement("a");
+    // 노션에 올린 영상 파일: 1초 지점 화면을 썸네일로 사용
+    const media = thumb
+      ? `<img class="video-thumb" src="${thumb}" alt="" loading="lazy" />`
+      : v.uploaded
+        ? `<video class="video-thumb" src="${v.url}#t=1" preload="metadata" muted playsinline></video>`
+        : "";
+    const card = document.createElement("button");
+    card.type = "button";
     card.className = "video-card";
-    card.href = v.url;
-    card.target = "_blank";
-    card.rel = "noopener";
+    card.dataset.video = idx;
     card.innerHTML = `
-      ${thumb ? `<div class="video-thumb-wrap"><img class="video-thumb" src="${thumb}" alt="" loading="lazy" /><span class="video-play">▶</span></div>` : ""}
+      ${media ? `<div class="video-thumb-wrap">${media}<span class="video-play">▶</span></div>` : ""}
       <div class="video-card-body">
-        <h3 class="video-card-title">${v.title}</h3>
-        <p class="video-card-desc">${v.description}</p>
+        <h3 class="video-card-title">${escHtml(v.title)}</h3>
+        <p class="video-card-desc">${escHtml(v.description || "")}</p>
       </div>
     `;
     videoGridEl.appendChild(card);
   });
 }
+
+// 영상 상세: 영상을 바로 재생하고, 아래에 노션 본문(설명 글)을 보여줌
+const videoDetailViewEl = document.getElementById("videoDetailView");
+const videoEmbedEl = document.getElementById("videoEmbed");
+const videoDetailBodyEl = document.getElementById("videoDetailBody");
+const videoExternalEl = document.getElementById("videoExternal");
+
+function closeVideoDetail() {
+  videoEmbedEl.innerHTML = ""; // 목록으로 돌아가면 재생 중인 영상도 멈춤
+  videoDetailViewEl.classList.add("hidden");
+  videoGridEl.classList.remove("hidden");
+}
+
+async function openVideo(idx) {
+  const v = VIDEOS[idx];
+  if (!v) return;
+  const ytId = extractYoutubeId(v.url);
+  document.getElementById("videoDetailTitle").textContent = v.title;
+  videoEmbedEl.innerHTML = ytId
+    ? `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?rel=0" title="${escHtml(v.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    : v.uploaded
+      ? `<video src="${v.url}" controls autoplay playsinline preload="metadata"></video>`
+      : "";
+  videoEmbedEl.classList.toggle("hidden", !ytId && !v.uploaded);
+  videoExternalEl.href = v.url;
+  videoExternalEl.textContent = ytId ? "유튜브에서 보기 ↗" : "영상 보러 가기 ↗";
+  videoExternalEl.classList.toggle("hidden", Boolean(v.uploaded));
+  videoGridEl.classList.add("hidden");
+  videoDetailViewEl.classList.remove("hidden");
+  window.scrollTo({ top: 0 });
+
+  let html = "";
+  if (v.notion) {
+    videoDetailBodyEl.innerHTML = '<p class="empty-state">불러오는 중...</p>';
+    try {
+      const res = await fetch(`/api/items?id=${encodeURIComponent(v.id)}&html=1`);
+      html = (await res.json()).html || "";
+    } catch (e) {
+      html = "";
+    }
+  }
+  if (!html.trim() && v.description) html = `<p>${escHtml(v.description)}</p>`;
+  videoDetailBodyEl.innerHTML = html;
+}
+
+document.addEventListener("click", (e) => {
+  const card = e.target.closest("[data-video]");
+  if (!card) return;
+  if (!card.closest("#tab-videos")) switchTab("videos");
+  openVideo(Number(card.dataset.video));
+});
+
+document.getElementById("videoBackBtn").addEventListener("click", closeVideoDetail);
 
 // ── 강의 이력 (소개 탭) ──────────────────────────────────────────────
 const lectureListEl = document.getElementById("lectureList");

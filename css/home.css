@@ -1748,3 +1748,41 @@ button.material-card {
   margin-top: 8px;
   text-decoration: none;
 }
+
+/* ── 강의 영상: 카드 → 상세(영상 재생 + 설명 글) ──────────── */
+button.video-card {
+  width: 100%;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+video.video-thumb {
+  display: block;
+  background: #0f172a;
+}
+
+.video-embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 24px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.video-embed iframe,
+.video-embed video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-external {
+  display: inline-flex;
+  margin-top: 4px;
+  text-decoration: none;
+}
