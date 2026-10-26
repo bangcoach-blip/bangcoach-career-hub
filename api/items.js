@@ -42,6 +42,12 @@ module.exports = async function handler(req, res) {
         if (type && p["유형"]?.select?.name !== type) continue;
         const title = text(Object.values(p).find((v) => v.type === "title")?.title);
         if (!title) continue;
+        const itemType = p["유형"]?.select?.name || "";
+        let link = p["링크"]?.url || "";
+        // 자료: 링크 칸이 비어 있으면 페이지 본문에 올린 파일로 연결
+        if (itemType === "자료" && (!link || link.replace(/\/$/, "") === "https://drive.google.com")) {
+          link = `/api/file?id=${page.id}`;
+        }
         items.push({
           id: page.id,
           subCategory: text(p["소분류"]?.rich_text),
@@ -52,8 +58,8 @@ module.exports = async function handler(req, res) {
           effect: text(p["기대효과"]?.rich_text),
           mode: text(p["진행방식"]?.rich_text),
           title,
-          type: p["유형"]?.select?.name || "",
-          link: p["링크"]?.url || "",
+          type: itemType,
+          link,
           description: text(p["설명"]?.rich_text),
           category: p["카테고리"]?.select?.name || "",
           order: p["순서"]?.number ?? 9999,
