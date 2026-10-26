@@ -9,7 +9,8 @@ module.exports = async function handler(req, res) {
     return;
   }
   try {
-    res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=60");
+    // 본문(?id)은 노션 수정이 바로 보이도록 캐시하지 않고, 목록만 1분 캐시
+    res.setHeader("Cache-Control", req.query.id ? "no-store" : "s-maxage=60");
 
     if (req.query.id) {
       const page = await notion(`/pages/${encodeURIComponent(req.query.id)}`);

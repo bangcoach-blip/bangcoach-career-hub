@@ -6,8 +6,9 @@ module.exports = async function handler(req, res) {
     return;
   }
   try {
-    res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=300");
     const id = req.query.id;
+    // 글 본문(?id)은 캐시하지 않고, 목록만 1분 캐시
+    res.setHeader("Cache-Control", id ? "no-store" : "s-maxage=60");
 
     if (id) {
       const page = await notion(`/pages/${encodeURIComponent(id)}`);
