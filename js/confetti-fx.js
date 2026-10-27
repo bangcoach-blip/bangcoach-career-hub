@@ -40,7 +40,7 @@
 
   // 자료 내려받기: 누른 버튼 자리에서 터뜨린다 (새 탭은 그대로 열림)
   document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".file-download, .material-download");
+    const btn = e.target.closest(".file-download, .material-download, .profile-pdf-btn");
     if (btn) pop(btn);
   });
 })();

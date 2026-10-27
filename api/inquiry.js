@@ -1,4 +1,5 @@
 const { notion } = require("./_notion");
+const { notifyInquiry } = require("./_notify");
 
 const TYPES = ["대학", "공공기관", "기업", "기타"];
 const clip = (v, n) => String(v || "").trim().slice(0, n);
@@ -49,10 +50,15 @@ module.exports = async function handler(req, res) {
         paragraph: { rich_text: rt(message.slice(i, i + 1900)) },
       });
     }
-    await notion("/pages", {
+    const created = await notion("/pages", {
       method: "POST",
       body: JSON.stringify({ parent: { database_id: dbId }, properties: props, children }),
     });
+    // 이메일·카카오톡 알림 (실패해도 접수는 완료로 처리)
+    await notifyInquiry(
+      { orgType, org, name, contact, message, people: clip(b.people, 120), schedule: clip(b.schedule, 120), programs: clip(b.programs, 300) },
+      created?.url
+    ).catch(() => {});
     res.status(200).json({ ok: true });
   } catch (e) {
     res.status(500).json({ error: "접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요." });

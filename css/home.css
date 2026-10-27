@@ -1799,3 +1799,14 @@ video.video-thumb {
   height: 100%;
   object-fit: cover;
 }
+
+/* 강사 소개서 PDF 버튼 */
+.profile-pdf-btn {
+  display: inline-flex;
+  margin-top: 18px;
+  text-decoration: none;
+}
+
+.contact-aside .profile-pdf-btn {
+  margin: 6px 0 14px;
+}
