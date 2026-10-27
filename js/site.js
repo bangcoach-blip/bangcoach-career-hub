@@ -35,7 +35,25 @@ const navTabs = document.querySelectorAll(".nav-tab");
 const tabPanels = document.querySelectorAll(".tab-panel");
 let dataLoaded = { blog: false, videos: false, materials: false, about: false };
 
-function switchTab(tabName) {
+// 탭마다 주소(#about, #contact 등)와 제목을 붙여, 링크로 바로 열 수 있게 합니다.
+const TAB_TITLES = {
+  home: "",
+  about: "소개",
+  blog: "블로그",
+  videos: "강의 영상",
+  materials: "자료 공유",
+  prompts: "프롬프트 도구",
+  contact: "강의 문의",
+};
+const BASE_TITLE = document.title;
+
+function switchTab(tabName, { push = true } = {}) {
+  if (!(tabName in TAB_TITLES)) tabName = "home";
+  if (push) {
+    const hash = tabName === "home" ? "" : `#${tabName}`;
+    if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
+  }
+  document.title = TAB_TITLES[tabName] ? `${TAB_TITLES[tabName]} | ${BASE_TITLE}` : BASE_TITLE;
   navTabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tabName));
   tabPanels.forEach((panel) => panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`));
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -69,6 +87,13 @@ navTabs.forEach((btn) => {
 
 document.querySelectorAll("[data-goto]").forEach((btn) => {
   btn.addEventListener("click", () => switchTab(btn.dataset.goto));
+});
+
+// 주소로 들어오거나 뒤로가기를 누르면 그 탭을 연다
+const tabFromHash = () => location.hash.replace("#", "") || "home";
+window.addEventListener("popstate", () => switchTab(tabFromHash(), { push: false }));
+document.addEventListener("DOMContentLoaded", () => {
+  if (tabFromHash() !== "home") switchTab(tabFromHash(), { push: false });
 });
 
 // ── 공통 CSV 로더 ────────────────────────────────────────────────────
