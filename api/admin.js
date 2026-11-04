@@ -85,7 +85,16 @@ async function setStatus(b) {
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   if (req.method === "GET") {
-    res.status(200).json({ enabled: isEnabled(), loggedIn: isAdmin(req) });
+    res.status(200).json({
+      enabled: isEnabled(),
+      loggedIn: isAdmin(req),
+      // 값은 내보내지 않고, 업로드 설정이 갖춰졌는지만 알려줍니다
+      upload: {
+        storeId: Boolean(process.env.BLOB_STORE_ID),
+        webhookKey: Boolean(process.env.BLOB_WEBHOOK_PUBLIC_KEY),
+        oidc: Boolean(req.headers["x-vercel-oidc-token"] || process.env.VERCEL_OIDC_TOKEN),
+      },
+    });
     return;
   }
   if (req.method !== "POST") {

@@ -22,13 +22,19 @@ module.exports = async function handler(req, res) {
       getSignedToken: async (pathname) => {
         if (!isAdmin(req)) throw new Error("로그인이 필요합니다.");
         if (!ALLOWED.test(pathname)) throw new Error("올릴 수 없는 파일 형식입니다.");
-        const validUntil = Date.now() + VALID_MS;
-        const token = await issueSignedToken({ pathname, operations: ["put"], maximumSizeInBytes: MAX_SIZE, validUntil });
-        return { token, urlOptions: { validUntil, addRandomSuffix: true, maximumSizeInBytes: MAX_SIZE } };
+        // 서명 키는 서버에만 있고, 브라우저에는 이 파일 경로 전용 서명 주소만 나갑니다.
+        // 토큰에 경로를 묶으면 한글 파일 이름에서 어긋날 수 있어 주소 쪽에서 경로를 고정합니다.
+        const token = await issueSignedToken({
+          operations: ["put"],
+          maximumSizeInBytes: MAX_SIZE,
+          validUntil: Date.now() + VALID_MS,
+        });
+        return { token, urlOptions: { addRandomSuffix: true } };
       },
     });
     res.status(200).json(json);
   } catch (e) {
+    console.error("admin-upload", e.message);
     res.status(400).json({ error: e.message });
   }
 };
