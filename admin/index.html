@@ -208,9 +208,9 @@
         show($("progress"));
         $("progressBar").style.width = "0";
         setStatus($("uploadStatus"), "파일을 올리는 중입니다. 창을 닫지 마세요.");
-        const { upload } = await import("https://cdn.jsdelivr.net/npm/@vercel/blob@2.8.2/client/+esm");
+        const { uploadPresigned } = await import("https://cdn.jsdelivr.net/npm/@vercel/blob@2.8.2/client/+esm");
         const ext = file.name.split(".").pop().toLowerCase();
-        const blob = await upload(`${type === "영상" ? "videos" : "materials"}/${file.name}`, file, {
+        const blob = await uploadPresigned(`${type === "영상" ? "videos" : "materials"}/${file.name}`, file, {
           access: "public",
           handleUploadUrl: "/api/admin-upload",
           contentType: file.type || CONTENT_TYPES[ext],
