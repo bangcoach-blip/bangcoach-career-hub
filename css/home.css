@@ -1994,3 +1994,40 @@ button.avail-day:not(:disabled):hover {
     text-align: center;
   }
 }
+
+/* 상단 메뉴 새 콘텐츠 표시 (js/nav-new.js) */
+.nav-tab {
+  position: relative;
+}
+
+.nav-new {
+  position: absolute;
+  top: -3px;
+  right: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 0 0 2px #fff;
+  animation: nav-new-in 320ms var(--ease);
+}
+
+@keyframes nav-new-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-new {
+    animation: none;
+  }
+}

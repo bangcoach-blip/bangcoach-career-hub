@@ -57,6 +57,7 @@ function switchTab(tabName, { push = true } = {}) {
   navTabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tabName));
   tabPanels.forEach((panel) => panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`));
   window.scrollTo({ top: 0, behavior: "smooth" });
+  document.dispatchEvent(new CustomEvent("site:tab", { detail: tabName }));
 
   if (tabName === "blog" && !dataLoaded.blog) {
     dataLoaded.blog = true;
