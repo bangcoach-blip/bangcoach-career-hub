@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin
 
 Sitemap: https://bangcoach-ai-career-site.vercel.app/sitemap.xml

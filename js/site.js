@@ -236,7 +236,8 @@ async function loadVideos() {
         notion: true,
         title: i.title,
         url: i.uploaded ? `${i.link}&kind=video` : i.link,
-        uploaded: i.uploaded,
+        // 노션 본문에 올렸거나 관리자 페이지로 올린 영상 파일
+        uploaded: i.uploaded || /\.(mp4|webm|mov|m4v)(\?|$)/i.test(i.link),
         description: i.description,
       }))
       .filter((v) => v.url);

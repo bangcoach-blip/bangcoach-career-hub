@@ -1,0 +1,7 @@
+{
+  "name": "bangcoach-career-hub",
+  "private": true,
+  "dependencies": {
+    "@vercel/blob": "2.8.2"
+  }
+}
