@@ -153,6 +153,28 @@
     </ol>
   </div>
 
+  <div class="contact-programs hidden" id="availabilitySection">
+    <div class="section-head">
+      <h3 class="sub-title">강의 가능 일정</h3>
+      <p class="section-sub">앞으로 8주간 평일 9시~18시 기준으로 비어 있는 시간입니다. 날짜를 누르면 시간을 확인하고 바로 문의할 수 있어요. 이동 시간과 최종 일정은 상담 때 확인합니다.</p>
+    </div>
+    <div class="avail-card">
+      <div class="avail-head">
+        <button type="button" class="avail-nav" id="availPrev" aria-label="이전 달">‹</button>
+        <strong id="availMonth"></strong>
+        <button type="button" class="avail-nav" id="availNext" aria-label="다음 달">›</button>
+      </div>
+      <div class="avail-grid" id="availGrid"></div>
+      <div class="avail-legend">
+        <span><i class="is-open"></i>가능</span>
+        <span><i class="is-partial"></i>일부 가능</span>
+        <span><i class="is-full"></i>마감</span>
+        <span><i class="is-weekend"></i>주말 협의</span>
+      </div>
+      <div class="avail-detail hidden" id="availDetail"></div>
+    </div>
+  </div>
+
   <div class="contact-programs contact-form-head" id="contactFormAnchor">
     <h3 class="sub-title">문의 남기기</h3>
   </div>
@@ -733,6 +755,7 @@
 <script src="js/hero-motion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="js/confetti-fx.js"></script>
+<script src="js/availability.js"></script>
 <script type="module" src="js/hero3d.js"></script>
 <script type="module" src="js/motion-fx.js"></script>
 <script type="module" src="js/korea-map.js"></script>

@@ -1810,3 +1810,187 @@ video.video-thumb {
 .contact-aside .profile-pdf-btn {
   margin: 6px 0 14px;
 }
+
+/* ── 문의 탭: 강의 가능 일정 달력 ─────────────────────────── */
+.avail-card {
+  max-width: 720px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--panel);
+}
+
+.avail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.avail-nav {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.avail-nav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.avail-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.avail-week {
+  padding-bottom: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+}
+
+.avail-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 58px;
+  padding: 4px 2px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: none;
+  font-family: inherit;
+  color: var(--ink);
+}
+
+button.avail-day:not(:disabled) {
+  cursor: pointer;
+}
+
+button.avail-day:not(:disabled):hover {
+  border-color: var(--accent);
+}
+
+.avail-day b {
+  font-size: 14px;
+}
+
+.avail-day small {
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.avail-day.is-out {
+  color: var(--muted-dim);
+}
+
+.avail-day.is-open {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.avail-day.is-partial {
+  background: #f5f7ff;
+  border-color: #c7d2fe;
+  color: var(--accent-strong);
+}
+
+.avail-day.is-full {
+  background: var(--bg-subtle);
+  color: var(--muted-dim);
+}
+
+.avail-day.is-weekend {
+  color: var(--muted);
+}
+
+.avail-day.is-selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.avail-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.avail-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.avail-legend i {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.avail-legend i.is-open { background: var(--accent-soft); border-color: #c7d2fe; }
+.avail-legend i.is-partial { background: #f5f7ff; border-color: #a5b4fc; }
+.avail-legend i.is-full { background: var(--bg-subtle); }
+.avail-legend i.is-weekend { background: #fff; }
+
+.avail-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--accent-soft);
+}
+
+.avail-detail strong {
+  color: var(--ink);
+}
+
+.avail-detail p {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 600px) {
+  .avail-card {
+    padding: 14px;
+  }
+
+  .avail-grid {
+    gap: 3px;
+  }
+
+  .avail-day {
+    min-height: 50px;
+  }
+
+  .avail-day small {
+    font-size: 9px;
+  }
+
+  .avail-detail {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
