@@ -19,6 +19,11 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
 <meta name="theme-color" content="#4f46e5" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"방영황","jobTitle":"취업·AI 교육 강사","description":"2009년부터 대학·공공기관·기업에서 자기소개서·면접·직무 교육을 해 온 취업 교육 전문가. AI 취업 교육 프로그램을 설계합니다.","url":"https://bangcoach-ai-career-site.vercel.app/","image":"https://bangcoach-ai-career-site.vercel.app/img/og-image.png","knowsAbout":["취업 교육","자기소개서","면접","AI 활용 교육","직무 교육"]}
+</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/home.css" />
 </head>
@@ -71,11 +76,11 @@
   </section>
 
   <section class="photo-strip" aria-label="강의 사진">
-    <img src="img/lecture-2024-a.jpg" alt="2024년 취업 특강" loading="lazy" />
-    <img src="img/lecture-2019-a.jpg" alt="2019 경남대학교 건강과학대학 맞춤형 취업캠프" loading="lazy" />
-    <img src="img/networking-2026.jpg" alt="2026 스포츠분야 유관기관 종사자 네트워킹 데이" loading="lazy" />
-    <img src="img/lecture-2024-b.jpg" alt="2024년 취업 특강 강의실" loading="lazy" />
-    <img src="img/lecture-2019-b.jpg" alt="2019 경남대학교 취업캠프 강의실" loading="lazy" />
+    <img src="img/lecture-2024-a.webp" width="800" height="600" decoding="async" alt="2024년 취업 특강" loading="lazy" />
+    <img src="img/lecture-2019-a.webp" width="800" height="600" decoding="async" alt="2019 경남대학교 건강과학대학 맞춤형 취업캠프" loading="lazy" />
+    <img src="img/networking-2026.webp" width="800" height="450" decoding="async" alt="2026 스포츠분야 유관기관 종사자 네트워킹 데이" loading="lazy" />
+    <img src="img/lecture-2024-b.webp" width="800" height="600" decoding="async" alt="2024년 취업 특강 강의실" loading="lazy" />
+    <img src="img/lecture-2019-b.webp" width="800" height="600" decoding="async" alt="2019 경남대학교 취업캠프 강의실" loading="lazy" />
   </section>
 
   <section class="home-section">
@@ -125,6 +130,10 @@
   <div class="panel-header">
     <h2 class="panel-title">강의·교육 문의</h2>
     <p class="panel-subtitle">기관과 대상, 원하는 주제를 알려주시면 확인 후 연락드립니다.</p>
+    <div class="contact-jump">
+      <button type="button" class="cta-primary" id="jumpToForm">바로 문의하기 <span aria-hidden="true">↓</span></button>
+      <a class="cta-ghost" href="tel:01025873528">전화 010-2587-3528</a>
+    </div>
   </div>
     <div class="contact-programs">
     <div class="section-head">
@@ -638,7 +647,7 @@
 
   <div class="search-wrap">
     <div class="search-inner">
-      <input type="text" id="searchInput" placeholder="프롬프트 제목이나 상황을 검색해보세요 (예: 지원동기, 신입, 인성면접)" />
+      <input type="text" id="searchInput" aria-label="프롬프트 검색" placeholder="프롬프트 제목이나 상황을 검색해보세요 (예: 지원동기, 신입, 인성면접)" />
     </div>
   </div>
 
@@ -747,16 +756,16 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="js/tools.js"></script>
-<script src="js/main.js"></script>
-<script src="js/site.js"></script>
-<script src="js/home.js"></script>
-<script src="js/hero-motion.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-<script src="js/confetti-fx.js"></script>
-<script src="js/availability.js"></script>
-<script src="js/nav-new.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="js/tools.js"></script>
+<script defer src="js/main.js"></script>
+<script defer src="js/site.js"></script>
+<script defer src="js/home.js"></script>
+<script defer src="js/hero-motion.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script defer src="js/confetti-fx.js"></script>
+<script defer src="js/availability.js"></script>
+<script defer src="js/nav-new.js"></script>
 <script type="module" src="js/hero3d.js"></script>
 <script type="module" src="js/motion-fx.js"></script>
 <script type="module" src="js/korea-map.js"></script>

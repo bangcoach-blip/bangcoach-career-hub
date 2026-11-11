@@ -55,6 +55,12 @@ function switchTab(tabName, { push = true } = {}) {
   }
   document.title = TAB_TITLES[tabName] ? `${TAB_TITLES[tabName]} | ${BASE_TITLE}` : BASE_TITLE;
   navTabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tabName));
+  // 모바일의 한 줄 메뉴에서 선택한 메뉴가 화면 안에 오도록
+  const navTabsEl = document.querySelector(".nav-tabs");
+  const activeBtn = navTabsEl?.querySelector(".nav-tab.active");
+  if (activeBtn && navTabsEl.scrollWidth > navTabsEl.clientWidth) {
+    navTabsEl.scrollTo({ left: activeBtn.offsetLeft - (navTabsEl.clientWidth - activeBtn.offsetWidth) / 2, behavior: "smooth" });
+  }
   tabPanels.forEach((panel) => panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`));
   window.scrollTo({ top: 0, behavior: "smooth" });
   document.dispatchEvent(new CustomEvent("site:tab", { detail: tabName }));
@@ -216,13 +222,8 @@ function extractYoutubeId(url) {
 
 // 노션 "사이트 콘텐츠" DB(/api/items)가 설정돼 있으면 노션을, 아니면 구글시트 CSV를 사용합니다.
 async function fetchNotionItems(type) {
-  try {
-    const res = await fetch(`/api/items?type=${encodeURIComponent(type)}`, { cache: "no-store" });
-    const data = await res.json();
-    return data.configured ? data.items : null;
-  } catch (e) {
-    return null;
-  }
+  const items = await getSiteItems();
+  return items ? items.filter((i) => i.type === type) : null;
 }
 
 let VIDEOS = [];

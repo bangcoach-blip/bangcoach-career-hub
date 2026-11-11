@@ -3,6 +3,18 @@
 // 슬라이드 배열로 직접 관리합니다. 가이드를 추가하려면 TOOL_GUIDES 배열에
 // { id, title, description, color, slides } 객체를 하나 더 넣으면 됩니다.
 
+// 노션 "사이트 콘텐츠" 전체 목록을 한 번만 받아 여러 곳(프롬프트·영상·자료·프로그램·메뉴 N 표시)에서 나눠 씁니다.
+let siteItemsPromise = null;
+function getSiteItems() {
+  if (!siteItemsPromise) {
+    siteItemsPromise = fetch("/api/items", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => (d.configured ? d.items : null))
+      .catch(() => null);
+  }
+  return siteItemsPromise;
+}
+
 // 축하 효과 요청: 실제 폭죽은 js/confetti-fx.js가 그린다 (없으면 조용히 무시)
 function celebrate(kind, el) {
   document.dispatchEvent(new CustomEvent("site:celebrate", { detail: { kind, el } }));

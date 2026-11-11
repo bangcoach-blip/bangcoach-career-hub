@@ -2031,3 +2031,86 @@ button.avail-day:not(:disabled):hover {
     animation: none;
   }
 }
+
+/* ── 사이트 점검 후 개선 ─────────────────────────────────── */
+/* 키보드로 이동할 때 현재 위치가 보이도록 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 문의 탭 맨 위 바로가기 */
+.contact-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -8px 0 8px;
+}
+
+.contact-jump a {
+  text-decoration: none;
+}
+
+/* 프로그램 카드: 커리큘럼은 접어 두기 */
+.program-more summary {
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--accent);
+  list-style: none;
+}
+
+.program-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.program-more summary::after {
+  content: " +";
+}
+
+.program-more[open] summary::after {
+  content: " −";
+}
+
+.program-more[open] summary {
+  margin-bottom: 12px;
+}
+
+.program-more .program-effect {
+  margin-top: 12px;
+}
+
+/* 모바일: 상단 메뉴를 한 줄로(옆으로 밀어서 보기) 줄여 화면을 덜 가리게 */
+@media (max-width: 760px) {
+  .site-nav {
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+
+  .nav-brand {
+    display: none;
+  }
+
+  .nav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px;
+    margin: -4px -2px;
+    /* 오른쪽 끝을 흐리게 해서 옆으로 더 있다는 걸 알려줌 */
+    -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, #000 88%, transparent);
+    padding-right: 28px;
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
