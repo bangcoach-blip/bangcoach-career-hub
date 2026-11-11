@@ -56,10 +56,10 @@
 
   async function load() {
     const [items, posts] = await Promise.all([
-      getSiteItems(),
+      fetch("/api/items").then((r) => r.json()).catch(() => null),
       fetch("/api/posts").then((r) => r.json()).catch(() => null),
     ]);
-    (items || []).forEach((i) => {
+    (items?.items || []).forEach((i) => {
       if (NOTION_TYPES[i.type]) note(NOTION_TYPES[i.type], Date.parse(i.createdTime));
     });
     // 블로그는 노션의 '날짜' 칸 기준. 앞날짜로 예약해 둔 글은 그날이 되기 전까지 새 글로 치지 않습니다

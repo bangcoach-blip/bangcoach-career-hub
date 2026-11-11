@@ -41,7 +41,6 @@ async function loadHomeCopy(loader, flag, sourceSel, cardSel, target, emptyText)
   await loader();
   const cards = [...document.querySelectorAll(`${sourceSel} ${cardSel}`)].slice(0, 3);
   target.innerHTML = "";
-  target.closest(".home-section")?.classList.toggle("hidden", cards.length === 0);
   if (cards.length === 0) return homeEmpty(target, emptyText);
   cards.forEach((c) => target.appendChild(c.cloneNode(true)));
 }
@@ -80,10 +79,8 @@ function programCardHtml(p) {
     <h3 class="program-title">${hEsc(p.title)}</h3>
     <p class="program-desc">${hEsc(p.description)}</p>
     ${facts ? `<dl class="program-facts">${facts}</dl>` : ""}
-    ${curr || p.effect ? `<details class="program-more"><summary>커리큘럼 보기</summary>
-      ${curr ? `<ul class="program-curr">${curr}</ul>` : ""}
-      ${p.effect ? `<p class="program-effect">${hEsc(p.effect)}</p>` : ""}
-    </details>` : ""}
+    ${curr ? `<ul class="program-curr">${curr}</ul>` : ""}
+    ${p.effect ? `<p class="program-effect">${hEsc(p.effect)}</p>` : ""}
     <button class="cta-primary program-ask" type="button" data-ask="${hEsc(p.title)}">이 프로그램으로 문의하기</button>
   `;
 }
@@ -225,8 +222,3 @@ function bindMore(btnId, listId, openLabel, closeLabel) {
 }
 bindMore("uniMore", "uniWall", "68곳 모두 보기", "접기");
 bindMore("historyMore", "historyTimeline", "2009~2021년 이력 더 보기", "접기");
-
-// 문의 탭 맨 위 "바로 문의하기": 긴 프로그램 목록을 건너뛰고 양식으로 이동
-document.getElementById("jumpToForm")?.addEventListener("click", () => {
-  document.getElementById("contactFormAnchor").scrollIntoView({ behavior: "smooth", block: "start" });
-});

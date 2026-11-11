@@ -113,9 +113,10 @@ function buildFormattedPromptNodes(promptText) {
 // 노션 방식은 목록만 먼저 받고, 프롬프트 본문은 카드를 열 때 불러옵니다.
 async function loadPromptsFromNotion() {
   try {
-    const items = await getSiteItems();
-    if (!items) return null;
-    return items.filter((i) => i.type === "프롬프트").map((i) => ({
+    const res = await fetch("/api/items?type=" + encodeURIComponent("프롬프트"), { cache: "no-store" });
+    const data = await res.json();
+    if (!data.configured) return null;
+    return data.items.map((i) => ({
       id: i.id,
       category: i.category,
       title: i.title,
