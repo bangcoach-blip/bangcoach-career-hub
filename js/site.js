@@ -54,6 +54,7 @@ function switchTab(tabName, { push = true } = {}) {
     if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
   }
   document.title = TAB_TITLES[tabName] ? `${TAB_TITLES[tabName]} | ${BASE_TITLE}` : BASE_TITLE;
+  document.body.dataset.tab = tabName; // 메뉴별 색상(css의 body[data-tab=...])
   navTabs.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tabName));
   tabPanels.forEach((panel) => panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`));
   window.scrollTo({ top: 0, behavior: "smooth" });

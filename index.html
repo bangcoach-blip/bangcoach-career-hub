@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/home.css" />
 </head>
-<body>
+<body data-tab="home">
 
 <header class="site-nav">
   <span class="nav-brand">방영황 · 취업·AI 교육</span>
@@ -53,7 +53,7 @@
         <h1 class="hero3-title">취업 현장에서 바로 쓰이는 교육,<br /><span class="sr-only">대학·공공기관·기업에 맞춰 설계합니다</span><span class="hero3-accent" aria-hidden="true"><span class="rotator" id="heroRotator">대학</span>에 맞춰 설계합니다</span></h1>
         <p class="hero3-sub">2009년부터 68개 대학과 대기업·공공기관, KDT 부트캠프에서 자기소개서와 면접, 직무 분석을 가르쳐 왔습니다. 지금은 교육이 끝나도 도구가 남는 AI 취업 교육을 설계합니다. 올해는 50여 개 대학에서 1,335시간 동안 강의하고 상담했습니다.</p>
         <div class="hero3-actions">
-          <button class="cta-primary" data-goto="blog">최신 글 읽기 <span aria-hidden="true">→</span></button>
+          <button class="cta-primary" data-goto="prompts">프롬프트 바로 쓰기 <span aria-hidden="true">→</span></button>
           <button class="cta-ghost" data-goto="materials">무료 자료 받기</button>
         </div>
         <dl class="hero3-stats">
@@ -70,12 +70,33 @@
     </div>
   </section>
 
-  <section class="photo-strip" aria-label="강의 사진">
-    <img src="img/lecture-2024-a.jpg" alt="2024년 취업 특강" loading="lazy" />
-    <img src="img/lecture-2019-a.jpg" alt="2019 경남대학교 건강과학대학 맞춤형 취업캠프" loading="lazy" />
-    <img src="img/networking-2026.jpg" alt="2026 스포츠분야 유관기관 종사자 네트워킹 데이" loading="lazy" />
-    <img src="img/lecture-2024-b.jpg" alt="2024년 취업 특강 강의실" loading="lazy" />
-    <img src="img/lecture-2019-b.jpg" alt="2019 경남대학교 취업캠프 강의실" loading="lazy" />
+  <section class="home-section home-spark" id="homeSpark">
+    <div class="section-head">
+      <h2 class="section-title">경험을 정리하는 무료 도구</h2>
+      <p class="section-sub">흩어진 경험을 AI 질문에 답하며 자기소개서 재료로 정리합니다. 회원가입은 필요 없습니다.</p>
+    </div>
+    <div class="external-link-card spark-tool-card">
+      <div class="external-link-text">
+        <span class="external-link-tag">무료 도구 · 경험 정리</span>
+        <h3 class="external-link-title">SPARK 경험 지도</h3>
+        <p class="external-link-desc">지원할 기업·직무에 맞춰 어떤 경험을 어느 자기소개서 항목에 쓸지 한 장으로 보여줘요.</p>
+      </div>
+      <div class="spark-tool-actions">
+        <a class="spark-tool-btn spark-tool-btn--primary" href="spark-map.html" target="_blank" rel="noopener">ChatGPT·제미나이로 하기 →</a>
+        <a class="spark-tool-btn" href="https://claude.ai/artifact/DnVtVhY74fHpsxYoFqVVuh" target="_blank" rel="noopener">Claude로 하기 ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-prompts" id="homePrompts">
+    <div class="section-head section-head-row">
+      <div>
+        <h2 class="section-title">복사해서 바로 쓰는 프롬프트</h2>
+        <p class="section-sub">자기소개서·면접·이력서에 쓰는 AI 프롬프트를 무료로 공유합니다. 복사해서 ChatGPT, Claude, Gemini에 붙여넣으세요. 회원가입은 필요 없습니다.</p>
+      </div>
+      <button class="link-more" data-goto="prompts" id="homePromptsAll">전체 보기 →</button>
+    </div>
+    <ul class="share-list" id="homePromptList"></ul>
   </section>
 
   <section class="home-section">
@@ -100,7 +121,7 @@
     <div class="video-grid home-embed" id="homeVideos"></div>
   </section>
 
-  <section class="home-section">
+  <section class="home-section home-section-last">
     <div class="section-head section-head-row">
       <div>
         <h2 class="section-title">자료 공유</h2>
@@ -109,14 +130,6 @@
       <button class="link-more" data-goto="materials">전체 보기 →</button>
     </div>
     <div class="material-list home-embed" id="homeMaterials"></div>
-  </section>
-
-  <section class="home-section home-section-last">
-    <button class="prompt-banner" data-goto="prompts">
-      <span class="prompt-banner-tag">프롬프트 도구</span>
-      <span class="prompt-banner-title">자기소개서·면접·이력서 AI 프롬프트, 바로 복사해서 쓰세요</span>
-      <span class="prompt-banner-cta">프롬프트 보러 가기 →</span>
-    </button>
   </section>
 </section>
 
@@ -243,6 +256,14 @@
       </div>
       <a class="cta-primary profile-pdf-btn" href="/files/bang-profile-2026.pdf" download="방영황_강사소개서_2026.pdf">강사 소개서 PDF 받기 <span aria-hidden="true">↓</span></a>
     </div>
+  </section>
+
+  <section class="photo-strip" aria-label="강의 사진">
+    <img src="img/lecture-2024-a.jpg" alt="2024년 취업 특강" loading="lazy" />
+    <img src="img/lecture-2019-a.jpg" alt="2019 경남대학교 건강과학대학 맞춤형 취업캠프" loading="lazy" />
+    <img src="img/networking-2026.jpg" alt="2026 스포츠분야 유관기관 종사자 네트워킹 데이" loading="lazy" />
+    <img src="img/lecture-2024-b.jpg" alt="2024년 취업 특강 강의실" loading="lazy" />
+    <img src="img/lecture-2019-b.jpg" alt="2019 경남대학교 취업캠프 강의실" loading="lazy" />
   </section>
 
   <section class="about-section">
@@ -771,8 +792,8 @@
 <script src="js/confetti-fx.js"></script>
 <script src="js/availability.js"></script>
 <script src="js/nav-new.js"></script>
-<script type="module" src="js/hero3d.js"></script>
 <script type="module" src="js/motion-fx.js"></script>
+<script type="module" src="js/hero3d.js"></script>
 <script type="module" src="js/korea-map.js"></script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>

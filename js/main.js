@@ -424,4 +424,4 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-loadPrompts();
+const promptsReady = loadPrompts();

@@ -222,3 +222,69 @@ function bindMore(btnId, listId, openLabel, closeLabel) {
 }
 bindMore("uniMore", "uniWall", "68곳 모두 보기", "접기");
 bindMore("historyMore", "historyTimeline", "2009~2021년 이력 더 보기", "접기");
+
+// ── 홈: 프롬프트 공유 목록 ───────────────────────────────────────────
+// 카테고리를 번갈아 가며 6개를 고릅니다. 노션 '순서'가 앞쪽인 것이 먼저 나옵니다.
+const homePromptListEl = document.getElementById("homePromptList");
+
+function pickFeatured(list, count = 6) {
+  const groups = new Map();
+  list.forEach((p) => {
+    if (!groups.has(p.category)) groups.set(p.category, []);
+    groups.get(p.category).push(p);
+  });
+  const lanes = [...groups.values()].sort((a, b) => b.length - a.length);
+  const out = [];
+  for (let i = 0; out.length < count && lanes.some((g) => g[i]); i++) {
+    lanes.forEach((g) => {
+      if (g[i] && out.length < count) out.push(g[i]);
+    });
+  }
+  return out;
+}
+
+async function copyFromHome(p, btn) {
+  btn.disabled = true;
+  try {
+    if (p.prompt == null) {
+      const res = await fetch("/api/items?id=" + encodeURIComponent(p.id));
+      p.prompt = (await res.json()).body || "";
+    }
+    await navigator.clipboard.writeText(p.prompt);
+    btn.textContent = "복사됨";
+    btn.classList.add("copied");
+    celebrate("copy", btn);
+    setTimeout(() => {
+      btn.textContent = "복사";
+      btn.classList.remove("copied");
+    }, 1800);
+  } catch (e) {
+    openModal(p); // 복사 권한이 없는 브라우저에서는 상세 창에서 복사
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function loadHomePrompts() {
+  await promptsReady;
+  const section = document.getElementById("homePrompts");
+  const featured = pickFeatured(PROMPTS);
+  section.classList.toggle("hidden", featured.length === 0);
+  if (!featured.length) return;
+  document.getElementById("homePromptsAll").textContent = `프롬프트 ${PROMPTS.length}개 전체 보기 →`;
+  homePromptListEl.innerHTML = "";
+  featured.forEach((p) => {
+    const li = document.createElement("li");
+    li.className = "share-row";
+    li.innerHTML = `
+      <button type="button" class="share-main">
+        <span class="share-cat">${hEsc(p.category)}</span>
+        <span class="share-text"><strong class="share-title">${hEsc(p.title)}</strong><span class="share-desc">${hEsc(p.description || "")}</span></span>
+      </button>
+      <button type="button" class="share-copy">복사</button>`;
+    li.querySelector(".share-main").addEventListener("click", () => openModal(p));
+    li.querySelector(".share-copy").addEventListener("click", (e) => copyFromHome(p, e.currentTarget));
+    homePromptListEl.appendChild(li);
+  });
+}
+loadHomePrompts();
