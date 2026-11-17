@@ -1964,6 +1964,7 @@ function render(){
   var hasE=(D.experiences||[]).some(function(e){return e.spark;}),hasI=(D.items||[]).length>0;
   app.innerHTML=(hasE?hero():intro())+work()+(hasE?setups()+(hasI?flowMap():"")+mindMap()+(hasI?board()+skeleton():"")+experiences()+drafts()+checklist()+plan():"")+'<footer>SPARK 경험 지도 · 이 파일은 정리 시점의 스냅샷입니다. 경험이 바뀌면 「데이터 복사」로 채팅에 붙여넣고 바뀐 경험만 다시 요청하세요.</footer>';
   if(document.getElementById("flow"))bindMap();bindSetup();if(document.getElementById("check"))bindChecks();updBadge();
+  document.querySelectorAll("#nav a").forEach(function(a){a.hidden=!document.getElementById(a.getAttribute("href").slice(1));});
   document.title="경험 지도 · "+((D.meta&&D.meta.name)||"SPARK");
 }
 function empty(){
@@ -1993,6 +1994,13 @@ function boot(){
   D0=(loc&&(+loc._at||0)>=(+(EMB&&EMB._at)||0))?loc:(EMB||blank());
   sanitize();
   app.addEventListener("click",onWorkClick);app.addEventListener("input",onWorkInput);app.addEventListener("change",onWorkInput);
+  document.addEventListener("click",function(ev){
+    var a=ev.target.closest('a[href^="#"]');if(!a)return;
+    var t=document.getElementById(a.getAttribute("href").slice(1));if(!t)return;
+    ev.preventDefault();
+    var y=t.getBoundingClientRect().top+window.scrollY-64;
+    window.scrollTo({top:y,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+  });
   initRuntime();loadEdits();applyEdits();render();
 }
 var done=false;function go(){if(done)return;done=true;boot();}
