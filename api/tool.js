@@ -56,6 +56,7 @@ module.exports = async function handler(req, res) {
     res.setHeader("Cache-Control", locked ? "private, no-store" : "public, s-maxage=60, stale-while-revalidate=300");
     res.send(html);
   } catch (e) {
+    if (/^Notion (400|404)/.test(String(e.message))) return send(page(404, "찾을 수 없는 페이지입니다."));
     console.error("tool", e.message);
     send(page(500, "도구를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."));
   }
