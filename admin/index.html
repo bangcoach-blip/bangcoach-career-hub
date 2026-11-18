@@ -60,6 +60,14 @@
   .lockrow b { font-weight:600; }
   .lockrow small { color:var(--muted); margin-left:auto; white-space:nowrap; }
   .lockgroup { margin:18px 0 4px; font-size:13px; font-weight:800; color:var(--muted); }
+  .toolrow { padding:12px 0; border-top:1px solid var(--line); font-size:14px; }
+  .toolrow:first-child { border-top:0; }
+  .toolrow .row { border-top:0; padding:0; }
+  .tool-edit { margin-top:14px; padding:16px; border:1px solid var(--line); border-radius:12px; background:var(--bg); }
+  .tool-edit label.field { margin-bottom:12px; }
+  .samplelist { margin:0 0 12px; padding:0; list-style:none; font-size:13px; }
+  .samplelist li { display:flex; gap:8px; align-items:center; padding:4px 0; }
+  input[type=file].plain { display:block; margin-top:6px; font:inherit; font-size:13px; font-weight:400; }
   .hidden { display:none !important; }
 </style>
 </head>
@@ -121,6 +129,41 @@
     <p class="status" id="uploadStatus" role="status"></p>
   </form>
 
+  <!-- 도구 등록 -->
+  <form class="card hidden" id="toolCard">
+    <h2>AI 도구 등록</h2>
+    <p class="note">학생이 자기 AI로 해보는 도구(안내 페이지 + 샘플 화면)를 올립니다. 등록하면 홈과 '프롬프트 도구' 탭 위쪽에 카드가 나타납니다. 파일은 HTML 한 개씩입니다.</p>
+    <label class="field">도구 이름
+      <input type="text" id="toolTitle" maxlength="80" placeholder="예) 인성면접 시험지 메이커" required />
+    </label>
+    <label class="field">한 줄 설명 <small>(카드에 표시)</small>
+      <input type="text" id="toolDesc" maxlength="300" />
+    </label>
+    <label class="field">분류 <small>(카드 위쪽 작은 글자)</small>
+      <input type="text" id="toolCat" maxlength="40" placeholder="예) 인성면접" />
+    </label>
+    <label class="field">안내 페이지 HTML <small>(시작하기 버튼으로 열리는 페이지)</small>
+      <input class="plain" type="file" id="toolMain" accept=".html,.htm" required />
+    </label>
+    <label class="field">샘플 HTML <small>(여러 개 선택 가능. 파일 이름이 버튼 이름이 됩니다)</small>
+      <input class="plain" type="file" id="toolSamples" accept=".html,.htm" multiple />
+    </label>
+    <label class="field">Claude 링크 <small>(있으면 "Claude로 하기" 버튼이 생깁니다)</small>
+      <input type="url" id="toolClaude" placeholder="https://" />
+    </label>
+    <label class="check"><input type="checkbox" id="toolPublished" checked /> 바로 사이트에 공개</label>
+    <label class="check"><input type="checkbox" id="toolLocked" /> 코드를 입력한 사람만 열기</label>
+    <button class="primary" id="toolBtn" type="submit">도구 등록하기</button>
+    <p class="status" id="toolStatus" role="status"></p>
+  </form>
+
+  <!-- 등록된 도구 -->
+  <div class="card hidden" id="toolListCard">
+    <h2>등록된 도구</h2>
+    <p class="note">카드 순서는 노션 '사이트 콘텐츠'의 '순서' 칸(작은 숫자가 먼저)으로 바꿀 수 있습니다.</p>
+    <div id="toolList"></div>
+  </div>
+
   <!-- 접근 코드 -->
   <div class="card hidden" id="codeCard">
     <h2>접근 코드</h2>
@@ -181,6 +224,145 @@
         )
         .join("") || "<p>아직 없습니다.</p>";
   }
+
+  // ── AI 도구 ──
+  async function uploadBlob(file, folder) {
+    const { uploadPresigned } = await import("https://cdn.jsdelivr.net/npm/@vercel/blob@2.8.2/client/+esm");
+    const pathname = `${folder}/${file.name}`;
+    const multipart = file.size > 20 * 1024 * 1024;
+    const blob = await uploadPresigned(pathname, file, {
+      access: "public",
+      handleUploadUrl: "/api/admin-upload",
+      contentType: "text/html",
+      multipart,
+    }).catch(async (err) => {
+      if (!/presigned URL/.test(err.message)) throw err;
+      const res = await fetch("/api/admin-upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "blob.generate-presigned-url", payload: { pathname, clientPayload: null, multipart } }),
+      });
+      const json = await res.json().catch(() => ({}));
+      throw new Error(json.error ? `업로드 허가 실패: ${json.error}` : err.message);
+    });
+    return blob.url;
+  }
+  const labelOf = (file) => file.name.replace(/\.[^.]+$/, "").slice(0, 60);
+
+  async function renderTools() {
+    const { tools } = await api("toolList");
+    $("toolList")._tools = tools;
+    $("toolList").innerHTML =
+      tools
+        .map((t) => {
+          const state = t.status === "발행" ? ["공개 중", ""] : ["비공개", "off"];
+          const where = t.lockable ? "어드민에서 올린 파일" : "사이트 폴더에 있는 파일(코드로 잠글 수 없음)";
+          const samples = t.files.samples
+            .map((smp, i) => `<li><label><input type="checkbox" data-rm="${i}" /> 삭제</label> <span>${esc(smp.name)}</span></li>`)
+            .join("");
+          return `<div class="toolrow" data-tool="${esc(t.id)}">
+            <div class="row"><div><b>${esc(t.title)}</b> <span class="badge ${state[1]}">${state[0]}</span>${t.locked ? ' <span class="badge end">코드 필요</span>' : ""}
+              <small>${esc(t.category || "분류 없음")} · 샘플 ${t.files.samples.length}개 · ${where}</small></div>
+              <div class="tools">
+                <button class="ghost" type="button" data-tpub="${esc(t.id)}" data-publish="${t.status !== "발행"}">${t.status === "발행" ? "내리기" : "공개하기"}</button>
+                <button class="ghost" type="button" data-tedit="${esc(t.id)}">편집</button>
+                <button class="ghost" type="button" data-tdel="${esc(t.id)}">삭제</button>
+              </div></div>
+            <form class="tool-edit hidden" data-tform="${esc(t.id)}">
+              <label class="field">이름 <input type="text" name="title" maxlength="80" value="${esc(t.title)}" required /></label>
+              <label class="field">한 줄 설명 <input type="text" name="description" maxlength="300" value="${esc(t.description)}" /></label>
+              <label class="field">분류 <input type="text" name="category" maxlength="40" value="${esc(t.category)}" /></label>
+              <label class="field">Claude 링크 <input type="url" name="claude" value="${esc(t.claude)}" placeholder="https://" /></label>
+              <label class="field">안내 페이지 바꾸기 <small>(새 파일을 고르면 교체됩니다)</small><input class="plain" type="file" name="main" accept=".html,.htm" /></label>
+              ${samples ? `<div class="field">현재 샘플</div><ul class="samplelist">${samples}</ul>` : ""}
+              <label class="field">샘플 추가 <input class="plain" type="file" name="samples" accept=".html,.htm" multiple /></label>
+              <button class="primary" type="submit">저장</button>
+              <p class="status" role="status"></p>
+            </form>
+          </div>`;
+        })
+        .join("") || "<p>아직 등록한 도구가 없습니다.</p>";
+  }
+
+  $("toolCard").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const main = $("toolMain").files[0];
+    const samples = [...$("toolSamples").files];
+    if (!main) return setStatus($("toolStatus"), "안내 페이지 HTML 파일을 골라 주세요.", "err");
+    $("toolBtn").disabled = true;
+    try {
+      setStatus($("toolStatus"), "파일을 올리는 중입니다. 창을 닫지 마세요.");
+      const files = { main: await uploadBlob(main, "tools"), samples: [] };
+      for (const f of samples) files.samples.push({ name: labelOf(f), url: await uploadBlob(f, "tools/samples") });
+      setStatus($("toolStatus"), "사이트에 등록하는 중입니다...");
+      await api("toolCreate", {
+        title: $("toolTitle").value,
+        description: $("toolDesc").value,
+        category: $("toolCat").value,
+        claude: $("toolClaude").value,
+        files,
+        published: $("toolPublished").checked,
+        locked: $("toolLocked").checked,
+      });
+      setStatus($("toolStatus"), $("toolPublished").checked ? "등록했습니다. 1분 안에 사이트에 나타납니다." : "비공개로 저장했습니다.", "ok");
+      $("toolCard").reset();
+      await Promise.all([renderTools(), renderLocks()]);
+    } catch (err) {
+      setStatus($("toolStatus"), err.message || "등록하지 못했습니다. 다시 시도해 주세요.", "err");
+    } finally {
+      $("toolBtn").disabled = false;
+    }
+  });
+
+  $("toolList").addEventListener("click", async (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    try {
+      if (btn.dataset.tpub) {
+        await api("toolUpdate", { id: btn.dataset.tpub, published: btn.dataset.publish === "true" });
+        await renderTools();
+      } else if (btn.dataset.tedit) {
+        document.querySelector(`[data-tform="${btn.dataset.tedit}"]`).classList.toggle("hidden");
+      } else if (btn.dataset.tdel) {
+        if (!confirm("이 도구를 삭제할까요? 사이트에서 바로 사라집니다.")) return;
+        await api("toolDelete", { id: btn.dataset.tdel });
+        await Promise.all([renderTools(), renderLocks()]);
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  $("toolList").addEventListener("submit", async (e) => {
+    const form = e.target.closest("[data-tform]");
+    if (!form) return;
+    e.preventDefault();
+    const t = ($("toolList")._tools || []).find((x) => x.id === form.dataset.tform);
+    const status = form.querySelector(".status");
+    const btn = form.querySelector("button[type=submit]");
+    btn.disabled = true;
+    try {
+      setStatus(status, "저장하는 중입니다. 파일이 있으면 올리는 데 시간이 걸립니다.");
+      const files = JSON.parse(JSON.stringify(t.files));
+      const main = form.elements.main.files[0];
+      if (main) files.main = await uploadBlob(main, "tools");
+      const removed = new Set([...form.querySelectorAll("[data-rm]:checked")].map((c) => Number(c.dataset.rm)));
+      files.samples = files.samples.filter((_, i) => !removed.has(i));
+      for (const f of form.elements.samples.files) files.samples.push({ name: labelOf(f), url: await uploadBlob(f, "tools/samples") });
+      await api("toolUpdate", {
+        id: t.id,
+        title: form.elements.title.value,
+        description: form.elements.description.value,
+        category: form.elements.category.value,
+        claude: form.elements.claude.value,
+        files,
+      });
+      await Promise.all([renderTools(), renderLocks()]);
+    } catch (err) {
+      setStatus(status, err.message || "저장하지 못했습니다.", "err");
+      btn.disabled = false;
+    }
+  });
 
   // ── 접근 코드 ──
   async function renderCodes() {
@@ -256,14 +438,14 @@
   async function renderLocks() {
     const { items } = await api("lockList");
     let html = "";
-    ["프롬프트", "자료"].forEach((type) => {
+    ["도구", "프롬프트", "자료"].forEach((type) => {
       const rows = items.filter((i) => i.type === type);
       if (!rows.length) return;
       html += `<div class="lockgroup">${type} ${rows.length}개</div>`;
       html += rows
         .map(
-          (i) => `<label class="lockrow"><input type="checkbox" data-lock="${esc(i.id)}" ${i.locked ? "checked" : ""} />
-            <b>${esc(i.title)}</b><small>${esc(i.category)}${i.status === "초안" ? " · 비공개" : ""}</small></label>`
+          (i) => `<label class="lockrow"><input type="checkbox" data-lock="${esc(i.id)}" ${i.locked ? "checked" : ""} ${i.lockable === false ? "disabled" : ""} />
+            <b>${esc(i.title)}</b><small>${i.lockable === false ? "사이트 폴더 파일: 어드민에서 파일을 올리면 잠글 수 있어요" : esc(i.category)}${i.status === "초안" ? " · 비공개" : ""}</small></label>`
         )
         .join("");
     });
@@ -291,11 +473,13 @@
   async function enter() {
     show($("loginCard"), false);
     show($("uploadCard"));
+    show($("toolCard"));
+    show($("toolListCard"));
     show($("codeCard"));
     show($("lockCard"));
     show($("listCard"));
     show($("logoutBtn"));
-    await Promise.all([renderList(), renderCodes(), renderLocks()]);
+    await Promise.all([renderList(), renderTools(), renderCodes(), renderLocks()]);
   }
 
   // ── 시작 ──

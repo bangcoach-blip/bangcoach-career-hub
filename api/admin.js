@@ -3,6 +3,7 @@ const { notion } = require("./_notion");
 const { isEnabled, checkPassword, isAdmin, loginCookie, logoutCookie } = require("./_admin-auth");
 const crypto = require("crypto");
 const { normalize, expiryMs, rtText, forget } = require("./_access");
+const { isBlob, parseFiles, serializeFiles } = require("./_tools");
 
 const TYPES = ["자료", "영상"];
 const clip = (v, n) => String(v || "").trim().slice(0, n);
@@ -187,7 +188,7 @@ async function codeDelete(b) {
 // 프롬프트·자료 목록과 '코드 필요' 여부
 async function lockList(dbId) {
   const pages = await queryAll(dbId, {
-    or: ["프롬프트", "자료"].map((t) => ({ property: "유형", select: { equals: t } })),
+    or: ["프롬프트", "자료", "도구"].map((t) => ({ property: "유형", select: { equals: t } })),
   });
   const items = pages
     .filter((page) => ["발행", "초안"].includes(page.properties["상태"]?.select?.name))
@@ -200,6 +201,8 @@ async function lockList(dbId) {
         category: p["카테고리"]?.select?.name || "",
         status: p["상태"]?.select?.name || "",
         locked: p["공개범위"]?.select?.name === "코드 필요",
+        // 도구는 어드민에서 올린 파일일 때만 잠글 수 있습니다
+        lockable: p["유형"]?.select?.name !== "도구" || isBlob(parseFiles(rtText(p["도구파일"]?.rich_text))?.main),
         order: p["순서"]?.number ?? 9999,
       };
     })
@@ -209,13 +212,104 @@ async function lockList(dbId) {
 
 async function setLock(b) {
   const page = await notion(`/pages/${encodeURIComponent(clip(b.id, 60))}`);
-  if (!["프롬프트", "자료"].includes(page.properties["유형"]?.select?.name)) {
-    return [400, { error: "프롬프트와 자료만 바꿀 수 있습니다." }];
+  const kind = page.properties["유형"]?.select?.name;
+  if (!["프롬프트", "자료", "도구"].includes(kind)) {
+    return [400, { error: "프롬프트, 자료, 도구만 바꿀 수 있습니다." }];
+  }
+  if (kind === "도구" && b.locked === true && !isBlob(parseFiles(rtText(page.properties["도구파일"]?.rich_text))?.main)) {
+    return [400, { error: "사이트 폴더에 있는 도구는 잠글 수 없습니다. 어드민에서 파일을 올려 주세요." }];
   }
   await notion(`/pages/${page.id}`, {
     method: "PATCH",
     body: JSON.stringify({ properties: { 공개범위: { select: { name: b.locked === true ? "코드 필요" : "공개" } } } }),
   });
+  return [200, { ok: true }];
+}
+
+// ── 도구 관리 ────────────────────────────────────────────────────────
+function toolRow(page) {
+  const p = page.properties;
+  const files = parseFiles(rtText(p["도구파일"]?.rich_text));
+  return {
+    id: page.id,
+    title: rtText(Object.values(p).find((v) => v.type === "title")?.title),
+    description: rtText(p["설명"]?.rich_text),
+    category: rtText(p["소분류"]?.rich_text),
+    claude: p["링크"]?.url || "",
+    status: p["상태"]?.select?.name || "",
+    locked: p["공개범위"]?.select?.name === "코드 필요",
+    order: p["순서"]?.number ?? 9999,
+    files: files || { main: "", samples: [] },
+    lockable: Boolean(files && isBlob(files.main)),
+    createdTime: page.created_time,
+  };
+}
+
+async function toolList(dbId) {
+  const pages = await queryAll(dbId, { property: "유형", select: { equals: "도구" } });
+  const tools = pages.map(toolRow).sort((a, b) => a.order - b.order || (a.createdTime < b.createdTime ? 1 : -1));
+  return [200, { tools }];
+}
+
+function toolProps(b, { requireAll }) {
+  const props = {};
+  const title = clip(b.title, 80);
+  if (requireAll && !title) return { error: "도구 이름을 입력해 주세요." };
+  if (b.title !== undefined && title) props["이름"] = { title: rt(title) };
+  if (b.description !== undefined) props["설명"] = { rich_text: rt(clip(b.description, 300)) };
+  if (b.category !== undefined) props["소분류"] = { rich_text: rt(clip(b.category, 40)) };
+  if (b.claude !== undefined) {
+    const link = clip(b.claude, 1500);
+    if (link && !validLink(link)) return { error: "Claude 링크는 https로 시작해야 합니다." };
+    props["링크"] = { url: link || null };
+  }
+  if (b.files !== undefined) {
+    const text = serializeFiles(b.files);
+    if (!text) return { error: "안내 페이지 파일이 필요합니다. (샘플은 10개까지)" };
+    props["도구파일"] = { rich_text: rt(text) };
+  }
+  if (typeof b.published === "boolean") props["상태"] = { select: { name: statusOf(b.published) } };
+  if (typeof b.locked === "boolean") props["공개범위"] = { select: { name: b.locked ? "코드 필요" : "공개" } };
+  return { props };
+}
+
+async function toolCreate(b, dbId) {
+  const { props, error } = toolProps(b, { requireAll: true });
+  if (error) return [400, { error }];
+  if (!props["도구파일"]) return [400, { error: "안내 페이지 파일이 필요합니다." }];
+  if (props["공개범위"]?.select.name === "코드 필요" && !isBlob(b.files?.main)) return [400, { error: "잠글 수 없는 파일입니다." }];
+  const existing = await queryAll(dbId, { property: "유형", select: { equals: "도구" } });
+  const order = existing.reduce((m, pg) => Math.max(m, pg.properties["순서"]?.number ?? 0), 0) + 1;
+  const created = await notion("/pages", {
+    method: "POST",
+    body: JSON.stringify({
+      parent: { database_id: dbId },
+      properties: { ...props, 유형: { select: { name: "도구" } }, 순서: { number: order }, ...(props["상태"] ? {} : { 상태: { select: { name: "발행" } } }) },
+    }),
+  });
+  return [200, { ok: true, id: created.id }];
+}
+
+async function toolUpdate(b) {
+  const page = await notion(`/pages/${encodeURIComponent(clip(b.id, 60))}`);
+  if (page.properties["유형"]?.select?.name !== "도구") return [400, { error: "도구를 찾을 수 없습니다." }];
+  const { props, error } = toolProps(b, { requireAll: false });
+  if (error) return [400, { error }];
+  // 파일이 바뀌면 잠금 가능 여부도 다시 확인
+  const nextFiles = b.files !== undefined ? parseFiles(JSON.stringify(b.files)) : parseFiles(rtText(page.properties["도구파일"]?.rich_text));
+  const nextLocked = typeof b.locked === "boolean" ? b.locked : page.properties["공개범위"]?.select?.name === "코드 필요";
+  if (nextLocked && !isBlob(nextFiles?.main)) {
+    if (typeof b.locked === "boolean") return [400, { error: "사이트 폴더에 있는 도구는 잠글 수 없습니다. 어드민에서 파일을 올려 주세요." }];
+    props["공개범위"] = { select: { name: "공개" } };
+  }
+  await notion(`/pages/${page.id}`, { method: "PATCH", body: JSON.stringify({ properties: props }) });
+  return [200, { ok: true }];
+}
+
+async function toolDelete(b) {
+  const page = await notion(`/pages/${encodeURIComponent(clip(b.id, 60))}`);
+  if (page.properties["유형"]?.select?.name !== "도구") return [400, { error: "도구를 찾을 수 없습니다." }];
+  await notion(`/pages/${page.id}`, { method: "PATCH", body: JSON.stringify({ in_trash: true }) });
   return [200, { ok: true }];
 }
 
@@ -270,6 +364,10 @@ module.exports = async function handler(req, res) {
     if (b.action === "codeDelete") result = await codeDelete(b);
     if (b.action === "lockList") result = await lockList(dbId);
     if (b.action === "setLock") result = await setLock(b);
+    if (b.action === "toolList") result = await toolList(dbId);
+    if (b.action === "toolCreate") result = await toolCreate(b, dbId);
+    if (b.action === "toolUpdate") result = await toolUpdate(b);
+    if (b.action === "toolDelete") result = await toolDelete(b);
     res.status(result[0]).json(result[1]);
   } catch (e) {
     console.error("admin", e.message);

@@ -4,7 +4,7 @@ const { issueSignedToken } = require("@vercel/blob");
 const { handleUploadPresigned } = require("@vercel/blob/client");
 const { isAdmin } = require("./_admin-auth");
 
-const ALLOWED = /\.(pdf|pptx?|docx?|xlsx?|hwpx?|zip|txt|mp4|webm|mov|m4v|png|jpe?g)$/i;
+const ALLOWED = /\.(pdf|pptx?|docx?|xlsx?|hwpx?|zip|txt|html?|mp4|webm|mov|m4v|png|jpe?g)$/i;
 const MAX_SIZE = 2 * 1024 * 1024 * 1024; // 2GB
 const VALID_MS = 60 * 60 * 1000; // 큰 파일도 올릴 수 있게 1시간
 

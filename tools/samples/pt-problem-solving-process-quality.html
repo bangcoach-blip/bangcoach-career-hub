@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PT면접 연습 시험지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#ffffff; --bg:#f6f8fc; --ink:#0f172a; --ink-2:#334155; --muted:#64748b; --soft:#94a3b8;
+  --rule:#e2e8f0; --rule-2:#cbd5e1; --blue:#1c60ef; --blue-tint:#eef4ff; --blue-2:#dbe8fe;
+  --c-p:#2563eb; --c-r:#0d9488; --c-e:#7c3aed; --c-p2:#ea580c; --c-f:#0891b2; --c-c:#0369a1; --c-l:#be123c;
+  --ok:#16a34a; --warn:#ca8a04; --bad:#dc2626; --as:#fef3c7;
+  --r:12px; --font:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:56px}
+.brand{font-weight:800;letter-spacing:-.02em;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;border-radius:3px;background:var(--blue);display:inline-block}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav::-webkit-scrollbar{display:none}
+.nav a{text-decoration:none;font-size:13.5px;color:var(--muted);padding:6px 10px;border-radius:8px;white-space:nowrap;font-weight:500}
+.nav a:hover{background:var(--blue-tint);color:var(--blue)}
+.tools{display:flex;gap:6px;align-items:center}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:15px;padding:5px 11px;border-radius:8px;background:var(--blue-tint);color:var(--blue);min-width:68px;text-align:center}
+.timer.low{background:#fef2f2;color:var(--bad)}
+.btn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--rule-2);background:#fff;color:var(--ink-2);padding:6px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{color:#fff;opacity:.92}
+.btn.big{font-size:15px;padding:11px 22px;border-radius:10px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}
+section{padding:56px 0 8px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--blue);margin:0 0 6px}
+h2{font-size:26px;letter-spacing:-.03em;margin:0 0 6px;line-height:1.3}
+.lead{color:var(--muted);margin:0 0 22px;font-size:14.5px}
+.panel{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.hero{padding:48px 0 8px}
+.hero h1{font-size:clamp(26px,4vw,38px);letter-spacing:-.035em;line-height:1.25;margin:0 0 14px}
+.target{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.target b{font-weight:600;font-size:14px;background:#fff;border:1px solid var(--rule);padding:6px 12px;border-radius:999px}
+.target b em{font-style:normal;color:var(--muted);font-weight:500;margin-right:6px;font-size:12.5px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{padding:18px 20px}
+.stat .n{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.15}
+.stat .n small{font-size:15px;color:var(--soft);font-weight:600;margin-left:2px}
+.stat .l{font-size:13px;color:var(--muted);margin-top:4px}
+.howto{margin-top:14px;font-size:13.5px;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+.howto span::before{content:"→ ";color:var(--blue);font-weight:700}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:3px 9px 3px 7px;border-radius:999px;background:#fff;border:1px solid var(--rule-2);line-height:1.4;white-space:nowrap;color:var(--ink-2)}
+.chip .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.status{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-ok{color:var(--ok);background:#ecfdf3}.s-warn{color:#a16207;background:#fefce8}.s-gray{color:#64748b;background:#f1f5f9}.s-bad{color:var(--bad);background:#fef2f2}
+mark.as{background:linear-gradient(transparent 55%,var(--as) 55%);color:inherit;padding:0 1px}
+.rich p{margin:0 0 8px}
+.rich p:last-child{margin:0}
+.k{font-size:11.5px;font-weight:700;color:var(--soft);letter-spacing:.04em;margin-bottom:4px}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{padding:18px 20px;display:flex;flex-direction:column;gap:11px;break-inside:avoid;page-break-inside:avoid}
+.card h3{margin:0;font-size:17.5px;letter-spacing:-.02em;line-height:1.4}
+.card .hd{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.card .src{font-size:12px;color:var(--soft)}
+.big-q{padding:26px 28px;display:flex;flex-direction:column;gap:18px}
+.story{font-size:clamp(17px,2.2vw,21px);font-weight:700;letter-spacing:-.02em;line-height:1.5;border-left:4px solid var(--blue);padding:4px 0 4px 18px;margin:0}
+.story small{display:block;font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;margin-bottom:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--ink)}
+.box h4{margin:0 0 6px;font-size:13px;color:var(--blue)}
+.opt .lab{width:30px;height:30px;border-radius:9px;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.opt .pc{font-size:13px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt .pc div{border-radius:8px;padding:8px 10px}
+.opt .pc .pro{background:#f0fdf4;color:#166534}
+.opt .pc .con{background:#fff7ed;color:#9a3412}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:12px;color:var(--muted);font-weight:700;padding:9px 12px;border-bottom:1px solid var(--rule);background:#fbfcfe;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+ul.plain{margin:0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+ul.plain li{margin-bottom:4px}
+/* answer */
+.wk{padding:22px 26px 26px;display:flex;flex-direction:column;gap:18px}
+.pick{display:flex;gap:8px;flex-wrap:wrap}
+.pick label{display:flex;align-items:center;gap:8px;border:1px solid var(--rule-2);border-radius:10px;padding:9px 14px;cursor:pointer;font-size:14px;font-weight:600;background:#fff}
+.pick label.on{border-color:var(--blue);background:var(--blue-tint);color:var(--blue)}
+.pick input{accent-color:var(--blue)}
+.ans{display:grid;grid-template-columns:30px 1fr;gap:12px}
+.ans .no{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.ans label{font-weight:800;font-size:15px;display:block}
+.ans label small{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.ans textarea{font:inherit;font-size:14.5px;border:1px solid var(--rule-2);border-radius:10px;padding:10px 12px;width:100%;min-height:96px;resize:vertical;line-height:1.7;color:var(--ink);background:#fff;margin-top:6px}
+.ans textarea:focus{outline:2px solid var(--blue-2);border-color:var(--blue)}
+.ans .cnt{font-size:12px;color:var(--soft);text-align:right}
+.wact{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.wnote{font-size:13px;color:var(--muted)}
+/* compare */
+.lock{padding:34px 28px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.lock h3{margin:0;font-size:19px}
+.lock p{margin:0;color:var(--muted);font-size:14px}
+.cmp{display:flex;flex-direction:column}
+.cmp .row{display:grid;grid-template-columns:90px 1fr 1fr;gap:16px;padding:16px 22px;border-top:1px solid var(--rule)}
+.cmp .row.hd{border-top:0;background:#fbfcfe;font-size:12px;font-weight:700;color:var(--muted);padding-top:11px;padding-bottom:11px}
+.cmp .step{font-weight:800;font-size:13px}
+.cmp .me{font-size:14px;color:var(--ink-2);white-space:pre-wrap}
+.cmp .me.empty{color:var(--soft);font-style:italic}
+.cmp .ai{font-size:14px;color:var(--ink);background:var(--blue-tint);border-radius:10px;padding:10px 12px}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;border-radius:7px;color:#fff;font-size:11.5px;font-weight:800;padding:0 7px}
+.p-P{background:var(--c-p)}.p-R{background:var(--c-r)}.p-E{background:var(--c-e)}.p-P2{background:var(--c-p2)}.p-C{background:var(--c-c)}.p-F{background:var(--c-f)}.p-L{background:var(--c-l)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);align-items:center;margin:0 0 14px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.stimer{display:flex;gap:14px;align-items:center;padding:14px 20px;margin-bottom:14px;flex-wrap:wrap}
+.stimer .big{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--blue);min-width:84px}
+.stimer .big.low{color:var(--bad)}
+.stimer small{color:var(--muted);font-size:13px;flex:1;min-width:200px}
+.grp{border:1px solid var(--rule);border-radius:12px;padding:16px 18px 18px;background:#fcfdff}
+.grp .gh{display:flex;gap:10px;align-items:center;margin-bottom:2px}
+.grp .gh b{font-size:17px;letter-spacing:-.02em}
+.grp .gn{font-size:12px;font-weight:800;color:#fff;background:var(--blue);border-radius:7px;padding:2px 9px}
+.grp .gd{margin:0 0 12px;font-size:13.5px;color:var(--muted)}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-weight:800;font-size:14.5px}
+.fld textarea{font:inherit;font-size:14.5px;border:1px solid var(--rule-2);border-radius:10px;padding:10px 12px;width:100%;min-height:120px;resize:vertical;line-height:1.7;color:var(--ink);background:#fff}
+.fld textarea:focus{outline:2px solid var(--blue-2);border-color:var(--blue)}
+.fld .cnt{font-size:12px;color:var(--soft);text-align:right}
+.grp .one{display:grid;gap:14px}
+.grp .two2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.grp .two2{grid-template-columns:1fr}}
+.sv ol{margin:0;padding-left:0;list-style:none}
+.dgrp{margin:18px 0 2px;font-size:13px;font-weight:800;color:var(--blue);background:var(--blue-tint);border-radius:8px;padding:6px 12px}
+.dgrp:first-child{margin-top:12px}
+.dgrp + .st{border-top:0}
+.skel .st .lab::after{display:none}
+.frame{font-size:13.5px;border-left:3px solid var(--blue);padding:4px 0 4px 12px;color:var(--ink);background:#fbfcff}
+.sv li{margin-bottom:8px}
+.mats{display:flex;flex-direction:column}
+.mrow{display:grid;grid-template-columns:22px 1fr auto;gap:10px;padding:11px 20px;border-top:1px solid var(--rule);align-items:center;font-size:14px}
+.mrow:first-child{border-top:0}
+.mrow .hit{font-size:12px;font-weight:700}
+.hit.y{color:var(--ok)}.hit.n{color:#b45309}
+.chk{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:12px 20px;border-top:1px solid var(--rule);font-size:14px;cursor:pointer}
+.chk:first-child{border-top:0}
+.chk input{width:17px;height:17px;accent-color:var(--blue);margin-top:3px}
+.chk small{display:block;color:var(--muted);font-size:12.5px}
+.score{display:flex;gap:14px;align-items:center;padding:14px 20px;border-top:1px solid var(--rule);background:#fbfcfe;border-radius:0 0 var(--r) var(--r);font-size:14px}
+.score b{font-size:20px;color:var(--blue)}
+.gap{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+/* direction */
+.skel{padding:8px 22px 22px}
+.st{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px 0;position:relative}
+.st + .st{border-top:1px solid var(--rule)}
+.st .lab{font-weight:800;font-size:15px;display:flex;align-items:flex-start;gap:8px}
+.st .lab b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.st .body{display:flex;flex-direction:column;gap:9px;font-size:14.5px}
+.st:not(:last-child) .lab::after{content:"";position:absolute;left:11px;top:48px;bottom:-14px;border-left:2px solid var(--blue-2)}
+.warnbox{font-size:13px;color:#9a3412;background:#fff7ed;border-radius:8px;padding:8px 12px}
+.hint{font-size:13.5px;color:var(--ink-2);background:var(--bg);border-radius:8px;padding:9px 12px}
+/* scenario */
+.sc{padding:20px 22px;display:flex;flex-direction:column;gap:12px;break-inside:avoid;page-break-inside:avoid}
+.sc .no{font-size:13px;font-weight:800;color:var(--blue)}
+.sc h3{margin:0;font-size:18px;letter-spacing:-.02em;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sc .script{font-size:15.5px;line-height:1.9;color:var(--ink)}
+.applyl{font-size:14px;border-left:3px solid var(--blue);padding:4px 0 4px 12px;color:var(--ink)}
+.checkl{font-size:13px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:10px}
+.checkl b{color:var(--ink-2)}
+.scs{display:flex;flex-direction:column;gap:14px}
+/* flow */
+.fbar{display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;margin:6px 0 12px}
+.fbar i{display:block;height:100%;background:var(--blue)}
+.fbar i:nth-child(2n){background:#7aa6f7}
+.flow{padding:20px 22px;display:flex;flex-direction:column}
+.fl{display:grid;grid-template-columns:28px 1fr;gap:12px;position:relative;padding-bottom:16px}
+.fl:last-child{padding-bottom:0}
+.fl:not(:last-child)::before{content:"";position:absolute;left:13px;top:28px;bottom:0;border-left:2px solid var(--blue-2)}
+.fl .n{width:26px;height:26px;border-radius:50%;background:var(--blue-tint);color:var(--blue);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.fl .t{font-size:14.5px;font-weight:700;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.fl .t span.m{font-weight:500;color:var(--soft);font-size:12px}
+.fl .cn{font-size:13.5px;color:var(--ink-2);margin-top:3px}
+.fl .cn em{font-style:normal;font-weight:700;color:var(--blue);margin-right:6px;font-size:12px}
+.chain{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:13px 18px;border-top:1px solid var(--rule);font-size:14px}
+.chain:first-child{border-top:0}
+.seq{display:flex;gap:5px;flex-wrap:wrap;align-items:center;padding:14px 20px;border-bottom:1px solid var(--rule)}
+.seq .ar{color:var(--soft)}
+footer{padding:48px 0 60px;font-size:12.5px;color:var(--soft);text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13.5px;padding:10px 16px;border-radius:10px;z-index:50;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .two,.opt .pc{grid-template-columns:1fr}
+  .cmp .row{grid-template-columns:1fr;gap:8px}
+  .cmp .row.hd{display:none}
+  .st{grid-template-columns:1fr;gap:8px}
+  .st .lab::after{display:none}
+  .wk{padding:18px 16px}
+  .big-q{padding:20px 18px}
+  .tools .btn.opt-b{display:none}
+  h2{font-size:22px}
+  .chain{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff;font-size:12.5px}
+  .top,.tools,.wact,.toast{display:none!important}
+  section{padding:24px 0 0}
+  .panel,.card,.sc{box-shadow:none}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand"><i></i>PT면접 시험지</div>
+  <nav class="nav">
+    <a href="#exam">시험지</a><a href="#mine">내 답안</a><a href="#compare">비교</a><a href="#direction">답변 방향</a><a href="#scenario">시나리오</a><a href="#flow">논리 흐름</a>
+  </nav>
+  <div class="tools"><span class="timer" id="timer">00:00</span><button class="btn opt-b" id="tToggle">시작</button><button class="btn primary" onclick="window.print()">PDF 저장</button></div>
+</div></header>
+<main id="app" class="wrap"></main>
+<div class="toast" id="toast"></div>
+<noscript>이 파일은 자바스크립트가 켜진 브라우저에서 열어주세요.</noscript>
+
+<script>
+/* ============ 여기부터 데이터 (AI는 이 구간의 값만 채운다) ============ */
+const DATA = /*DATA_START*/{
+  "meta": {
+    "company": "한빛전자(가상 기업)",
+    "job": "공정·품질 엔지니어",
+    "major": "산업공학",
+    "field": "이공·공학",
+    "industry": "전자부품 제조",
+    "type": "문제풀이형",
+    "role": "품질관리팀 신입 엔지니어",
+    "prepTime": 20,
+    "speechTime": 4
+  },
+  "topic": {
+    "title": "두께 규격 상한 초과 불량, 공정능력으로 진단하고 개선안을 제시하시오",
+    "summary": "고객사 클레임이 발생한 부품의 두께 데이터를 바탕으로 공정능력지수(Cp, Cpk)와 불량률을 직접 계산하고, 그 결과로 개선 방향과 기대효과, 남는 문제점까지 발표하는 문제풀이형 PT입니다."
+  },
+  "situation": "한빛전자는 스마트폰용 금속 부품을 월 100만 개 생산합니다. 두께 규격은 10.00 ± 0.30 mm인데, 최근 고객사에서 두께 상한 초과 불량 클레임이 들어왔습니다.\n설비 담당자는 설비 노후가 원인이라며 설비 교체를 요청했고, 생산팀은 공정 평균만 조정하면 해결된다고 주장합니다.\n당신은 품질관리팀 신입 엔지니어로서 공정능력 계산 결과를 근거로 어느 쪽을 먼저 해야 하는지 팀장에게 발표해야 합니다.",
+  "task": "공정능력지수와 예상 불량률을 계산하고, 그 결과를 바탕으로 개선안·기대효과·남은 문제점을 설정한 발표 시간 안에 발표하세요.",
+  "solve": {
+    "title": "공정능력(Cp·Cpk)과 불량률 계산",
+    "problem": "아래 조건에서 (1) Cp와 Cpk를 구하고, (2) 정규분포를 가정해 현재 불량률(%와 ppm, 월 불량 개수)을 추정하고, (3) 평균을 10.00 mm로 중심화했을 때 Cpk와 불량률이 어떻게 달라지는지 비교하시오.",
+    "given": [
+      "규격: 10.00 ± 0.30 mm (하한 LSL = 9.70, 상한 USL = 10.30)",
+      "현재 공정 평균 μ = 10.06 mm",
+      "공정 표준편차 σ = 0.08 mm",
+      "월 생산량 1,000,000개",
+      "정규분포 가정. 표준정규분포 상위 확률: P(Z>3.00)=0.00135, P(Z>3.75)=0.0000884, P(Z>4.50)=0.0000034"
+    ],
+    "formulas": [
+      {
+        "name": "Cp (공정 산포 능력)",
+        "expr": "Cp = (USL − LSL) / (6σ)",
+        "note": "평균 치우침은 반영하지 않음"
+      },
+      {
+        "name": "Cpk (치우침 반영)",
+        "expr": "Cpk = min[(USL − μ)/(3σ), (μ − LSL)/(3σ)]",
+        "note": "더 가까운 규격 한계 기준"
+      },
+      {
+        "name": "z 값과 불량률",
+        "expr": "z = (규격 한계 − μ)/σ,  불량률 = P(Z>z상) + P(Z>z하)",
+        "note": "양쪽 꼬리를 합산"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1) 가정 정리",
+        "work": "공정은 안정 상태이고 두께는 정규분포를 따르며, 측정 오차는 무시한다고 가정합니다.",
+        "why": "가정을 먼저 밝혀야 결과의 한계도 설명할 수 있습니다."
+      },
+      {
+        "title": "2) Cp 계산",
+        "work": "Cp = (10.30 − 9.70) / (6 × 0.08) = 0.60 / 0.48 = 1.25",
+        "why": "산포 자체는 규격 폭 대비 충분한지 확인합니다."
+      },
+      {
+        "title": "3) Cpk 계산",
+        "work": "상한 쪽: (10.30 − 10.06) / (3 × 0.08) = 0.24 / 0.24 = 1.00\n하한 쪽: (10.06 − 9.70) / (3 × 0.08) = 0.36 / 0.24 = 1.50\nCpk = min(1.00, 1.50) = 1.00",
+        "why": "Cp는 1.25인데 Cpk가 1.00이라는 것은 평균이 상한 쪽으로 치우쳤다는 신호입니다."
+      },
+      {
+        "title": "4) 현재 불량률",
+        "work": "z상 = 0.24 / 0.08 = 3.00 → P = 0.00135 (0.135%)\nz하 = 0.36 / 0.08 = 4.50 → P = 0.0000034 (0.00034%)\n합계 ≈ 0.00135 ≈ 1,350 ppm → 월 약 1,350개",
+        "why": "불량은 거의 전부 상한 초과에서 나옵니다."
+      },
+      {
+        "title": "5) 평균 중심화(μ = 10.00)",
+        "work": "Cpk = Cp = 1.25\nz = 0.30 / 0.08 = 3.75 → 한쪽 P = 0.0000884, 양쪽 합 ≈ 0.000177 ≈ 177 ppm → 월 약 177개",
+        "why": "산포는 그대로인데 평균만 맞춰도 불량이 크게 줄어듭니다."
+      },
+      {
+        "title": "6) 비교와 검산",
+        "work": "월 불량 1,350개 → 177개, 약 1,173개 감소(약 87% 감소)\n검산: 평균이 중앙일 때 Cp = Cpk가 되는지, z = 3σ일 때 0.135%가 표준정규분포표와 맞는지 확인",
+        "why": "계산 결과가 상식(규격 중앙일수록 불량이 최소)과 맞는지 확인하는 단계입니다."
+      }
+    ],
+    "answer": "Cp = 1.25, Cpk = 1.00, 현재 불량률 약 0.135%(≈1,350 ppm, 월 약 1,350개). 평균을 10.00 mm로 중심화하면 Cpk = 1.25, 불량률 약 0.018%(≈177 ppm, 월 약 177개).",
+    "answerKeys": [
+      "1.25",
+      "1.0",
+      "1350",
+      "177"
+    ],
+    "check": "Cp ≥ Cpk 관계, 단위(mm)와 ppm 환산(0.001 = 1,000 ppm), z값과 정규분포표 일치 여부를 확인했습니다.",
+    "pitfalls": [
+      "Cp만 보고 ‘충분하다’고 결론 내리는 것(평균 치우침은 Cpk로 확인)",
+      "한쪽 꼬리만 계산하거나 σ가 아닌 규격 폭으로 z를 계산하는 것",
+      "%와 ppm, 월 불량 개수 환산 실수"
+    ]
+  },
+  "options": [],
+  "materials": [
+    {
+      "kind": "자사현황",
+      "title": "두께 측정 데이터 요약(가상)",
+      "status": "가상 자료",
+      "body": "",
+      "table": {
+        "headers": [
+          "항목",
+          "값"
+        ],
+        "rows": [
+          [
+            "규격(상·하한)",
+            "10.30 / 9.70 mm"
+          ],
+          [
+            "공정 평균",
+            "10.06 mm"
+          ],
+          [
+            "공정 표준편차",
+            "0.08 mm"
+          ],
+          [
+            "측정 시료 수",
+            "n = 200"
+          ],
+          [
+            "월 생산량",
+            "1,000,000개"
+          ],
+          [
+            "고객사 요구 Cpk(가정)",
+            "1.33 이상"
+          ]
+        ]
+      },
+      "source": "가상 내부 자료(연습용)",
+      "keywords": [
+        "10.06",
+        "0.08",
+        "Cpk",
+        "1.33"
+      ],
+      "insight": "평균이 상한 쪽으로 0.06 mm 치우쳐 있고, 고객 요구(1.33)에는 중심화만으로 부족"
+    },
+    {
+      "kind": "문제점",
+      "title": "현장 의견 충돌: 설비 교체 vs 평균 조정",
+      "status": "가상 자료",
+      "body": "- 설비팀: 노후 설비라 산포가 크다, 교체 비용은 약 2억 원(가상), 납기 3개월\n- 생산팀: 세팅값만 보정하면 즉시 해결 가능, 비용은 거의 없음",
+      "table": null,
+      "source": "가상 사례(연습용)",
+      "keywords": [
+        "설비 교체",
+        "평균 조정",
+        "세팅",
+        "중심화"
+      ],
+      "insight": "비용·시간이 적은 중심화를 먼저, 부족분은 산포 개선으로 단계화"
+    },
+    {
+      "kind": "개념",
+      "title": "공정능력지수 Cp와 Cpk",
+      "status": "개념 정리",
+      "body": "Cp는 규격 폭을 공정 산포(6σ)로 나눈 값으로 평균 치우침을 보지 못합니다. Cpk는 평균에서 가까운 규격 한계까지의 거리를 3σ로 나눈 값으로 치우침을 함께 반영합니다. 일반적으로 Cpk 1.33 이상을 양호한 공정으로 봅니다.",
+      "table": null,
+      "source": "일반 품질관리 개념",
+      "keywords": [
+        "Cp",
+        "Cpk",
+        "산포",
+        "치우침"
+      ],
+      "insight": "Cp와 Cpk의 차이가 ‘치우침’의 크기를 보여줌"
+    }
+  ],
+  "basis": [
+    {
+      "kind": "산업",
+      "text": "제조업 공정·품질 직무 PT에서는 공정능력지수 계산 후 개선안을 제시하는 문제풀이형이 출제될 수 있습니다.(출제 가능 이슈 예시)"
+    },
+    {
+      "kind": "기업",
+      "text": "전자부품 제조사는 고객사의 품질 요구(Cpk 기준)와 클레임 대응이 중요한 이슈입니다.(예시)"
+    }
+  ],
+  "model": {
+    "choice": "",
+    "choiceReason": "",
+    "P": "설비 교체에 앞서 공정 평균 중심화를 먼저 실행하고, 부족한 산포는 단계적으로 개선하겠습니다.",
+    "C": "두께 규격은 10.00 ± 0.30 mm인데 공정 평균은 10.06 mm, 표준편차는 0.08 mm입니다. 계산하면 Cp는 1.25로 산포는 규격 폭에 비해 충분하지만, Cpk는 1.00입니다. 평균이 상한 쪽으로 치우쳐 현재 불량률이 약 0.135%, 월 약 1,350개이며 불량은 거의 상한 초과에서 나옵니다.",
+    "F": "중심화만으로 Cpk가 1.25가 되고 불량률은 약 177 ppm, 월 약 177개로 줄어 월 약 1,170개의 불량이 감소합니다(약 87%). 클레임 대응 비용과 재작업 비용도 함께 줄 것으로 기대합니다.",
+    "L": "중심화해도 Cpk 1.25는 고객 요구 1.33에 못 미칩니다. 1.33에 닿으려면 σ를 약 0.075 mm 이하로 줄여야 하므로, 산포의 원인인 설비 상태와 공정 변동을 계속 분석해야 합니다. 또 정규분포·안정 공정 가정과 n=200이라는 표본 크기의 한계가 있어 정기적으로 다시 확인하겠습니다.",
+    "P2": "정리하면 비싼 설비 교체보다 평균 중심화를 먼저 하고, 남은 산포는 데이터로 확인하며 단계적으로 해결하는 것이 해결방안입니다.",
+    "R": "산포는 이미 충분하고 평균만 상한 쪽으로 치우쳐 있어서, 치우침은 설비 교체 없이 세팅만으로 바로잡을 수 있기 때문입니다.",
+    "E": "1단계로 평균을 10.00 mm로 맞추는 세팅 보정과 초기 조건 점검을 즉시 실행합니다. 비용이 거의 들지 않고 효과가 바로 나옵니다. 2단계로 보정 후 데이터를 2주간 모니터링해 산포가 목표에 못 미치면 그때 설비 점검과 교체를 검토합니다."
+  },
+  "checklist": [
+    {
+      "item": "Cp와 Cpk를 둘 다 계산하고 두 값의 차이가 무엇을 뜻하는지 설명했다",
+      "why": "차이가 평균 치우침의 크기를 보여주기 때문입니다."
+    },
+    {
+      "item": "계산 과정을 가정 → 식 → 숫자 → 검산 순서로 말했다",
+      "why": "답만 말하면 이해 여부를 판단할 수 없습니다."
+    },
+    {
+      "item": "최종 값(1.25, 1.00, 약 1,350 ppm, 약 177 ppm)이 맞다",
+      "why": "문제풀이형은 정확성이 기본 평가 항목입니다."
+    },
+    {
+      "item": "해결방안을 결론 → 이유 → 근거(계산)·실행 → 재강조 순서로 말하고, 계산 결과를 개선안(중심화 먼저)으로 연결했다",
+      "why": "계산이 의사결정으로 이어져야 실무 역량으로 평가받습니다."
+    },
+    {
+      "item": "기대효과를 불량 개수·비율 등 숫자로 말했다",
+      "why": "현업에서는 효과를 비용·불량 수로 환산해 설득합니다."
+    },
+    {
+      "item": "한계(고객 요구 Cpk 미달, 가정의 한계)를 먼저 말했다",
+      "why": "가정과 오차를 아는 엔지니어가 더 신뢰받습니다."
+    }
+  ],
+  "direction": [
+    {
+      "step": "C",
+      "title": "문제점 및 현황 분석 — 조건 정리",
+      "guide": "규격, 평균, 표준편차, 클레임 내용을 짧게 정리하고 구해야 할 것(Cp, Cpk, 불량률)을 밝힙니다.",
+      "frame": "규격은 ○○, 평균 ○○, 표준편차 ○○입니다. 구할 것은 ○○, ○○, ○○입니다.",
+      "refs": [
+        0,
+        1
+      ],
+      "how": "조건 3개 + 구할 값 3개를 한 번에 정리",
+      "mistake": "조건을 하나씩 모두 읽느라 시간을 쓰는 것"
+    },
+    {
+      "step": "V",
+      "title": "풀이 과정 — 가정, 식, 계산, 검산",
+      "guide": "계산은 ‘가정 → 식 → 숫자 대입 → 결과 해석 → 검산’ 순서로 정리합니다. 숫자는 천천히, 해석은 한 문장으로 붙입니다.",
+      "frame": "○○를 가정하면 ○○는 (식)=○○입니다. 이는 ○○를 뜻합니다.",
+      "refs": [
+        2
+      ],
+      "how": "Cp=1.25, Cpk=1.00을 구한 직후 ‘차이 0.25는 치우침’이라고 해석",
+      "mistake": "Cp만 구하고 ‘산포가 충분하니 문제없다’고 결론 내리는 것"
+    },
+    {
+      "step": "P",
+      "title": "P · 해결방안 결론 — 계산이 가리키는 조치",
+      "guide": "계산 결과가 가리키는 조치를 한 문장으로 말합니다. ‘계산해 보니’가 아니라 ‘무엇을 먼저 하겠다’로 시작하세요.",
+      "frame": "계산 결과, ○○보다 ○○를 먼저 하겠습니다.",
+      "refs": [],
+      "how": "결론 + 우선순위를 한 문장으로",
+      "mistake": "계산 과정만 길게 설명하다 결론이 빠지는 것"
+    },
+    {
+      "step": "R",
+      "title": "R · 이유 — 계산 결과와 연결",
+      "guide": "왜 그 조치가 먼저인지를 풀이에서 나온 해석(산포는 충분, 평균이 치우침)과 연결해 말합니다.",
+      "frame": "○○는 충분하고 ○○만 문제이므로, ○○로 바로잡을 수 있기 때문입니다.",
+      "refs": [
+        2
+      ],
+      "how": "Cp와 Cpk의 차이가 곧 이유가 됨",
+      "mistake": "비용이 싸다는 이유만 말하고 계산과 연결하지 않는 것"
+    },
+    {
+      "step": "E",
+      "title": "E · 근거와 실행 방안 — 비용·시간을 비교한 단계별 실행",
+      "guide": "비용과 시간이 적은 조치부터 순서대로 제시하고, 다음 단계로 넘어가는 판단 기준을 함께 말합니다.",
+      "frame": "1단계로 ○○를 보정하고, ○주 모니터링 후 ○○가 부족하면 ○○를 검토합니다.",
+      "refs": [
+        1
+      ],
+      "how": "1단계 중심화 → 2주 모니터링 → 필요 시 설비 교체 검토",
+      "mistake": "설비 교체 같은 큰 비용 조치를 근거 없이 먼저 말하는 것"
+    },
+    {
+      "step": "P2",
+      "title": "P · 재강조 — 한 줄로 닫기",
+      "guide": "처음 결론을 같은 방향으로 한 번 더 말합니다.",
+      "frame": "결국 큰 비용보다 작은 보정이 먼저입니다.",
+      "refs": [],
+      "how": "첫 문장과 같은 방향으로",
+      "mistake": "새 계산이나 새 주장으로 끝내는 것"
+    },
+    {
+      "step": "F",
+      "title": "기대효과 — 불량 수와 비용으로 환산",
+      "guide": "효과를 %와 ppm, 월 불량 개수로 말하고, 가능하면 비용으로 환산합니다.",
+      "frame": "불량이 월 ○○개에서 ○○개로 줄어 약 ○○% 감소합니다.",
+      "refs": [
+        0
+      ],
+      "how": "1,350개 → 177개, 월 약 1,170개 감소",
+      "mistake": "‘품질이 좋아질 것’처럼 숫자 없이 말하는 것"
+    },
+    {
+      "step": "L",
+      "title": "남아있는 문제점 — 가정과 한계",
+      "guide": "중심화만으로 고객 요구(1.33)에 못 미친다는 점과 정규성·표본 크기 가정의 한계를 스스로 먼저 말합니다.",
+      "frame": "다만 ○○가 남습니다. ○○까지 줄이려면 ○○가 필요하고, ○○ 가정도 계속 확인하겠습니다.",
+      "refs": [
+        0,
+        2
+      ],
+      "how": "한계 + 필요한 후속 조치(σ ≤ 0.075 mm)",
+      "mistake": "가정을 숨기고 정답이 확정인 것처럼 말하는 것"
+    }
+  ],
+  "scenario": [
+    {
+      "name": "오프닝 멘트",
+      "prep": [],
+      "minutes": 0.5,
+      "script": "안녕하십니까, 품질관리팀 지원자 ○○○입니다. [[숫자 하나만 먼저 보여드리겠습니다.]] 월 100만 개 중 약 1,350개. 지금 고객사가 항의하는 불량의 규모입니다. 이 숫자가 어디서 나오는지, 그리고 얼마까지 줄일 수 있는지 계산으로 말씀드리겠습니다.",
+      "connector": "",
+      "check": "처음 20초 안에 불량 규모(숫자)로 관심을 열었는가?"
+    },
+    {
+      "name": "서론 — 주제의 중요성",
+      "prep": [
+        "P"
+      ],
+      "minutes": 1,
+      "script": "클레임이 반복되면 비용도 신뢰도 같이 무너집니다. 그런데 현장에서는 설비를 바꾸자는 의견과 세팅만 바꾸자는 의견이 맞서고 있습니다. [[누구 말이 맞을까요?]] 계산해 보면 답이 나옵니다. 제 결론은 설비 교체 전에 공정 평균 중심화를 먼저 실행하자는 것입니다.",
+      "connector": "불량 숫자 이야기에서 현장의 논쟁으로 넘어가고, 계산으로 답하겠다고 예고하며 결론을 먼저 말합니다.",
+      "check": "결론이 서론 안에서 분명히 나왔는가?"
+    },
+    {
+      "name": "목차 소개",
+      "prep": [],
+      "minutes": 0.5,
+      "script": "순서는 세 가지입니다. 첫째, 조건을 정리하고 무엇을 구할지 말씀드립니다. 둘째, 계산 과정과 개선안입니다. 셋째, 기대효과와 아직 남는 문제입니다.",
+      "connector": "결론을 말했으니 그 근거를 계산으로 보여줄 순서를 안내합니다.",
+      "check": "목차 3개가 본론 1·2·3과 맞는가?"
+    },
+    {
+      "name": "본론 1 — 문제 현황과 조건 정리",
+      "prep": [
+        "C"
+      ],
+      "minutes": 1,
+      "script": "첫째, 조건입니다. 규격은 10.00에 플러스마이너스 0.30 밀리미터, 현재 평균은 10.06, 표준편차는 0.08입니다. 구할 것은 Cp, Cpk, 그리고 불량률입니다. [[평균이 10.06이면 규격 중앙인 10.00과 얼마나 다를까요?]] 0.06 밀리미터 상한 쪽으로 치우쳐 있습니다. 이 작은 치우침이 불량의 열쇠입니다.",
+      "connector": "결론에서 약속한 계산을 위해 필요한 조건을 정리하고, ‘치우침’이라는 핵심 단서를 다음 계산으로 넘깁니다.",
+      "check": "조건과 구할 값이 30초 안에 정리되었는가?"
+    },
+    {
+      "name": "본론 2 — 풀이 과정과 해결방안",
+      "prep": [
+        "P",
+        "R",
+        "E",
+        "P2"
+      ],
+      "minutes": 2,
+      "script": "둘째, 해결방안입니다. 결론부터 말씀드리면 설비 교체 전에 평균 중심화를 먼저 하겠습니다. [[왜 설비가 아니라 평균일까요?]] 산포는 이미 충분하고, 치우침은 세팅만으로 바로잡을 수 있기 때문입니다. 계산으로 보겠습니다. 정규분포와 안정된 공정을 가정하면 Cp는 규격 폭 0.60을 6시그마 0.48로 나눈 1.25로 산포는 충분합니다. 그런데 Cpk는 상한 쪽 0.24를 3시그마 0.24로 나눈 1.00입니다. 평균이 치우쳐서 불량률이 약 0.135%, 월 1,350개입니다. 그래서 1단계로 세팅을 보정하고, 2주간 데이터를 본 뒤 산포가 부족하면 그때 설비 교체를 검토합니다. 큰 비용보다 작은 보정이 먼저입니다.",
+      "connector": "조건 정리에서 찾은 ‘치우침’ 단서를 받아, 해결방안을 결론 → 이유 → 근거(계산)·실행 → 재강조 순서로 말합니다.",
+      "check": "결론, 이유, 근거(계산 값), 재강조가 이 순서로 들어갔는가?"
+    },
+    {
+      "name": "본론 3 — 기대효과와 남은 문제점",
+      "prep": [
+        "F",
+        "L"
+      ],
+      "minutes": 1.5,
+      "script": "셋째, 기대효과와 남은 문제입니다. 평균을 10.00으로 맞추면 Cpk는 1.25가 되고, 불량률은 약 177ppm, 월 약 177개로 줄어듭니다. 월 1,170개 정도, 약 87%가 줄어드는 셈입니다. [[그렇다면 이것으로 끝일까요?]] 아닙니다. 고객사가 요구하는 Cpk 1.33에는 아직 못 미칩니다. 그러려면 표준편차를 0.075 이하로 줄여야 하고, 정규분포와 표본 200개라는 가정의 한계도 계속 확인해야 합니다.",
+      "connector": "계산 결과를 숫자로 약속하고, 고객 요구와의 차이라는 남은 문제를 먼저 꺼내 후속 과제로 닫습니다.",
+      "check": "기대효과 숫자와 한계(1.33 미달, 가정)를 모두 말했는가?"
+    },
+    {
+      "name": "요약 및 정리",
+      "prep": [
+        "P2"
+      ],
+      "minutes": 0.7,
+      "script": "정리하겠습니다. 불량의 원인은 산포가 아니라 평균의 치우침이었고, 그래서 설비 교체보다 평균 중심화가 먼저입니다. 불량을 월 1,350개에서 177개로 줄이고, 남은 산포는 데이터를 보며 단계적으로 해결하겠습니다.",
+      "connector": "세 가지 본론을 되짚으며 처음 결론과 같은 방향으로 돌아옵니다.",
+      "check": "첫 결론과 마지막 결론이 같은 방향인가?"
+    },
+    {
+      "name": "마무리 멘트",
+      "prep": [],
+      "minutes": 0.3,
+      "script": "숫자는 현장의 논쟁을 끝내 줍니다. 계산으로 먼저 판단하는 엔지니어가 되겠습니다. 감사합니다.",
+      "connector": "오프닝의 숫자 이야기를 다시 꺼내 닫습니다.",
+      "check": "오프닝의 ‘숫자’ 이야기와 이어지는가?"
+    }
+  ]
+}/*DATA_END*/;
+/* ============ 여기까지 데이터. 아래 코드는 수정하지 않는다 ============ */
+
+const D = DATA;
+const M = D.meta;
+const $ = (s, r) => (r || document).querySelector(s);
+function h(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (k === 'class') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  kids.flat(Infinity).forEach(c => { if (c == null || c === false) return; e.append(c.nodeType ? c : document.createTextNode(String(c))); });
+  return e;
+}
+function rich(t, cls) {
+  const box = h('div', { class: 'rich' + (cls ? ' ' + cls : '') });
+  String(t || '').split('\n').forEach(line => {
+    if (!line.trim()) return;
+    const p = h('p');
+    line.split(/(\[\[.*?\]\])/g).forEach(seg => {
+      if (/^\[\[.*\]\]$/.test(seg)) p.append(h('mark', { class: 'as' }, seg.slice(2, -2)));
+      else if (seg) p.append(seg);
+    });
+    box.append(p);
+  });
+  return box;
+}
+function sec(id, eyebrow, title, lead, ...kids) {
+  return h('section', { id }, h('p', { class: 'eyebrow' }, eyebrow), h('h2', {}, title), lead ? h('p', { class: 'lead' }, lead) : null, ...kids);
+}
+function table(t) {
+  return h('div', { class: 'tw' }, h('table', {},
+    h('thead', {}, h('tr', {}, t.headers.map(x => h('th', {}, x)))),
+    h('tbody', {}, t.rows.map(r => h('tr', {}, r.map(c => h('td', {}, c)))))));
+}
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); setTimeout(() => t.classList.remove('on'), 1800); }
+
+/* ---- 저장 ---- */
+const mem = {};
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return mem[k] != null ? mem[k] : null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } }
+};
+function hash(s) { let x = 0; for (let i = 0; i < s.length; i++) x = (x * 31 + s.charCodeAt(i)) | 0; return String(x); }
+const KEY = 'ptprep2:' + hash(M.company + D.topic.title);
+let S = { ans: {}, choice: '', submitted: false, checks: {} };
+try { const raw = store.get(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch (e) {}
+function save() { store.set(KEY, JSON.stringify(S)); }
+
+/* ---- 구조 정의 ---- */
+const SOLVE = D.solve && D.solve.problem ? D.solve : null;
+const hasOpt = Array.isArray(D.options) && D.options.length > 0;
+const mats = Array.isArray(D.materials) ? D.materials : [];
+const STEPS = [
+  { k: 'C', tag: 'C', name: '문제점 및 현황 분석', ph: SOLVE ? '문제 상황과 주어진 조건, 구해야 할 것을 정리하고 왜 이 계산이 필요한지 쓰세요.' : '지금 무엇이 문제인지, 왜 그렇게 진단했는지(이유)를 자료의 숫자와 함께 쓰세요.' }
+];
+if (SOLVE) STEPS.push({ k: 'V', tag: 'E', name: '풀이 과정과 답', ph: '가정 → 식 세우기 → 계산 → 검산 순서로 풀이와 최종 답을 쓰세요. 수식은 글자로 써도 됩니다.' });
+STEPS.push(
+  { k: 'P', tag: 'P', name: 'P · 해결방안 결론', ph: '해결방안의 핵심을 한 문장으로 먼저 쓰세요. (선택한 안, 핵심 조치)' },
+  { k: 'R', tag: 'R', name: 'R · 이유', ph: '왜 그 해결방안이 맞는지, 앞의 문제 현황과 연결해서 쓰세요.' },
+  { k: 'E', tag: 'E', name: 'E · 근거와 실행 방안', ph: SOLVE ? '계산 결과 등 근거를 쓰고, 실행 순서와 우선순위를 이어서 쓰세요.' : '자료의 수치·사례를 근거로 쓰고, 구체적인 실행 방안(예산·일정·역할)을 이어서 쓰세요.' },
+  { k: 'P2', tag: 'P2', name: 'P · 재강조', ph: '해결방안의 핵심을 한 문장으로 다시 정리하세요.' },
+  { k: 'F', tag: 'F', name: '기대효과', ph: '실행했을 때 기대되는 변화를 숫자·지표와 기간으로 쓰세요.' },
+  { k: 'L', tag: 'L', name: '남아있는 문제점', ph: '해결되지 않는 한계·리스크, 보완책, 중단 기준을 쓰세요.' });
+const TAG = { C: 'C', V: 'E', P: 'P', R: 'R', E: 'E', P2: 'P2', F: 'F', L: 'L' };
+const SNAME = {}; STEPS.forEach(s => SNAME[s.k] = s.name);
+const ANS = STEPS;   // 모든 단계가 내 답안 입력칸이다
+const COL = { C: 'var(--c-c)', P: 'var(--c-p)', R: 'var(--c-r)', E: 'var(--c-e)', F: 'var(--c-f)', L: 'var(--c-l)', P2: 'var(--c-p2)' };
+const pill = t => h('span', { class: 'pill p-' + t }, t === 'P2' ? 'P' : t);
+const legend = () => h('div', { class: 'legend' }, [['C', '문제점·현황'], ['P', '해결방안 결론'], ['R', '이유'], ['E', '근거·실행'], ['P2', '재강조'], ['F', '기대효과'], ['L', '남아있는 문제점']].map(([t, n]) => h('span', {}, pill(t), n)));
+
+/* ---- 시간 ---- */
+const PREP = +M.prepTime || 20, SPEECH = +M.speechTime || 5;
+const chars = s => String(s.script || '').replace(/\[\[|\]\]/g, '').length;
+const est = s => Math.round(chars(s) / 330 * 10) / 10;           // 분당 약 330자
+const totalEst = Math.round(D.scenario.reduce((a, s) => a + chars(s), 0) / 330 * 10) / 10;
+const fmt = s => String(Math.floor(Math.abs(s) / 60)).padStart(2, '0') + ':' + String(Math.abs(s) % 60).padStart(2, '0');
+function makeTimer(sec0, el, btn) {
+  let left = sec0, run = false, id = null;
+  const paint = () => { el.textContent = (left < 0 ? '-' : '') + fmt(left); el.classList.toggle('low', left <= 60); };
+  const api = {
+    toggle() { run = !run; btn.textContent = run ? '정지' : '시작'; if (run) id = setInterval(() => { left--; paint(); }, 1000); else clearInterval(id); },
+    reset() { run = false; clearInterval(id); left = sec0; btn.textContent = '시작'; paint(); },
+    get running() { return run; }
+  };
+  btn.addEventListener('click', api.toggle); paint(); return api;
+}
+const prepTimer = makeTimer(PREP * 60, $('#timer'), $('#tToggle'));
+
+/* ---- 1 히어로 ---- */
+function stat(n, u, l) { return h('div', { class: 'panel stat' }, h('div', { class: 'n' }, n, u ? h('small', {}, u) : null), h('div', { class: 'l' }, l)); }
+function hero() {
+  return h('div', { class: 'hero' },
+    h('p', { class: 'eyebrow' }, 'PT면접 연습 시험지 · ' + M.type + (M.field ? ' · ' + M.field : '')),
+    h('h1', {}, D.topic.title),
+    h('div', { class: 'target' },
+      [['기업', M.company], ['직무', M.job], ['전공', M.major], ['계열', M.field], ['산업', M.industry], ['발표자 역할', M.role]].filter(x => x[1]).map(([a, b]) => h('b', {}, h('em', {}, a), b))),
+    h('div', { class: 'stats' },
+      stat(M.type, '', '유형'), stat(PREP, '분', '작성 제한 시간'), stat(SPEECH, '분', '발표 시간'), stat(SOLVE ? 1 : mats.length, SOLVE ? '문제' : '개', SOLVE ? '풀이 문제 + 자료 ' + mats.length + '개' : '제공 자료')),
+    h('div', { class: 'howto' }, h('span', {}, '시험지 읽기'), h('span', {}, '내 답안 쓰기'), h('span', {}, '모범답안과 비교'), h('span', {}, '시나리오로 소리 내어 연습'))
+  );
+}
+
+/* ---- 2 시험지 ---- */
+function statusCls(s) { s = s || ''; if (s.includes('필요')) return 's-warn'; if (s.includes('확인') || s.includes('개념')) return 's-ok'; return 's-gray'; }
+function exam() {
+  const parts = [];
+  const bq = h('div', { class: 'panel big-q' },
+    h('p', { class: 'story' }, h('small', {}, 'QUESTION'), D.topic.title),
+    rich(D.topic.summary));
+  if (D.situation) bq.append(h('div', { class: 'box' }, h('h4', {}, '① 상황 설명'), rich(D.situation)));
+  if (D.task) bq.append(h('div', { class: 'box' }, h('h4', {}, '② 해결 과제'), rich(D.task)));
+  parts.push(bq);
+  if (SOLVE) {
+    parts.push(h('p', { class: 'k', style: 'margin-top:22px' }, '문제풀이 — 풀이 과정도 발표에 포함하세요'));
+    parts.push(h('div', { class: 'panel big-q' },
+      h('p', { class: 'story' }, h('small', {}, 'PROBLEM'), SOLVE.title || '문제'),
+      h('div', { class: 'box' }, h('h4', {}, '문제'), rich(SOLVE.problem)),
+      SOLVE.given && SOLVE.given.length ? h('div', { class: 'box' }, h('h4', {}, '주어진 조건'), h('ul', { class: 'plain' }, SOLVE.given.map(g => h('li', {}, g)))) : null,
+      SOLVE.formulas && SOLVE.formulas.length ? h('div', {}, h('p', { class: 'k' }, '참고 공식'), h('div', { class: 'panel' }, table({ headers: ['이름', '식', '설명'], rows: SOLVE.formulas.map(f => [f.name, f.expr, f.note || '']) }))) : null));
+  }
+  if (hasOpt) {
+    parts.push(h('p', { class: 'k', style: 'margin-top:22px' }, '선택지 — 하나를 골라 발표하세요'));
+    parts.push(h('div', { class: 'board' }, D.options.map(o => h('div', { class: 'panel card opt' },
+      h('div', { class: 'hd' }, h('h3', {}, o.title), h('span', { class: 'lab' }, o.label)),
+      rich(o.desc),
+      h('div', { class: 'pc' }, h('div', { class: 'pro' }, '👍 ' + o.pro), h('div', { class: 'con' }, '⚠ ' + o.con))))));
+  }
+  if (mats.length) {
+    parts.push(h('p', { class: 'k', style: 'margin-top:22px' }, '③ 관련 데이터 및 자료 — 해결 과정에서 활용하세요'));
+    parts.push(h('div', { class: 'board' }, mats.map((m, i) => h('div', { class: 'panel card' },
+      h('div', { class: 'hd' },
+        h('span', { class: 'chip' }, h('span', { class: 'dot', style: 'background:var(--blue)' }), '자료 ' + (i + 1) + ' · ' + m.kind),
+        h('span', { class: 'status ' + statusCls(m.status) }, m.status || '확인 필요')),
+      h('h3', {}, m.title),
+      m.body ? rich(m.body) : null,
+      m.table ? table(m.table) : null,
+      m.source ? h('div', { class: 'src' }, '출처: ' + m.source) : null))));
+  }
+  if (D.basis && D.basis.length) {
+    parts.push(h('p', { class: 'k', style: 'margin-top:22px' }, '④ 기출 근거 (산업·기업 이슈)'));
+    parts.push(h('div', { class: 'panel', style: 'padding:16px 20px' }, h('ul', { class: 'plain' }, D.basis.map(b => h('li', {}, h('b', {}, b.kind + ' · '), b.text)))));
+  }
+  parts.push(h('div', { class: 'wact', style: 'margin-top:18px' },
+    h('button', { class: 'btn primary big', onclick: () => { document.getElementById('mine').scrollIntoView(); if (!prepTimer.running) prepTimer.toggle(); } }, '답안 작성 시작 (' + PREP + '분 타이머 시작) →')));
+  return sec('exam', 'STEP 1 · 시험지', '문제를 읽고 자료를 확인하세요', '상황과 과제를 읽은 뒤, 자료에서 쓸 수 있는 숫자와 사례에 표시해 두세요. 작성 제한 시간은 ' + PREP + '분입니다.', ...parts);
+}
+
+/* ---- 3 내 답안 ---- */
+function mine() {
+  const wk = h('div', { class: 'panel wk' });
+  if (hasOpt) {
+    const pick = h('div', { class: 'pick' });
+    D.options.forEach(o => {
+      const lab = h('label', { class: S.choice === o.label ? 'on' : '' },
+        h('input', { type: 'radio', name: 'opt', value: o.label, onchange: () => { S.choice = o.label; save(); pick.querySelectorAll('label').forEach(l => l.classList.remove('on')); lab.classList.add('on'); renderCompare(); } }),
+        o.label + '안 · ' + o.title);
+      if (S.choice === o.label) lab.querySelector('input').checked = true;
+      pick.append(lab);
+    });
+    wk.append(h('div', {}, h('p', { class: 'k' }, '내가 고른 선택지'), pick));
+  }
+  const field = (st, solo) => {
+    const ta = h('textarea', { placeholder: st.ph, 'aria-label': st.name, style: st.k === 'V' ? 'min-height:150px' : (st.k === 'P' || st.k === 'P2') ? 'min-height:70px' : null });
+    ta.value = S.ans[st.k] || '';
+    const cnt = h('div', { class: 'cnt' }, ta.value.length + '자');
+    ta.addEventListener('input', () => { S.ans[st.k] = ta.value; cnt.textContent = ta.value.length + '자'; save(); if (S.submitted) renderCompare(); });
+    return h('div', { class: 'fld' }, solo ? null : h('label', {}, st.name), ta, cnt);
+  };
+  const byK = k => ANS.find(s => s.k === k);
+  const groups = [
+    { n: '본론 1', title: '문제점 및 현황 분석', desc: '지금 무엇이 얼마나 문제인지, 왜 그런지를 자료의 숫자로 정리합니다.', ks: ['C'] },
+    { n: '본론 2', title: '해결방안 (PREP)', desc: SOLVE ? '풀이 과정과 답을 먼저 쓰고, 해결방안을 PREP(결론 → 이유 → 근거·실행 → 재강조) 순서로 씁니다.' : '해결방안을 PREP(결론 → 이유 → 근거·실행 → 재강조) 순서로 씁니다.', ks: SOLVE ? ['V', 'P', 'R', 'E', 'P2'] : ['P', 'R', 'E', 'P2'] },
+    { n: '본론 3', title: '기대효과와 남아있는 문제점', desc: '실행하면 무엇이 얼마나 좋아지는지(기대효과)와, 그래도 남는 한계·보완책(남아있는 문제점)을 따로 씁니다.', ks: ['F', 'L'], two: true }
+  ];
+  groups.forEach(g => wk.append(h('div', { class: 'grp' },
+    h('div', { class: 'gh' }, h('span', { class: 'gn' }, g.n), h('b', {}, g.title)),
+    h('p', { class: 'gd' }, g.desc),
+    h('div', { class: g.two ? 'two2' : 'one' }, g.ks.map(k => field(byK(k), g.ks.length === 1))))));
+  wk.append(h('div', { class: 'wact' },
+    h('button', { class: 'btn primary big', onclick: submit }, '답안 제출하고 모범답안 열기'),
+    h('button', { class: 'btn ghost', onclick: () => { if (confirm('작성한 답안을 모두 지울까요?')) { S.ans = {}; S.choice = ''; S.submitted = false; S.checks = {}; save(); location.reload(); } } }, '답안 지우기'),
+    h('span', { class: 'wnote' }, '작성 내용은 이 브라우저에 자동 저장됩니다.')));
+  return sec('mine', 'STEP 2 · 내 답안', '본론 1·2·3 순서로 내 답을 정리해 보세요', '발표 시나리오의 본론 구성과 같은 순서입니다. 모범답안은 내가 쓴 뒤에 열립니다.', wk);
+}
+function submit() {
+  const any = Object.values(S.ans).some(v => (v || '').trim());
+  if (!any && !confirm('작성한 답안이 없습니다. 그래도 모범답안을 열까요?')) return;
+  S.submitted = true; save(); renderCompare(); toast('모범답안이 열렸습니다');
+  document.getElementById('compare').scrollIntoView();
+}
+
+/* ---- 4 비교 ---- */
+const cmpHost = h('div');
+function solveModel() {
+  return h('div', { class: 'sv' },
+    h('ol', {}, (SOLVE.steps || []).map(st => h('li', {}, h('b', {}, st.title), rich(st.work), st.why ? h('div', { class: 'wnote' }, st.why) : null))),
+    h('div', { style: 'margin-top:8px' }, h('b', {}, '최종 답 · '), SOLVE.answer),
+    SOLVE.check ? h('div', { class: 'wnote', style: 'margin-top:6px' }, '검산 · ' + SOLVE.check) : null,
+    SOLVE.pitfalls && SOLVE.pitfalls.length ? h('div', { class: 'warnbox', style: 'margin-top:8px' }, '⚠ 자주 하는 실수: ' + SOLVE.pitfalls.join(' / ')) : null);
+}
+function renderCompare() {
+  cmpHost.replaceChildren();
+  if (!S.submitted) {
+    cmpHost.append(h('div', { class: 'panel lock' }, h('h3', {}, '🔒 모범답안은 내 답안을 제출하면 열립니다'), h('p', {}, '먼저 STEP 2에서 내 답을 써보세요.'),
+      h('button', { class: 'btn primary', onclick: submit }, '지금 제출하고 열기')));
+    return;
+  }
+  const MD = D.model;
+  const txt = ANS.map(s => S.ans[s.k] || '').join(' ');
+  const norm = x => String(x).replace(/[\s,]/g, '');
+  const rows = [h('div', { class: 'row hd' }, h('div', {}, '구조'), h('div', {}, '내 답안'), h('div', {}, 'AI 모범답안'))];
+  ANS.forEach(st => {
+    const mine = (S.ans[st.k] || '').trim();
+    rows.push(h('div', { class: 'row' }, h('div', { class: 'step' }, pill(st.tag), h('div', { style: 'margin-top:6px;color:var(--muted);font-weight:600;font-size:12px' }, st.name)),
+      h('div', { class: 'me' + (mine ? '' : ' empty') }, mine || '(작성하지 않음)'),
+      h('div', { class: 'ai' }, st.k === 'V' ? solveModel() : rich(MD[st.k]))));
+  });
+  const wrap = [h('div', { class: 'panel cmp' }, rows)];
+  if (hasOpt) {
+    const mc = D.options.find(o => o.label === MD.choice);
+    wrap.push(h('div', { class: 'panel', style: 'padding:16px 20px;margin-top:14px;font-size:14px' },
+      h('p', { class: 'k' }, '선택지 비교'),
+      '내 선택: ', h('b', {}, S.choice ? S.choice + '안' : '선택 안 함'), ' · 모범답안 선택: ', h('b', {}, MD.choice + '안' + (mc ? ' (' + mc.title + ')' : '')),
+      h('div', { class: 'hint', style: 'margin-top:8px' }, '선택이 달라도 괜찮습니다. 이유와 근거가 일관되면 좋은 답안입니다. 모범답안의 판단 이유: ' + (MD.choiceReason || ''))));
+  }
+  const left = [];
+  const matRows = [];
+  if (SOLVE && SOLVE.answerKeys && SOLVE.answerKeys.length) {
+    const mv = norm(S.ans.V || '');
+    const hits = SOLVE.answerKeys.filter(k => mv.includes(norm(k)));
+    matRows.push(h('div', { class: 'mrow' }, h('span', { class: 'chip' }, '풀이'), h('div', {}, '정답 핵심값 확인', h('div', { style: 'font-size:12.5px;color:var(--muted)' }, '확인 대상: ' + SOLVE.answerKeys.join(', '))),
+      h('span', { class: 'hit ' + (hits.length === SOLVE.answerKeys.length ? 'y' : 'n') }, hits.length === SOLVE.answerKeys.length ? '✔ 모두 일치' : '△ ' + hits.length + '/' + SOLVE.answerKeys.length + ' 일치')));
+  }
+  mats.forEach((m, i) => {
+    const hit = (m.keywords || []).some(k => k && txt.includes(k));
+    matRows.push(h('div', { class: 'mrow' }, h('span', { class: 'chip' }, String(i + 1)), h('div', {}, m.title, h('div', { style: 'font-size:12.5px;color:var(--muted)' }, m.insight || '')),
+      h('span', { class: 'hit ' + (hit ? 'y' : 'n') }, hit ? '✔ 활용함' : '△ 빠짐')));
+  });
+  if (matRows.length) left.push(h('div', {}, h('p', { class: 'k' }, '자료·정답 활용 점검 (내 답안에 핵심어가 있는지 자동 확인)'), h('div', { class: 'panel mats' }, matRows)));
+  const cl = D.checklist || [];
+  const done = () => cl.filter((c, i) => S.checks[i]).length;
+  const score = h('div', { class: 'score' });
+  const paintScore = () => { score.replaceChildren('자기 진단 점수 ', h('b', {}, done() + ' / ' + cl.length), h('span', { class: 'wnote' }, done() === cl.length ? '모두 충족했습니다.' : '체크되지 않은 항목을 보완해 다시 써보세요.')); };
+  paintScore();
+  left.push(h('div', {}, h('p', { class: 'k' }, '자기 진단 체크리스트'),
+    h('div', { class: 'panel' }, cl.map((c, i) => {
+      const cb = h('input', { type: 'checkbox', onchange: () => { S.checks[i] = cb.checked; save(); paintScore(); } });
+      cb.checked = !!S.checks[i];
+      return h('label', { class: 'chk' }, cb, h('div', {}, c.item, h('small', {}, c.why)));
+    }), score)));
+  wrap.push(h('div', { class: 'gap', style: 'margin-top:14px' }, left));
+  cmpHost.append(...wrap);
+}
+function compare() {
+  renderCompare();
+  return sec('compare', 'STEP 3 · 비교', '내 답안과 AI 모범답안 비교', '구조별로 나란히 보고, 자료 활용과 빠진 요소를 점검하세요.', cmpHost);
+}
+
+/* ---- 5 답변 방향 ---- */
+function direction() {
+  const dir = D.direction || [];
+  const GRP = { C: '본론 1 · 문제점 및 현황 분석', V: '본론 2 · 해결방안 (PREP)', P: '본론 2 · 해결방안 (PREP)', R: '본론 2 · 해결방안 (PREP)', E: '본론 2 · 해결방안 (PREP)', P2: '본론 2 · 해결방안 (PREP)', F: '본론 3 · 기대효과와 남아있는 문제점', L: '본론 3 · 기대효과와 남아있는 문제점' };
+  const line = h('div', { class: 'seq', style: 'border:1px solid var(--rule);border-radius:12px;background:#fff;margin-bottom:14px' },
+    h('span', { class: 'wnote' }, '답변 흐름:'), dir.map((d, i) => [i ? h('span', { class: 'ar' }, '→') : null, h('span', { class: 'chip' }, pill(TAG[d.step] || 'E'), (SNAME[d.step] || d.step).replace(/^[PRE] · /, ''))]));
+  const items = [];
+  let last = '';
+  dir.forEach((d, i) => {
+    const g = GRP[d.step] || '';
+    if (g && g !== last) { items.push(h('div', { class: 'dgrp' }, g)); last = g; }
+    items.push(h('div', { class: 'st' },
+      h('div', { class: 'lab' }, h('b', {}, String(i + 1)), h('div', {}, pill(TAG[d.step] || 'E'), h('div', { style: 'font-size:13px;margin-top:4px' }, d.title))),
+      h('div', { class: 'body' },
+        rich(d.guide),
+        d.frame ? h('div', { class: 'frame' }, '💬 말하기 틀: ' + d.frame) : null,
+        d.refs && d.refs.length ? h('div', { class: 'chips' }, h('span', { class: 'wnote' }, '쓸 자료 →'), d.refs.map(r => mats[r] ? h('span', { class: 'chip' }, h('span', { class: 'dot', style: 'background:' + COL[TAG[d.step] || 'E'] }), '자료 ' + (r + 1) + ' ' + mats[r].title) : null)) : null,
+        d.how ? h('div', { class: 'hint' }, '💡 쓰는 법: ' + d.how) : null,
+        d.mistake ? h('div', { class: 'warnbox' }, '⚠ 자주 하는 실수: ' + d.mistake) : null)));
+  });
+  const kids = [legend(), line, h('div', { class: 'panel skel' }, items)];
+  if (mats.length) {
+    kids.push(h('p', { class: 'k', style: 'margin-top:22px' }, '자료 활용 지도 — 자료가 어느 칸에서 쓰이는가'));
+    kids.push(h('div', { class: 'panel' }, table({
+      headers: ['자료', '핵심 인사이트', '쓰이는 곳'],
+      rows: mats.map((m, i) => ['자료 ' + (i + 1) + ' · ' + m.title, m.insight || '', dir.filter(d => (d.refs || []).includes(i)).map(d => SNAME[d.step] || d.step).join(', ') || '—'])
+    })));
+  }
+  return sec('direction', 'STEP 4 · 답변 방향', '본론 1·2·3 순서로, 해결방안은 PREP로 답을 구성하는 법', '문제 현황 → 해결방안(결론 → 이유 → 근거·실행 → 재강조) → 기대효과 → 남아있는 문제점 순서로, 각 칸에 자료를 어떻게 넣는지 정리했습니다.', ...kids);
+}
+
+/* ---- 6 시나리오 ---- */
+function scenario() {
+  const el = h('div', { class: 'big' }), btn = h('button', { class: 'btn primary' }, '시작'), rs = h('button', { class: 'btn' }, '리셋');
+  const st = h('div', { class: 'panel stimer' }, el, btn, rs, h('small', {}, '발표 시간 ' + SPEECH + '분 타이머 · 대본을 소리 내어 읽으며 시간을 재보세요. 이 대본의 예상 발표 시간은 약 ' + totalEst + '분입니다.'));
+  const sTimer = makeTimer(SPEECH * 60, el, btn); rs.addEventListener('click', () => sTimer.reset());
+  const cards = D.scenario.map((s, i) => h('div', { class: 'panel sc' },
+    h('div', { class: 'no' }, String(i + 1).padStart(2, '0')),
+    h('h3', {}, s.name, (s.prep || []).map(pill), h('span', { class: 'chip' }, '약 ' + est(s) + '분 · ' + chars(s) + '자')),
+    rich(s.script, 'script'),
+    s.connector ? h('div', { class: 'applyl' }, h('b', {}, '앞 구간과의 연결 '), s.connector) : null,
+    s.check ? h('div', { class: 'checkl' }, h('b', {}, '자기 점검 · '), s.check) : null));
+  return sec('scenario', 'STEP 5 · 발표 시나리오', '소리 내어 읽으며 연습하세요', '노란 밑줄은 자문자답 문장입니다. 청중에게 질문하듯 톤을 바꿔 말해보세요. (말하는 속도는 분당 약 330자로 계산했습니다)',
+    legend(), st, h('div', { class: 'scs' }, cards));
+}
+
+/* ---- 7 논리 흐름 ---- */
+function flow() {
+  const sc = D.scenario;
+  const seq = []; sc.forEach(s => (s.prep || []).forEach(p => seq.push(p)));
+  const iE = seq.lastIndexOf('E'), iF = seq.indexOf('F'), iL = seq.indexOf('L');
+  const tol = Math.max(0.7, SPEECH * 0.15);
+  const checks = [
+    { ok: seq[0] === 'P', t: '결론 먼저(P) — 이야기가 결론으로 시작함', f: '첫 요소가 P가 아닙니다. 서론에서 결론을 먼저 말하세요.' },
+    { ok: seq.indexOf('C') !== -1 && seq.indexOf('C') < seq.indexOf('E'), t: '문제점 및 현황 분석(C)이 해결방안·근거(E)보다 먼저 나옴', f: '문제 현황을 먼저 말한 뒤 해결방안으로 넘어가세요.' },
+    { ok: (() => { const s2 = sc.find(s => s.name.startsWith('본론 2')); const tg = (s2 && s2.prep) || []; return tg.indexOf('P') !== -1 && tg.indexOf('P') < tg.indexOf('R') && tg.indexOf('R') < tg.indexOf('E'); })(), t: '해결방안 구간이 결론(P) → 이유(R) → 근거·실행(E) 순서임', f: '본론 2의 해결방안이 PREP 순서(결론 → 이유 → 근거)로 되어 있지 않습니다.' },
+    { ok: iF !== -1 && iF > iE, t: '해결방안 뒤에 기대효과(F)가 나옴', f: '기대효과가 없거나 해결방안보다 앞에 있습니다.' },
+    { ok: iL !== -1 && iL > iF, t: '기대효과 뒤에 남은 문제점·보완(L)을 말함', f: '남은 문제점과 보완책이 빠졌습니다. 한계를 먼저 말하면 신뢰가 높아집니다.' },
+    { ok: seq.length > 0 && seq[seq.length - 1] === 'P2', t: '마지막에 결론을 다시 말함(P 재강조)', f: '마지막 요소가 결론 재강조가 아닙니다.' },
+    { ok: sc.filter(s => s.name.startsWith('본론')).length === 3, t: '본론이 3단 구성임', f: '본론이 3개가 아닙니다.' },
+    { ok: sc.slice(1).every(s => (s.connector || '').trim()), t: '모든 구간에 앞 구간과의 연결 문장이 있음', f: '연결 문장이 빠진 구간이 있습니다.' },
+    { ok: sc.map(s => (s.script.match(/\[\[.*?\]\]/g) || []).length).reduce((a, b) => a + b, 0) >= 2, t: '자문자답이 2회 이상 들어감', f: '자문자답이 부족해 설명이 일방적일 수 있습니다.' },
+    { ok: Math.abs(totalEst - SPEECH) <= tol, t: '대본의 예상 시간(' + totalEst + '분)이 설정한 발표 시간(' + SPEECH + '분)에 맞음', f: '대본 예상 시간 ' + totalEst + '분이 설정한 ' + SPEECH + '분과 ' + (totalEst > SPEECH ? '넘게 길어' : '짧게 차이 나') + ' 있습니다. 분량을 조정하세요.' }
+  ];
+  const pass = checks.filter(c => c.ok).length;
+  const bar = h('div', { class: 'fbar' }, sc.map(s => h('i', { style: 'flex:' + Math.max(est(s), 0.2), title: s.name + ' ' + est(s) + '분' })));
+  const fl = h('div', { class: 'panel flow' }, sc.map((s, i) => h('div', { class: 'fl' },
+    h('div', { class: 'n' }, String(i + 1)),
+    h('div', {}, h('div', { class: 't' }, s.name, (s.prep || []).map(pill), h('span', { class: 'm' }, est(s) + '분')),
+      s.connector ? h('div', { class: 'cn' }, h('em', {}, '연결'), s.connector) : h('div', { class: 'cn' }, h('em', {}, '시작'), '청중의 관심을 여는 첫 구간')))));
+  const seqRow = h('div', { class: 'seq' }, h('span', { class: 'wnote' }, '발표 흐름:'), seq.map((p, i) => [i ? h('span', { class: 'ar' }, '→') : null, pill(p)]));
+  const chk = h('div', { class: 'panel' }, seqRow, checks.map(c => h('div', { class: 'chain' },
+    h('span', { class: 'status ' + (c.ok ? 's-ok' : 's-warn') }, c.ok ? '충족' : '보완'),
+    h('div', {}, c.ok ? c.t : c.t + ' — ' + c.f))));
+  return sec('flow', 'STEP 6 · 논리 흐름', '발표가 논리적으로 이어지는지 점검', '구간의 연결, 문제 현황 → 해결방안 → 기대효과 → 남은 문제점 순서, 시간 배분을 자동으로 확인했습니다. (' + pass + '/' + checks.length + ' 충족)',
+    legend(), bar, fl, h('p', { class: 'k', style: 'margin-top:22px' }, '자동 흐름 점검'), chk);
+}
+
+const app = $('#app');
+app.append(hero(), exam(), mine(), compare(), direction(), scenario(), flow(), h('footer', {}, '이 시험지는 연습용입니다. 자료의 수치·사례는 면접 전 반드시 직접 확인하세요.'));
+document.title = 'PT면접 연습 시험지 · ' + M.company;
+</script>
+<a class="bc-back" href="/#prompts">← 방영황 사이트</a><style>.bc-back{position:fixed;left:14px;bottom:14px;z-index:2147483000;padding:9px 14px;border-radius:999px;background:#0a0a0a;color:#fff!important;font:700 13px/1 'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}.bc-back:hover{background:#4f46e5}@media print{.bc-back{display:none}}</style></body>
+</html>

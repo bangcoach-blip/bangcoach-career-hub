@@ -70,22 +70,15 @@
     </div>
   </section>
 
-  <section class="home-section home-spark" id="homeSpark">
-    <div class="section-head">
-      <h2 class="section-title">경험을 정리하는 무료 도구</h2>
-      <p class="section-sub">흩어진 경험을 AI 질문에 답하며 자기소개서 재료로 정리합니다. 회원가입은 필요 없습니다.</p>
-    </div>
-    <div class="external-link-card spark-tool-card">
-      <div class="external-link-text">
-        <span class="external-link-tag">무료 도구 · 경험 정리</span>
-        <h3 class="external-link-title">SPARK 경험 지도</h3>
-        <p class="external-link-desc">지원할 기업·직무에 맞춰 어떤 경험을 어느 자기소개서 항목에 쓸지 한 장으로 보여줘요.</p>
+  <section class="home-section home-tools hidden" id="homeTools">
+    <div class="section-head section-head-row">
+      <div>
+        <h2 class="section-title">내 AI로 해보는 도구</h2>
+        <p class="section-sub">ChatGPT·Claude·Gemini 등 평소 쓰는 AI로 직접 연습해 보세요. 경험 정리부터 면접 연습까지, 회원가입은 필요 없습니다.</p>
       </div>
-      <div class="spark-tool-actions">
-        <a class="spark-tool-btn spark-tool-btn--primary" href="spark-map.html" target="_blank" rel="noopener">ChatGPT·제미나이로 하기 →</a>
-        <a class="spark-tool-btn" href="https://claude.ai/artifact/DnVtVhY74fHpsxYoFqVVuh" target="_blank" rel="noopener">Claude로 하기 ↗</a>
-      </div>
+      <button class="link-more" data-goto="prompts">도구 모두 보기 →</button>
     </div>
+    <div class="ai-tool-grid" id="homeToolGrid"></div>
   </section>
 
   <section class="home-section home-prompts" id="homePrompts">
@@ -630,6 +623,14 @@
 
 <!-- ===================== 프롬프트 도구 ===================== -->
 <section id="tab-prompts" class="tab-panel hidden">
+  <section class="tools-shelf hidden" id="toolsShelf">
+    <div class="tools-shelf-inner">
+      <h2 class="tools-shelf-title">내 AI로 해보는 도구</h2>
+      <p class="tools-shelf-sub">프롬프트를 복사해 붙여넣고, AI가 만들어 주는 화면으로 직접 연습해 보세요. 평소 쓰는 ChatGPT·Claude·Gemini 어디서든 됩니다.</p>
+      <div class="ai-tool-grid" id="toolShelfGrid"></div>
+    </div>
+  </section>
+
   <section class="demo-section">
     <div class="demo-inner">
       <h2 class="demo-title">실제로 이렇게 써요</h2>
@@ -699,20 +700,6 @@
       </div>
       <span class="external-link-arrow">이동하기 →</span>
     </a>
-  </section>
-
-  <section class="external-link-section">
-    <div class="external-link-card spark-tool-card">
-      <div class="external-link-text">
-        <span class="external-link-tag">무료 도구 · 경험 정리</span>
-        <h2 class="external-link-title">SPARK 경험 지도</h2>
-        <p class="external-link-desc">흩어진 경험을 AI 질문에 답하며 800자를 채울 재료로 정리하고, 지원할 기업·직무에 맞춰 어떤 경험을 어느 자기소개서 항목에 쓸지 한 장으로 보여줘요.</p>
-      </div>
-      <div class="spark-tool-actions">
-        <a class="spark-tool-btn spark-tool-btn--primary" href="spark-map.html" target="_blank" rel="noopener">ChatGPT·제미나이로 하기 →</a>
-        <a class="spark-tool-btn" href="https://claude.ai/artifact/DnVtVhY74fHpsxYoFqVVuh" target="_blank" rel="noopener">Claude로 하기 ↗</a>
-      </div>
-    </div>
   </section>
 
   <section class="request-section">
@@ -788,6 +775,7 @@
 <script src="js/main.js"></script>
 <script src="js/site.js"></script>
 <script src="js/home.js"></script>
+<script src="js/tools-shelf.js"></script>
 <script src="js/hero-motion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="js/confetti-fx.js"></script>

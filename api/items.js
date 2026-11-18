@@ -1,10 +1,11 @@
 const { notion, listChildren, renderBlocks } = require("./_notion");
 const { getAccess } = require("./_access");
+const { parseFiles, hrefs } = require("./_tools");
 
 const text = (arr = []) => arr.map((t) => t.plain_text).join("");
 
 // '공개범위'가 '코드 필요'인 프롬프트·자료는 코드를 입력한 방문자에게만 본문과 파일을 줍니다.
-const LOCKABLE = ["프롬프트", "자료"];
+const LOCKABLE = ["프롬프트", "자료", "도구"];
 const isLocked = (p) => LOCKABLE.includes(p["유형"]?.select?.name) && p["공개범위"]?.select?.name === "코드 필요";
 
 module.exports = async function handler(req, res) {
@@ -60,7 +61,17 @@ module.exports = async function handler(req, res) {
           link = `/api/file?id=${page.id}`;
           uploaded = true;
         }
-        const locked = isLocked(p);
+        let locked = isLocked(p);
+        let tool;
+        if (itemType === "도구") {
+          // 도구: 파일 주소는 숨기고 /tool/... 주소만 내보냅니다. 사이트 폴더 파일은 잠글 수 없습니다.
+          const files = parseFiles(text(p["도구파일"]?.rich_text));
+          if (!files) continue;
+          const h = hrefs(page.id, files);
+          locked = locked && h.lockable;
+          tool = { href: h.main, samples: h.samples, claude: link };
+          link = "";
+        }
         // 잠긴 자료는 실제 파일·링크 주소를 목록에 내보내지 않고, 코드를 확인하는 /api/file로만 연결합니다
         if (locked && itemType === "자료") {
           link = `/api/file?id=${page.id}`;
@@ -69,6 +80,7 @@ module.exports = async function handler(req, res) {
         items.push({
           id: page.id,
           locked,
+          ...(tool ? { tool } : {}),
           subCategory: text(p["소분류"]?.rich_text),
           period: text(p["기간"]?.rich_text),
           audience: text(p["대상"]?.rich_text),
