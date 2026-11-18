@@ -95,7 +95,7 @@ svg.focus .lnk.on{opacity:1}
 svg.focus .node.on{opacity:1}
 
 /* board */
-.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.board{display:flex;flex-direction:column;gap:14px}
 .card{padding:18px 20px;display:flex;flex-direction:column;gap:12px;break-inside:avoid;page-break-inside:avoid}
 .card.gap{border:1.5px dashed #fca5a5;background:#fffafa}
 .card h3{margin:0;font-size:18px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -354,7 +354,49 @@ dialog::backdrop{background:rgba(15,23,42,.35)}
 .empty{padding:80px 20px;text-align:center}
 .empty h1{font-size:28px;letter-spacing:-.03em}
 
+/* v7 */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modes button{text-align:left;border:1.5px solid var(--rule-2);background:#fff;border-radius:12px;padding:14px 16px;font:inherit;cursor:pointer;color:var(--ink)}
+.modes button b{display:block;font-size:16px}
+.modes button small{display:block;color:var(--muted);font-size:13px;margin-top:4px;line-height:1.5}
+.modes button.on{border-color:var(--blue);background:var(--blue-tint);box-shadow:0 0 0 1px var(--blue) inset}
+.erows{display:flex;flex-direction:column}
+.erow{display:grid;grid-template-columns:minmax(150px,230px) 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--rule);align-items:center}
+.erow:first-child{border-top:0}
+.erow .ex{font-weight:700;font-size:15px;text-decoration:none;color:var(--ink)}
+.erow .its{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.erow.off .ex{color:var(--soft)}
+.erow .none{font-size:13px;color:var(--soft)}
+.ipill{font-size:13px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--blue);color:#fff;text-decoration:none;white-space:nowrap}
+.ipill.s2{background:#fff;color:var(--blue);border:1px solid var(--blue-2)}
+.ipill.gap{background:#fff5f5;color:var(--bad);border:1px dashed #f87171}
+.ileg{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.ic{padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.ic.gap{border:1.5px dashed #fca5a5;background:#fffafa}
+.ic .hd{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ic h3{margin:0;font-size:19px;letter-spacing:-.02em}
+.ic .q{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.ic .sec .flow{margin:0}
+.gapbox{display:flex;flex-direction:column;gap:8px}
+.gapbox .gl{font-size:12px;font-weight:800;color:var(--bad);margin-top:4px}
+.gapbox ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+.asm{display:flex;flex-direction:column;gap:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 16px}
+.asm h4{margin:0;font-size:15px}
+.asm .row{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px dashed #fde68a}
+.asm .t{font-size:14px;color:var(--ink-2)}
+.asm .t small{display:block;color:#a16207;font-weight:700;font-size:12px;margin-bottom:2px}
+.asm .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.asm input[type=text]{flex:1;min-width:200px;font:inherit;font-size:13.5px;border:1px solid var(--rule-2);border-radius:8px;padding:7px 10px;background:#fff}
+.asm label{font-size:13px;display:flex;gap:5px;align-items:center;color:var(--ink-2);white-space:nowrap}
+.exdraft{background:#f8fafc;border-radius:10px;padding:12px 14px;margin-top:8px}
+.exdraft .q{font-size:13px;color:var(--muted);margin:0 0 6px}
+.exdraft p{margin:6px 0 0}
+.exdraft .from{display:block;font-size:12px;color:var(--blue);margin-top:2px}
+.savebar2{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 20px}
+.savebar2 p{margin:0;flex:1;min-width:220px;font-size:13.5px;color:var(--muted)}
 @media (max-width:760px){
+  .modes{grid-template-columns:1fr}
+  .erow{grid-template-columns:1fr;gap:6px}
   .wk{padding:18px 16px}
   .howgo{grid-template-columns:1fr}
   .wbar li{font-size:12.5px}
@@ -395,9 +437,9 @@ dialog::backdrop{background:rgba(15,23,42,.35)}
 <header class="top"><div class="wrap">
   <div class="brand"><i></i>SPARK 경험 지도</div>
   <nav class="nav" id="nav">
-    <a href="#work">작업실</a><a href="#setup">최종 세팅</a><a href="#map">연결 지도</a><a href="#mind">직무 마인드맵</a><a href="#board">자소서 활용 보드</a><a href="#skel">지원동기 뼈대</a><a href="#exps">경험 카드</a><a href="#drafts">예시 사례</a><a href="#check">가정 다듬기</a><a href="#plan">보완 계획</a>
+    <a href="#work">작업실</a><a href="#setup">한눈에 보기</a><a href="#map">연결 지도</a><a href="#board">항목별 분석</a><a href="#exps">경험 카드</a><a href="#plan">부족한 곳</a>
   </nav>
-  <div class="tools"><span class="aib" id="aiBadge">연결 확인 중</span><button class="btn" id="btnLoad">데이터 불러오기</button><button class="btn primary" id="btnPrint" onclick="window.print()">PDF 저장</button></div>
+  <div class="tools"><span class="aib" id="aiBadge">연결 확인 중</span><button class="btn" id="btnWipe" hidden>전체 초기화</button><button class="btn" id="btnLoad">데이터 불러오기</button><button class="btn primary" id="btnPrint" onclick="window.print()">PDF 저장</button></div>
 </div></header>
 
 <main id="app" class="wrap"></main>
@@ -415,7 +457,8 @@ dialog::backdrop{background:rgba(15,23,42,.35)}
 
 [v4 → v5 바뀐 점]
 - STEP 6 '최종 세팅'을 새로 만들었습니다. 산업·기업·직무를 입력하면 어떤 경험을 어느 항목에 어떤 각도로 쓸지 한 장으로 정리합니다. 타겟을 바꿔 여러 번 할 수 있습니다.
-- 내보내기는 STEP 7이 되었습니다. 경험 지도 HTML의 가정 체크리스트에 실제 내용을 적고 체크하면 경험 카드·원고에 바로 반영되고, 반영된 상태로 새 HTML을 저장할 수 있습니다. 이를 위해 [가정] 문장은 데이터 안에서 글자 그대로 같아야 합니다(7-5).
+- 시작할 때 '기업별 경험 분석'과 '기본 경험 분석' 중 하나를 고릅니다. 기업 자소서 문항을 넣으면 그 문항에 맞춰, 없으면 기본 항목 10개로 세팅합니다.
+- AI가 짐작해 채운 [가정]은 경험마다 확정본을 낼 때 바로 확인합니다. 결과 페이지에는 가정 체크리스트가 없습니다.
 - 학생이 경험 지도 데이터(JSON)를 다시 붙여넣으면 그 데이터를 확정본으로 이어서 작업합니다(이어하기 규칙).
 
 [v3 → v4 바뀐 점]
@@ -511,8 +554,10 @@ STEP 7 경험 지도 내보내기
 
 첫 메시지에서 아래 두 가지를 한 번에 묻습니다.
 
-질문 1. 지원 타겟
-"지원할 산업 / 기업 / 직무가 정해져 있나요? 정해진 것만 알려주세요. 없으면 '미정'이라고 적어주세요. 지원 기업의 자기소개서 문항과 글자수가 이미 나와 있으면 함께 적어주세요. 사회이슈, 산업 이슈, 입사 후 포부처럼 따로 묻는 문항도 모두 반영합니다."
+질문 1. 분석 방식과 지원 타겟
+"어떤 분석을 할까요?
+① 기업별 경험 분석: 지원할 기업·직무(산업은 선택)를 알려주세요. 그 기업의 자기소개서 문항을 글자수와 함께 붙여넣으면 그 문항에 맞춰 경험을 세팅합니다. 문항이 없으면 기본 항목 10개로 분석합니다.
+② 기본 경험 분석: 아직 기업이 정해지지 않았다면 지원 직무만 알려주세요(산업은 선택). 내 경험이 그 직무와 자소서 기본 항목 10개의 의도에 잘 맞도록 세팅합니다."
 
 질문 2. 경험 자료
 "가지고 있는 자료를 그대로 붙여넣거나 올려주세요. ① 이력서 ② 기존 자기소개서 ③ 경험 메모 ④ 자료 없음: 떠오르는 경험을 적어주세요. 한 줄도 괜찮고, 길게 써도 전부 반영합니다. 아르바이트, 조별과제, 동아리, 혼자 꾸준히 한 일 모두 소재가 됩니다. 그때 답답했던 일, 망설였던 일, 누가 했던 말이 기억나면 함께 적어주세요. 자소서의 깊이는 거기서 나옵니다."
@@ -703,6 +748,7 @@ STEP 7 경험 지도 내보내기
 
 2-10. 확정본 출력 형식
 확정본은 초안과 같은 구조, 같은 분량으로 씁니다. 요약하지 않습니다.
+- 확정본 바로 아래에 [AI가 짐작해 채운 부분] 목록을 번호로 보여주고 "내 경험과 다른 문장만 번호와 함께 고쳐 적어주세요. 모두 맞으면 '맞아요'라고 적어주세요."라고 묻습니다. 학생이 고친 내용은 사실로 바꿔 [가정]을 떼고, '맞아요'라고 한 문장도 [가정]을 뗍니다. 이 확인을 마친 뒤 다음 경험으로 넘어갑니다.
 
 ✅ 경험 01 확정 _ 「경험 이름」 _ 상태: 확정 / 가정 포함 / 가정 중심 _ 재료 분량: 800자 가능
 ① 상황 ... ② 문제와 목표 ... ③ 행동 _ 단계별 ... ④ 결과 ... ⑤ 배운 점 ... 장면 재료 ...
@@ -733,11 +779,7 @@ STEP 7 경험 지도 내보내기
 - 커버 상태: 충분(◎ 1개 이상 또는 ○ 2개 이상) / 약함(○ 1개 또는 △만) / 공백(연결 없음)
 - 직무 과업·역량 공백은 "직무 준비 노력에서 증명이 비는 역량", 산업·사회·기업 공백은 "지원동기·포부에서 근거가 비는 요인"으로 1줄씩 알립니다.
 
-경험 간 연결 흐름
-- 「경험 이름」 ──▶ 「경험 이름」 _ 앞 경험의 결과나 배운 점이 뒤 경험의 계기가 된 지점 1줄 _ 닿는 요인 이름
-- 직무 관심이 커져 간 순서를 보여주는 흐름을 반드시 1개 이상 넣습니다. 학생이 말한 적 없는 연결은 [가정]을 붙이고 확인을 요청합니다.
-
-"경험 O개 정리가 끝났습니다. 가정을 실제 내용으로 바꾸고 싶으면 경험 이름과 내용을 알려주세요. 그대로 진행하려면 '다음'을 입력해주세요. 800자 경험 원고로 넘어갑니다."
+"경험 O개 정리가 끝났습니다. '다음'을 입력하면 800자 경험 원고로 넘어갑니다."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -774,10 +816,11 @@ STEP 7 경험 지도 내보내기
 
 [STEP 4] 자소서 항목별 경험 매칭 + 작성 흐름 예시
 
-자소서 10개 항목: 지원동기·포부 / 성장과정 / 성격 장점 / 성격 단점 / 직무 준비 노력 / 도전·열정 / 문제해결·개선 / 팀워크 / 갈등 해결 / 윤리적 행동
-추가 문항: STEP 1에서 받은 실제 문항 중 10개에 포함되지 않는 것
+분석할 항목
+- 기업별 경험 분석이고 STEP 1에서 기업 자소서 문항을 받았으면: 그 문항들만 항목으로 씁니다. 문항마다 6~12자 항목 이름을 붙이고, 아래 10개 기본 항목 중 가장 가까운 항목의 의도 기준(4-0)을 적용합니다.
+- 문항이 없거나 기본 경험 분석이면: 자소서 10개 기본 항목 지원동기·포부 / 성장과정 / 성격 장점 / 성격 단점 / 직무 준비 노력 / 도전·열정 / 문제해결·개선 / 팀워크 / 갈등 해결 / 윤리적 행동. 기본 경험 분석은 기업 정보 없이 지원 직무의 과업·역량과 항목 의도에 맞춰 세팅합니다.
 
-진행 순서: 4-0 기준 확인 → 4-1 요인 연결 분석 → 4-2 중복 정리 → 4-3 매칭 표 + 화살표 지도 → 4-4 항목별 작성 흐름 예시 → 4-5 경험 확장 활용 → 4-6 배치 전략·공백·보완
+진행 순서: 4-0 기준 확인 → 4-1 요인 연결 분석 → 4-2 중복 정리 → 4-3 매칭 표 + 화살표 지도 → 4-4 항목별 작성 흐름 예시 → 4-5 한 줄 지원 스토리 → 4-6 부족한 곳 채우기
 분량이 한 응답을 넘으면 "STEP 4 (1/3)": 4-0~4-2, "STEP 4 (2/3)": 4-3, 4-4 앞 5개 항목, "STEP 4 (3/3)": 4-4 나머지 항목, 4-5, 4-6으로 나눕니다.
 
 4-0. 항목별 의도 기준과 기본 흐름
@@ -831,15 +874,14 @@ STEP 7 경험 지도 내보내기
 (1) 매칭 표
 | 항목 | 1순위 경험 | 2순위 후보 | 의도 충족 | 쓸 장면 | 연결 요인 | 작성 각도 | 상태 |
 |---|---|---|---|---|---|---|---|
-| 문제해결·개선 | 「편의점 폐기 줄이기」 | 「동아리 SNS 반응 분석」 | 2/2 | 「편의점 폐기 줄이기」 경험의 문제, '2주 폐기 메모'와 '한 품목 시험' 장면, 결과 숫자 | 판매 데이터로 발주 조정 ◎ | 감으로 하던 발주를 기록으로 바꾼 과정 | 가정 확인 후 사용 |
+| 문제해결·개선 | 「편의점 폐기 줄이기」 | 「동아리 SNS 반응 분석」 | 2/2 | 「편의점 폐기 줄이기」 경험의 문제, '2주 폐기 메모'와 '한 품목 시험' 장면, 결과 숫자 | 판매 데이터로 발주 조정 ◎ | 감으로 하던 발주를 기록으로 바꾼 과정 | 바로 사용 |
 - '쓸 장면'은 반드시 「경험 이름」 + 칸 이름·장면 이름의 말로 씁니다.
-- 10개 항목과 추가 문항을 모두 넣습니다. 매칭할 경험이 없으면 ⚠️ 공백을 적습니다.
+- 분석할 항목을 모두 넣습니다. 매칭할 경험이 없으면 ⚠️ 공백을 적습니다.
 - 의도 충족은 "O/O (빠진 조건)"으로 적습니다.
-- 필수 요인이 △ 이하이면 상태를 "요인 보강 후 사용"으로 둡니다.
 - 재료 분량이 500자 수준 이하인 경험이 1순위면 작성 각도에 "재료 보강 필요: 무엇"을 함께 적습니다.
 - 같은 경험을 2개 항목에 쓰면 각도와 쓸 장면을 다르게 나눕니다. 예: 문제해결·개선에는 '한 품목 시험' 장면, 성격 장점에는 '2주 폐기 메모' 장면
 - 경험이 항목 의도를 실제로 증명하지 못하면 억지로 넣지 않고 공백으로 둡니다.
-- 상태는 바로 사용 / 가정 확인 후 사용 / 요인 보강 후 사용 / 공백 중 하나입니다.
+- 상태는 바로 사용(핵심 조건 충족) / 각도 바꿔 사용(딱 맞는 경험은 아니지만 쓰는 각도를 잡으면 쓸 수 있음) / 공백 중 하나입니다. 각도 바꿔 사용이면 작성 각도에 '어떤 장면을 앞세우고 무엇을 직무와 잇는지'를 구체적으로 씁니다. 부족한 경험이라도 지원 기업·직무에 맞춰 쓰는 길을 보여주는 것이 목적입니다.
 
 (2) 화살표 지도 _ 표 바로 아래, 코드 블록 안에
 ```
@@ -876,21 +918,16 @@ STEP 7 경험 지도 내보내기
 - 직무 준비 노력은 역량마다 문단 하나씩 나눕니다.
 - 재료가 부족해 기준 글자수를 채울 수 없으면 억지로 늘리지 않고, 모자란 글자수와 채울 재료를 "보강하면 채워지는 문단"으로 적습니다.
 
-4-5. 경험 확장 활용 가능성
-| 경험 이름 | 현재 배치 | 추가 활용 가능 항목 | 직무 연결 요인 | 확장 방법 |
-|---|---|---|---|---|
-- 학생의 모든 경험을 행으로 둡니다.
-- 확장 방법은 "어느 장면을 어떤 각도로 쓰는지"로 적습니다. 예: 「편의점 폐기 줄이기」의 '2주 폐기 메모' 장면만 떼어 성격 장점(끈기)에 씀
+4-5. 한 줄 지원 스토리
+- 내 경험들을 하나로 꿰어 지원 직무(기업별 분석이면 기업)와 잇는 한 줄. 정리본의 사실만 씁니다.
 
-4-6. 배치 전략, 공백 처리, 보완 인사이트
-- 배치 전략: 주력 경험 2~3개와 담당 항목, 각도 분리, 경험 간 연결 흐름을 살릴 항목, 뼈대에서 가장 약한 줄, 바로 사용 가능 항목 수와 공백 수, 효과가 큰 보완 1~2개
-- 공백 처리 표
-| 항목 | 다시 답해볼 질문 | 2주 [제안] | 1개월 [제안] | 3개월 [제안] |
-|---|---|---|---|---|
-- 보완 경험 인사이트 표
-| 분류 | 보완 대상 요인 | 보완 경험 [제안] | 이유 | 효과 항목 |
-|---|---|---|---|---|
-- 제안은 학생의 상황에서 기간 안에 할 수 있는 수준으로만 쓰고, 기관명·수상은 만들지 않습니다.
+4-6. 부족한 곳 채우기
+| 항목 | 비어 있는 것 | 다시 답해볼 질문 | 혹시 이런 경험은 없었나요? |
+|---|---|---|---|
+- 공백 항목과 의도 충족이 절반 이하인 항목마다 씁니다.
+- 다시 답해볼 질문: 이미 한 경험 안에서 장면을 다시 떠올리게 하는 회상형 질문 1~2개.
+- 혹시 이런 경험은 없었나요?: 학생의 학교·알바·동아리·일상에서 있었을 법한 경험 1~2개를 "혹시 ~한 적은 없었나요?"로 묻습니다.
+- 앞으로 할 일이나 기간별 계획(2주·1개월·3개월)은 쓰지 않습니다.
 
 4-7. STEP 4 종료 안내
 "매칭과 작성 흐름이 정리되었습니다. 지원할 기업과 직무, 자소서 문항(글자수 포함)을 입력하면 예시 사례를 만들어드립니다. 예: 'OO기업 영업관리, 문제해결 경험 800자'. 산업·기업·직무만 입력하고 '최종 세팅'이라고 하면 어떤 경험을 어디에 쓸지 한 장으로 정리해드립니다. 경험 지도 파일로 받으려면 '내보내기'를 입력해주세요."
@@ -991,7 +1028,7 @@ STEP 7 경험 지도 내보내기
 - 경험 하나는 최대 2개 항목의 1순위로만 씁니다(지원동기의 '내 경험의 적용', 직무 준비 노력은 예외).
 - 같은 타겟 안에서 같은 장면을 두 항목에 쓰지 않습니다.
 - 재료 분량이 기준 글자수보다 모자란 경험이면 상태에 "재료 보강 필요"를 적습니다.
-- 상태는 바로 사용 / 가정 확인 후 사용 / 요인 보강 후 사용 / 공백 중 하나입니다.
+- 상태는 바로 사용 / 각도 바꿔 사용 / 공백 중 하나입니다.
 
 이 타겟에서 약한 곳: 1~3개. 어느 항목, 왜 약한지, 어떻게 보완할지 1줄씩
 면접 전 할 일: 우선순위대로 3~5개. 이 타겟의 주력 경험에 걸린 [가정]·[수치 확인]과 [추정] 요인부터
@@ -1019,19 +1056,17 @@ STEP 7 경험 지도 내보내기
 | 행동 단계 · 장면 재료 | 단계 O개, 생각·감정 O개, 숫자 O개, 말 O개 | 전체 포함 |
 | 타겟 연결 | O / O개 경험 | 전체 포함 |
 | 원문 반영 | 전체 O개 중 O개, 미배치 O개 | 미배치도 부록 포함 |
-| 요인 커버리지 · 경험 간 연결 흐름 | 충분 O / 약함 O / 공백 O · 흐름 O개 | 포함 |
+| 요인 커버리지 | 충분 O / 약함 O / 공백 O | 포함 |
 | 경험 원고 800자 | O / O개 | 전체 포함 |
-| 항목 매칭 · 작성 흐름 예시 | 10 / 10 + 추가 O개, 공백 O · 흐름 예시 O개 | 전체 포함 |
-| 지원동기·포부 뼈대 | 근거 없는 줄 O개 | 포함 |
+| 항목 매칭 · 작성 흐름 예시 | 항목 O개, 바로 사용 O · 각도 바꿔 사용 O · 공백 O | 전체 포함 |
+| 한 줄 지원 스토리 | 있음 / 없음 | 포함 |
 | 예시 사례 | O개 | 포함 |
-| 최종 세팅 | 타겟 O개 | 포함 |
-| 확장 활용 · 공백 처리 · 보완 인사이트 | 있음 / 없음 | 포함 |
-| 가정 확인 체크리스트 | [가정] O곳 / [수치 확인] O곳 / [추정] O곳 | 포함 |
+| 부족한 곳 채우기 | O개 항목 | 포함 |
 대화에서 확정된 개수와 다르면 파일을 만들지 않고 먼저 다시 확인합니다. 확정 문장은 그대로 옮기고, 파일을 만들면서 요약하지 않습니다.
 
 7-3. 형식 선택
 "파일 형식을 선택해주세요.
-① 경험 지도 HTML: 요인 → 경험 → 자소서 항목 화살표 지도, 직무 마인드맵, 경험 카드(행동 단계·생각·숫자), 항목별 작성 흐름, 예시 사례가 들어간 한 장짜리 웹페이지. 추천
+① 경험 지도 HTML: 한눈에 보기(한 줄 스토리, 경험별 쓰는 항목), 경험 → 자소서 항목 화살표 지도, 항목별 분석, 경험 카드(원고·예시 글 포함), 부족한 곳이 들어간 한 장짜리 웹페이지. 추천
 ② 경험 지도 데이터(JSON): '경험지도_템플릿.html'의 붙여넣기 칸에 넣으면 같은 지도가 열립니다.
 ③ Word 파일 ④ 복사용 텍스트"
 
@@ -1044,18 +1079,18 @@ STEP 7 경험 지도 내보내기
 7-4. 경험 지도 HTML 규격 (① 선택 시)
 - 단일 파일, 외부 JS 없음. 글꼴만 Pretendard CDN(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css), 실패 시 시스템 글꼴.
 - 흰 바탕, 글자 #0F172A, 포인트 파랑 #1C60EF, 연한 파랑 #EEF4FF, 보조 글자 #64748B, 선 #E2E8F0. 분류 색(산업 흐름 #2563EB / 사회 이슈 #0D9488 / 기업 방향 #7C3AED / 직무 과업 #EA580C / 직무 역량 #DB2777)은 점·선·작은 이름표에만.
-- 상태 색: 바로 사용 #16A34A / 가정 확인 후 사용 #CA8A04 / 요인 보강 후 사용 #64748B / 공백 #DC2626. 상태 글자를 함께 씁니다.
+- 상태 색: 바로 사용 #16A34A / 각도 바꿔 사용 #CA8A04 / 공백 #DC2626. 상태 글자를 함께 씁니다.
 - [가정]은 연노랑 형광 밑줄, [수치 확인]은 하늘색, [추정]은 점선 테두리.
-- 구성: 표지(숫자 4개) → 최종 세팅(타겟이 여럿이면 탭, 한 줄 지원 스토리, 주력 경험 역할 카드, 항목 세팅표, 면접 전 할 일) → 연결 지도(요인 → 경험 → 항목, 1순위 파란 실선 화살표, 2순위 회색 점선, 클릭하면 연결만 남음) → 직무 마인드맵 → 자소서 활용 보드(항목마다 쓸 경험, 쓸 장면, 작성 흐름 예시를 글자수 막대와 예시 문장으로) → 지원동기 뼈대 → 경험 카드(상황·문제·행동 단계·결과·배운 점, 생각·감정 말풍선, 숫자, 재료 분량 막대, 800자 원고 접고 펴기) → 예시 사례(문단마다 출처 표시) → 가정 체크리스트 → 보완 계획 → 부록
+- 구성: 표지(지원처 + 숫자 4개: 정리한 경험, 바로 쓸 항목, 각도를 바꾸면 쓸 항목, 쓸 경험이 없는 항목) → 한눈에 보기(한 줄 지원 스토리, 경험마다 쓰는 항목 알약과 보여줄 직무 역량) → 연결 지도(요인 → 경험 → 항목, 1순위 파란 실선 화살표, 2순위 회색 점선, 클릭하면 연결만 남음, 읽는 법 설명) → 항목별 분석(한 줄에 한 항목씩: 묻는 것, 쓸 경험, 쓸 장면, 쓰는 각도, 보여줄 역량, 작성 흐름, 주의할 곳. 공백은 빨간 점선 카드에 다시 답해볼 질문) → 경험 카드(상황·문제·행동 단계·결과·배운 점, 생각·감정, 주고받은 말, 숫자, 경험 원고와 이 경험으로 쓴 예시 글 접고 펴기) → 부족한 곳(다시 답해볼 질문, 혹시 이런 경험은 없었나요?) → 데이터 복사·HTML 저장 버튼
 - 경험은 화면 어디에서나 「경험 이름」으로 표시하고, 위치는 칸 이름·장면 이름으로 씁니다.
-- 가정 다듬기 표는 행마다 '내 경험에 맞게 고쳐 쓰기' 입력칸(비어 있음)과 '반영' 체크를 둡니다. 체크하면 같은 [가정] 문장이 들어 있는 모든 곳(경험 카드, 원고, 흐름 예시, 예시 사례)을 실제 내용으로 바꾸고 초록 밑줄로 표시하며, 행마다 "반영 O곳"을 보여줍니다. [수치 확인]은 그 자리를 입력한 숫자로 바꿉니다. 문장이 달라 자동으로 바뀌지 않은 곳은 "채팅에서 다시 쓰기"로 안내합니다.
-- 체크리스트 아래에 '반영된 상태로 새 HTML 저장'(지금 데이터를 넣은 같은 파일을 내려받음)과 '데이터 복사'(JSON을 클립보드로, 채팅에 붙여넣어 이어하기) 버튼을 둡니다. 입력 내용은 브라우저에 저장되며 서버나 API를 쓰지 않습니다.
+- 가정은 STEP 2에서 학생이 확인합니다. 남은 [가정]만 노란 밑줄로 보여주고, 결과 페이지에는 가정 체크리스트를 넣지 않습니다. 입력 내용은 브라우저에 저장되며 서버나 API를 쓰지 않습니다.
 - 760px 이하에서는 지도가 가로 스크롤 상자 안에서 보이고, 페이지는 가로로 넘치지 않게 합니다. 인쇄 시 카드마다 page-break-inside: avoid.
 
 7-5. 경험 지도 데이터 규격 (② 선택 시, 또는 ①과 함께)
 ```json
 {
-  "meta": {"name": "", "date": "", "industry": "", "company": "", "job": ""},
+  "meta": {"name": "", "date": "", "mode": "company|basic", "industry": "", "company": "", "job": ""},
+  "story": "한 줄 지원 스토리",
   "factors": [
     {"id": "f1", "group": "산업 흐름|사회 이슈|기업 방향|직무 과업|직무 역량", "kind": "지식|경험|태도 (직무 역량만)", "name": "", "detail": "", "source": "학생 자료|채용공고|추정"}
   ],
@@ -1078,7 +1113,7 @@ STEP 7 경험 지도 내보내기
   "items": [
     {"id": "q1", "name": "문제해결·개선", "extra": false, "asks": "", "chars": 800,
      "primary": ["e1"], "secondary": ["e2"], "fit": "2/2", "scene": "「편의점 폐기 줄이기」 경험의 문제와 '한 품목 시험' 장면", "angle": "", "factors": ["f7"],
-     "status": "바로 사용|가정 확인 후 사용|요인 보강 후 사용|공백",
+     "status": "바로 사용|각도 바꿔 사용|공백",
      "flow": [{"part": "결과 먼저", "chars": 100, "use": "쓸 재료", "example": "예시 문장"}],
      "weak": "흐름이 끊기기 쉬운 곳"}
   ],
@@ -1087,36 +1122,26 @@ STEP 7 경험 지도 내보내기
      "paras": [{"text": "문단 본문", "from": "「경험 이름」 경험의 문제와 고민"}],
      "points": ["기업·직무 맞춤 포인트"], "rewrite": ["내 말로 고쳐 쓸 곳"], "questions": ["면접 꼬리 질문"]}
   ],
-  "setups": [
-    {"id": "s1", "industry": "", "company": "", "job": "", "story": "한 줄 지원 스토리",
-     "why": [{"q": "왜 이 산업|왜 이 기업|왜 이 직무", "a": "답 1줄", "exps": ["e1"], "scene": "근거 장면", "factors": ["f1"], "missing": false}],
-     "roles": [{"exp": "e1", "role": "주력 · 직무 증명", "items": ["q1", "q7"], "split": "항목마다 쓰는 장면"}],
-     "lineup": [{"item": "q7", "question": "문항 원문(있으면)", "chars": 800, "exps": ["e1"], "scene": "", "angle": "", "factors": ["f7"], "status": ""}],
-     "weak": ["약한 곳"], "before": ["면접 전 할 일"], "diff": ["이전 타겟과 달라진 점"], "factorCard": [{"group": "", "name": "", "detail": "", "source": "추정"}]}
-  ],
-  "chains": [{"from": "e2", "to": "e5", "note": "", "factors": ["f10"], "assumed": false}],
-  "skeleton": [{"step": "왜 이 산업", "factors": ["f1"], "exps": ["e6"], "text": "", "missing": false}],
-  "gaps": [{"item": "", "question": "", "w2": "", "m1": "", "m3": ""}],
-  "boosts": [{"group": "", "factor": "f5", "idea": "", "why": "", "effect": ""}],
+  "gaps": [{"item": "q4", "why": "비어 있는 것", "questions": ["다시 답해볼 질문"], "maybe": ["혹시 ~한 적은 없었나요?"]}],
   "memos": {"성격": [], "계기": [], "기타": [], "미배치": []}
 }
 ```
 - level: 3 = ◎ 직접 증명, 2 = ○ 비슷한 경험, 1 = △ 맥락만. 연결 없음은 넣지 않습니다.
-- 10개 기본 항목을 모두 넣고, 추가 문항은 "extra": true. 공백 항목은 primary를 빈 배열, status를 "공백"으로 둡니다.
+- 기업 문항으로 분석했으면 문항마다 항목 하나("extra": true, asks에 문항 원문), 아니면 10개 기본 항목을 모두 넣습니다. 공백 항목은 primary를 빈 배열, status를 "공백"으로 둡니다.
 - scene, use, from, evidence는 모두 「경험 이름」과 칸 이름·장면 이름의 말로 씁니다.
 - assumptions의 text는 [가정]이 붙은 문장을 spark·steps·narrative에 있는 그대로 한 글자도 바꾸지 않고 옮깁니다([가정] 표시는 빼고). [수치 확인]은 대괄호 안의 '무엇을 세어볼지'를 그대로 text에 넣습니다. 이 규칙이 지켜져야 HTML 체크리스트가 본문에 반영됩니다.
 - 예시 사례(drafts)와 흐름 예시(flow.example)에도 같은 [가정] 문장을 쓸 수 있으면 글자 그대로 씁니다. 문장을 바꿔 썼다면 체크리스트로 자동 반영되지 않습니다.
 
 7-6. Word 규칙 (③ 선택 시)
 - python-docx 등으로 생성. 제목은 Heading 1/2, 본문은 기본 스타일.
-- 구성: 표지 → 가정 체크리스트 → 타겟 맥락 카드 → 화살표 지도 텍스트 → 항목별 매칭과 작성 흐름 → 지원동기 뼈대 → 경험별 심층 SPARK(표) + 800자 원고 → 예시 사례 → 보완 계획 → 부록
+- 구성: 표지 → 한 줄 지원 스토리와 경험별 쓰는 항목 → 화살표 지도 텍스트 → 항목별 분석 → 경험별 심층 SPARK(표) + 800자 원고 + 예시 사례 → 부족한 곳
 - [가정]은 노란 형광펜, [수치 확인]은 하늘색, [추정]은 회색. 목차는 텍스트 목차.
 
 7-7. 복사용 텍스트 (④ 선택 시)
 - 7-6 순서의 마크다운. 표는 유지, [가정]은 굵게, [추정]은 기울임. 길면 "1/3"처럼 나누되 섹션 중간에서 끊지 않습니다.
 
 7-8. 최종 안내
-"이 파일은 지금까지의 정리 스냅샷입니다. HTML 아래 '가정 다듬기'에서 AI가 짐작한 문장을 내 경험에 맞게 고쳐 쓰고 '반영'을 체크하면 본문이 바로 바뀌고, '새 HTML 저장'으로 바뀐 파일을 보관할 수 있습니다. 예시 사례처럼 문장이 달라 자동으로 바뀌지 않은 곳은 '데이터 복사'로 이 채팅에 붙여넣고 '바뀐 사실로 다시 써줘'라고 하면 됩니다. 예시 사례는 참고용이며, 그대로 제출하지 말고 내 말로 다시 쓰세요."
+"이 파일은 지금까지의 정리 스냅샷입니다. 경험이 바뀌면 '데이터 복사'로 이 채팅에 붙여넣고 바뀐 경험만 다시 요청하세요. 예시 사례는 참고용이며, 그대로 제출하지 말고 내 말로 다시 쓰세요."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1145,7 +1170,7 @@ var GROUPS=["산업 흐름","사회 이슈","기업 방향","직무 과업","직
 var GC={"산업 흐름":"#2563eb","사회 이슈":"#0d9488","기업 방향":"#7c3aed","직무 과업":"#ea580c","직무 역량":"#db2777"};
 var LV={3:"직접 증명",2:"비슷한 경험",1:"맥락만"};
 var LVS={3:"직접",2:"비슷",1:"맥락"};
-var STC={"바로 사용":"s-ok","가정 확인 후 사용":"s-warn","요인 보강 후 사용":"s-gray","공백":"s-bad","확정":"s-ok","가정 포함":"s-warn","가정 중심":"s-bad"};
+var STC={"바로 사용":"s-ok","각도 바꿔 사용":"s-warn","가정 확인 후 사용":"s-warn","요인 보강 후 사용":"s-gray","공백":"s-bad","확정":"s-ok","가정 포함":"s-warn","가정 중심":"s-bad"};
 var D,D0,F,E,Q,app=document.getElementById("app");
 var SRC="<!doctype html>\n"+document.documentElement.outerHTML;
 var ED={},curSetup=0;
@@ -1193,47 +1218,44 @@ function index(){
 
 /* ---------- 1. hero ---------- */
 function hero(){
-  var m=D.meta||{},items=D.items||[],exps=D.experiences||[];
+  var m=D.meta||{},items=D.items||[],exps=(D.experiences||[]).filter(function(e){return e.spark;});
   var ready=items.filter(function(q){return q.status==="바로 사용";}).length;
   var gaps=items.filter(function(q){return q.status==="공백";}).length;
-  var asm=0,okc=0;exps.forEach(function(e){(e.assumptions||[]).forEach(function(a){if(a.confirmed)okc++;else asm++;});});
-  return '<div class="hero"><p class="eyebrow">'+esc([m.date,m.name].filter(Boolean).join(" · "))+'</p>'+
-  '<h1>내 경험이 <span>자소서 어디에</span> 쓰이는지<br>한 장으로 봅니다</h1>'+
-  '<div class="target"><b><em>산업</em>'+esc(m.industry||"미정")+'</b><b><em>기업</em>'+esc(m.company||"미정")+'</b><b><em>직무</em>'+esc(m.job||"미정")+'</b></div>'+
+  var bend=items.length-ready-gaps;
+  var basic=m.mode==="basic";
+  return '<div class="hero"><p class="eyebrow">'+esc([m.date,m.name,basic?"기본 경험 분석":"기업별 경험 분석"].filter(Boolean).join(" · "))+'</p>'+
+  '<h1>내 경험이 <span>'+esc(basic?(m.job&&m.job!=="미정"?m.job:"지원 직무"):(m.company&&m.company!=="미정"?m.company:"지원 기업"))+'</span>에<br>얼마나 준비되어 있을까요</h1>'+
+  '<div class="target">'+(m.industry&&m.industry!=="미정"?'<b><em>산업</em>'+esc(m.industry)+'</b>':'')+(!basic&&m.company&&m.company!=="미정"?'<b><em>기업</em>'+esc(m.company)+'</b>':'')+'<b><em>직무</em>'+esc(m.job||"미정")+'</b></div>'+
   '<div class="stats">'+
-   '<div class="panel stat"><div class="n">'+exps.length+'<small>개</small></div><div class="l">정리한 경험 · 충분히 구체적 '+exps.filter(function(e){return e.depth&&String(e.depth.grade||"").indexOf("800")>=0;}).length+'개</div></div>'+
+   '<div class="panel stat"><div class="n">'+exps.length+'<small>개</small></div><div class="l">정리한 경험</div></div>'+
    '<div class="panel stat ok"><div class="n">'+ready+'<small>/'+items.length+'</small></div><div class="l">바로 쓸 수 있는 항목</div></div>'+
-   '<div class="panel stat warn"><div class="n">'+asm+'<small>곳</small></div><div class="l">내 경험에 맞게 다듬을 [가정]'+(okc?' · 다듬음 '+okc+'곳':'')+'</div></div>'+
-   '<div class="panel stat bad"><div class="n">'+gaps+'<small>개</small></div><div class="l">경험이 비어 있는 항목</div></div>'+
-  '</div>'+
-  '<div class="howto"><span>연결 지도에서 경험을 눌러 어느 항목에 쓰이는지 확인</span><span>활용 보드에서 항목별 쓸 장면 확인</span><span>가정 다듬기에서 AI가 짐작한 문장을 내 경험에 맞게 고치기</span></div></div>';
+   '<div class="panel stat warn"><div class="n">'+bend+'<small>개</small></div><div class="l">각도를 바꾸면 쓸 수 있는 항목</div></div>'+
+   '<div class="panel stat bad"><div class="n">'+gaps+'<small>개</small></div><div class="l">아직 쓸 경험이 없는 항목</div></div>'+
+  '</div></div>';
 }
-
 /* ---------- 0. final setup ---------- */
 function setups(){
-  var ss=D.setups||[];if(!ss.length)return "";
-  if(curSetup>=ss.length)curSetup=0;
-  var S=ss[curSetup];
-  var tabs=ss.length>1?'<div class="tabs" id="stabs">'+ss.map(function(x,i){return '<button data-i="'+i+'" class="'+(i===curSetup?"on":"")+'">'+esc(x.company||"")+' · '+esc(x.job||"")+'</button>';}).join("")+'</div>':'';
-  function inames(ids){return (ids||[]).map(function(id){return Q[id]?'<span class="ichip">'+esc(Q[id].name)+'</span>':'';}).join(" ");}
-  var why=(S.why||[]).map(function(w){var miss=w.missing||!(w.exps||[]).length;
-    return '<div class="why'+(miss?" miss":"")+'"><h4>'+esc(w.q)+'</h4><p>'+(miss?"⚠️ ":"")+mark(w.a)+'</p>'+(w.scene?'<div class="sc">'+mark(w.scene)+'</div>':'')+'<div class="chips">'+(w.factors||[]).map(function(id){return fchip(id);}).join("")+(w.exps||[]).map(function(id){return echip(id);}).join("")+'</div></div>';}).join("");
-  var roles=(S.roles||[]).map(function(r){var e=E[r.exp];if(!e)return "";var main=/주력/.test(r.role),off=!(r.items||[]).length;
-    return '<div class="role'+(main?" main":"")+(off?" off":"")+'"><div class="rt"><b>'+esc(nm(e))+'</b><span class="rb">'+esc(r.role)+'</span></div>'+(off?'':'<div style="display:flex;gap:4px;flex-wrap:wrap">'+inames(r.items)+'</div>')+'<div class="sp">'+mark(r.split||"")+'</div></div>';}).join("");
-  var rows=(S.lineup||[]).map(function(l){var q=Q[l.item]||{};
-    return '<tr><td class="qcol"><b>'+esc(q.name||l.item)+'</b>'+(l.question?'<small>"'+esc(l.question)+'"</small>':'')+'</td><td>'+(l.chars?l.chars+'자':'-')+'</td><td><div class="chips">'+(l.exps||[]).map(function(id){return echip(id);}).join("")+'</div></td><td>'+mark(l.scene||"")+'</td><td>'+mark(l.angle||"")+'</td><td><div class="chips">'+(l.factors||[]).map(function(id){return fchip(id);}).join("")+'</div></td><td>'+st(l.status||"")+'</td></tr>';}).join("");
-  function lst(title,arr,bg){return (arr||[]).length?'<div style="background:'+bg+'"><div class="k">'+title+'</div><ul>'+arr.map(function(x){return '<li>'+mark(x)+'</li>';}).join("")+'</ul></div>':'';}
-  var card=(S.factorCard||[]).length?'<div><div class="k">이번 타겟 요인 카드</div><div class="chips">'+S.factorCard.map(function(f){return '<span class="chip'+(f.source==="추정"?" est":"")+'" title="'+esc(f.detail||"")+'"><span class="dot" style="background:'+(GC[f.group]||"#94a3b8")+'"></span>'+esc(f.name)+'</span>';}).join("")+'</div></div>':'';
-  return '<section id="setup"><p class="eyebrow">00 · 최종 세팅</p><h2>이 타겟에는 이 경험을, 이렇게 씁니다</h2><p class="lead">산업 · 기업 · 직무에 맞춰 어떤 경험을 어느 항목에 어떤 장면과 각도로 쓸지 정리한 한 장입니다.'+(ss.length>1?' 위 버튼으로 타겟을 바꿔 보세요.':'')+'</p>'+tabs+
-   '<div class="panel setup"><div class="target" style="margin:0"><b><em>산업</em>'+esc(S.industry||"")+'</b><b><em>기업</em>'+esc(S.company||"")+'</b><b><em>직무</em>'+esc(S.job||"")+'</b></div>'+
-   (S.story?'<p class="story"><small>한 줄 지원 스토리</small>'+mark(S.story)+'</p>':'')+
-   card+(why?'<div class="whys">'+why+'</div>':'')+
-   (roles?'<div><div class="k">경험 역할 · 같은 경험도 항목마다 다른 장면을 씁니다</div><div class="roles">'+roles+'</div></div>':'')+
-   (rows?'<div><div class="k">항목 세팅표</div><div class="tw" style="border:1px solid var(--rule);border-radius:10px"><table><thead><tr><th>항목 · 문항</th><th>글자수</th><th>쓸 경험</th><th>쓸 장면</th><th>작성 각도</th><th>요인</th><th>상태</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>':'')+
-   '<div class="lists">'+lst("이 타겟에서 약한 곳",S.weak,"#fff7ed")+lst("면접 전 할 일",S.before,"#eff6ff")+lst("이전 타겟과 달라진 점",S.diff,"#f8fafc")+'</div>'+
-   '</div></section>';
+  var items=D.items||[],exps=(D.experiences||[]).filter(function(e){return e.spark;});
+  var story=D.story||((D.setups||[])[0]||{}).story||"";
+  if(!items.length&&!story)return "";
+  var JOB={"직무 과업":1,"직무 역량":1};
+  var rows=exps.map(function(e){
+    var p1=items.filter(function(q){return q.primary.indexOf(e.id)>=0;}),p2=items.filter(function(q){return q.secondary.indexOf(e.id)>=0&&q.primary.indexOf(e.id)<0;});
+    var jl=e.links.filter(function(l){return F[l.factor]&&JOB[F[l.factor].group]&&l.level>=2;}).sort(function(a,b){return b.level-a.level;});
+    var off=!p1.length&&!p2.length;
+    return '<div class="erow'+(off?" off":"")+'"><a class="ex" href="#x-'+esc(e.id)+'">'+esc(nm(e))+'</a><div class="its">'+
+      (off?'<span class="none">이번 항목에는 쓰지 않아요 · 면접 답변 재료로 남겨 두세요</span>':
+       p1.map(function(q){return '<a class="ipill" href="#i-'+esc(q.id)+'">'+esc(q.name)+'</a>';}).join("")+p2.map(function(q){return '<a class="ipill s2" href="#i-'+esc(q.id)+'">'+esc(q.name)+'</a>';}).join(""))+
+      (jl.length?'<span style="width:100%;height:0"></span>'+jl.slice(0,3).map(function(l){return fchip(l.factor,l.level,l.assumed);}).join(""):'')+
+    '</div></div>';}).join("");
+  var gapItems=items.filter(function(q){return q.status==="공백";});
+  if(gapItems.length)rows+='<div class="erow"><span class="ex" style="color:var(--bad)">쓸 경험 없음</span><div class="its">'+gapItems.map(function(q){return '<a class="ipill gap" href="#i-'+esc(q.id)+'">'+esc(q.name)+'</a>';}).join("")+'</div></div>';
+  return '<section id="setup"><p class="eyebrow">00 · 한눈에 보기</p><h2>내 경험을 이렇게 씁니다</h2>'+
+   '<div class="panel setup">'+(story?'<p class="story"><small>내 경험으로 만든 한 줄 지원 스토리</small>'+mark(story)+'</p>':'')+
+   '<div><div class="ileg" style="margin-bottom:6px"><span><span class="ipill" style="padding:1px 8px">항목</span> 이 경험을 가장 먼저 쓰는 항목</span><span><span class="ipill s2" style="padding:1px 8px">항목</span> 대신 쓸 수 있는 항목</span><span>아래 작은 이름표는 이 경험으로 보여줄 직무 역량</span></div>'+
+   '<div class="erows">'+rows+'</div></div></div></section>';
 }
-function bindSetup(){document.querySelectorAll("#stabs button").forEach(function(b){b.onclick=function(){curSetup=+b.getAttribute("data-i");var sec=document.getElementById("setup");sec.outerHTML=setups();bindSetup();};});}
+function bindSetup(){return;document.querySelectorAll("#stabs button").forEach(function(b){b.onclick=function(){curSetup=+b.getAttribute("data-i");var sec=document.getElementById("setup");sec.outerHTML=setups();bindSetup();};});}
 
 /* ---------- 2. flow map ---------- */
 var mapMode="simple",pinned=null;
@@ -1334,7 +1356,7 @@ function flowMap(){
   });
   // item nodes
   items.forEach(function(q){
-    var p=pos[q.id],gap=q.status==="공백",sc={"바로 사용":"#16a34a","가정 확인 후 사용":"#ca8a04","요인 보강 후 사용":"#94a3b8","공백":"#dc2626"}[q.status]||"#94a3b8";
+    var p=pos[q.id],gap=q.status==="공백",sc={"바로 사용":"#16a34a","각도 바꿔 사용":"#ca8a04","가정 확인 후 사용":"#ca8a04","요인 보강 후 사용":"#94a3b8","공백":"#dc2626"}[q.status]||"#94a3b8";
     s+='<g class="node" data-id="'+q.id+'"><rect x="'+p.x+'" y="'+p.y+'" width="'+p.w+'" height="'+p.h+'" rx="9" fill="'+(gap?"#fff5f5":"#fff")+'" stroke="'+(gap?"#f87171":"#cbd5e1")+'"'+(gap?' stroke-dasharray="4 3"':'')+'/>'+
       '<circle cx="'+(p.x+14)+'" cy="'+(p.y+p.h/2)+'" r="4" fill="'+sc+'"/>'+
       '<text x="'+(p.x+26)+'" y="'+(p.y+p.h/2+4.5)+'" font-size="13" font-weight="700" fill="'+(gap?"#b91c1c":"#0f172a")+'">'+esc(fit(q.name+(q.extra?" ⁺":""),13,700,p.w-36))+'</text>'+
@@ -1352,7 +1374,7 @@ function flowMap(){
   var unused=(D.experiences||[]).filter(function(e){return e.spark&&!cnt[e.id]&&!items.some(function(q){return q.secondary.indexOf(e.id)>=0;});}).map(function(e){return nm(e);});
   var ins='<div class="insight"><b>지금 이 지도에서 보이는 것</b><ul>'+
     (top1?'<li>파란 화살표가 가장 많이 나가는 경험은 <b>'+esc(nm(E[top1]))+'</b>('+cnt[top1]+'개 항목)입니다. 자소서의 주력 경험이에요. 여러 항목에 쓸 때는 항목마다 다른 장면을 꺼내 쓰세요.</li>':'')+
-    (gapN.length?'<li>빨간 점선 항목 <b>'+esc(gapN.join(", "))+'</b>은 지금 쓸 경험이 없습니다. 맨 아래 보완 계획을 보세요.</li>':'<li>모든 항목에 쓸 경험이 있습니다.</li>')+
+    (gapN.length?'<li>빨간 점선 항목 <b>'+esc(gapN.join(", "))+'</b>은 지금 쓸 경험이 없습니다. 맨 아래 \'부족한 곳\'을 보세요.</li>':'<li>모든 항목에 쓸 경험이 있습니다.</li>')+
     (unused.length?'<li>'+esc(unused.join(", "))+' 경험은 아직 어느 항목에도 쓰이지 않았습니다. 다른 기업 세팅이나 면접 답변 재료로 남겨 두세요.</li>':'')+
     '</ul></div>';
   var readme='<div class="readme">'+
@@ -1452,35 +1474,41 @@ function mindMap(){
 
 /* ---------- 4. board ---------- */
 function flowHtml(q){
-  var fl=q.flow||[];if(!fl.length)return (q.outline||[]).length?'<div><div class="k">문단 구성 재료</div><ol class="outline">'+q.outline.map(function(o){return '<li>'+mark(o)+'</li>';}).join("")+'</ol></div>':'';
+  var fl=q.flow||[];if(!fl.length)return "";
   var tot=0;fl.forEach(function(f){tot+=+f.chars||0;});
-  return '<div><div class="k">작성 흐름 예시 · '+(q.chars||tot)+'자 기준</div>'+
-    '<div class="fbar" title="문단별 글자수 배분">'+fl.map(function(f){return '<i style="flex:'+(+f.chars||1)+'" title="'+esc(f.part+" "+f.chars+"자")+'"></i>';}).join("")+'</div>'+
+  return '<div><div class="fbar" title="문단별 글자수 배분">'+fl.map(function(f){return '<i style="flex:'+(+f.chars||1)+'" title="'+esc(f.part+" "+f.chars+"자")+'"></i>';}).join("")+'</div>'+
     '<div class="flow">'+fl.map(function(f){return '<div class="fl"><span class="n"></span><div><div class="t">'+esc(f.part)+(f.chars?'<span>'+f.chars+'자</span>':'')+'</div>'+
-      (f.use?'<div class="u">쓸 재료 · '+esc(f.use)+'</div>':'')+(f.example?'<div class="x">'+mark(f.example)+'</div>':'')+'</div></div>';}).join("")+'</div></div>'+
-    (q.weak&&q.weak!=="-"?'<div class="weak">흐름이 끊기기 쉬운 곳 · '+esc(q.weak)+'</div>':'');
+      (f.use?'<div class="u">쓸 재료 · '+mark(f.use)+'</div>':'')+(f.example?'<div class="x">'+mark(f.example)+'</div>':'')+'</div></div>';}).join("")+'</div></div>';
 }
 function board(){
-  var hasDraft={};(D.drafts||[]).forEach(function(d,i){hasDraft[d.item]=i;});
-  var cards=(D.items||[]).map(function(q){
-    var gap=q.status==="공백",fm=String(q.fit||"").match(/(\d+)\s*\/\s*(\d+)/),pct=fm?Math.round(fm[1]/fm[2]*100):0;
-    return '<article class="panel card'+(gap?" gap":"")+'" id="i-'+esc(q.id)+'"><div class="hd"><h3>'+esc(q.name)+(q.extra?'<span class="extra">추가 문항</span>':'')+'</h3>'+st(q.status)+'</div>'+
-      '<p class="asks">'+esc(q.asks||"")+'</p>'+
-      '<div class="use"><div class="k">쓸 경험</div>'+
-        (q.primary.length?'<div class="row"><span class="arrow">1순위 →</span><span class="chips">'+q.primary.map(function(id){return echip(id);}).join("")+'</span></div>':'<div class="row" style="color:var(--bad);font-weight:600;font-size:14px">⚠️ 연결할 경험이 없습니다</div>')+
-        (q.secondary.length?'<div class="row"><span style="color:var(--muted);font-size:13px;font-weight:600">2순위</span><span class="chips">'+q.secondary.map(function(id){return echip(id,1);}).join("")+'</span></div>':'')+
-      '</div>'+
-      (q.scene&&q.scene!=="-"?'<div><div class="k">쓸 장면</div><div style="font-size:14px;font-weight:600">'+mark(q.scene)+'</div></div>':'')+
-      (q.angle?'<div class="angle">'+mark(q.angle)+'</div>':'')+
-      ((q.factors||[]).length?'<div><div class="k">닿는 요인</div><div class="chips">'+q.factors.map(function(id){return fchip(id);}).join("")+'</div></div>':'')+
-      flowHtml(q)+
-      (q.fit?'<div class="fit"><span class="bar"><i style="width:'+pct+'%"></i></span>의도 충족 '+esc(q.fit)+'</div>':'')+
-      (hasDraft[q.id]!=null?'<a class="btn" style="text-align:center;text-decoration:none" href="#d-'+hasDraft[q.id]+'">예시 사례 보기 →</a>':'')+
-    '</article>';
+  var items=D.items||[];if(!items.length)return "";
+  var G={};(D.gaps||[]).forEach(function(g){G[g.item]=g;});
+  function sec(k,body){return body?'<div class="sec"><b>'+k+'</b><div>'+body+'</div></div>':'';}
+  var cards=items.map(function(q){
+    var gap=q.status==="공백",g=G[q.id]||G[q.name];
+    var use=(q.primary.length?'<div class="chips">'+q.primary.map(function(id){return echip(id);}).join("")+(q.secondary.length?'<span style="font-size:12.5px;color:var(--muted);margin:0 2px 0 6px">대신</span>'+q.secondary.map(function(id){return echip(id,1);}).join(""):'')+'</div>':'');
+    var fm=String(q.fit||"").match(/(\d+)\s*\/\s*(\d+)/);
+    var body=gap?
+      sec("쓸 경험",'<span style="color:var(--bad);font-weight:700">아직 이 항목에 쓸 경험이 없어요</span>')+
+      sec("비어 있는 것",esc(q.weak||(g&&g.why)||""))+
+      (g?sec("채워 보기",gapHtml(g)):sec("채워 보기",'<a href="#plan" style="color:var(--blue);font-weight:700">아래 \'부족한 곳\'에서 다시 답해볼 질문 보기 →</a>')):
+      sec("쓸 경험",use)+
+      sec("쓸 장면",q.scene&&q.scene!=="-"?mark(q.scene):"")+
+      sec(q.status==="바로 사용"?"쓰는 각도":"맞춰 쓰는 법",q.angle?mark(q.angle):"")+
+      sec("보여줄 역량",(q.factors||[]).length?'<div class="chips">'+q.factors.map(function(id){return fchip(id);}).join("")+'</div>':"")+
+      sec("작성 흐름",flowHtml(q))+
+      sec("주의할 곳",q.weak&&q.weak!=="-"?esc(q.weak):"")+
+      (fm?sec("의도 충족",'<div class="fit" style="margin:0"><span class="bar"><i style="width:'+Math.round(fm[1]/fm[2]*100)+'%"></i></span>'+esc(q.fit)+'</div>'):"");
+    return '<article class="panel ic'+(gap?" gap":"")+'" id="i-'+esc(q.id)+'"><div class="hd"><div><h3>'+esc(q.name)+(q.extra?' <span class="extra" style="font-size:11px;font-weight:700;color:var(--blue);background:var(--blue-tint);padding:2px 7px;border-radius:5px;vertical-align:3px">기업 문항</span>':'')+'</h3>'+(q.asks?'<p class="q">'+esc(q.asks)+'</p>':'')+'</div>'+st(q.status)+'</div>'+
+      '<div class="spark" style="gap:12px">'+body+'</div></article>';
   }).join("");
-  return '<section id="board"><p class="eyebrow">03 · 자소서 활용 보드</p><h2>항목마다 어떤 흐름으로 쓸까</h2><p class="lead">문단 순서와 글자수 배분, 문단마다 쓸 재료와 첫 문장 예시입니다. 막대는 글자수 배분입니다.</p><div class="board">'+cards+'</div></section>';
+  return '<section id="board"><p class="eyebrow">02 · 항목별 분석</p><h2>항목마다 어떤 경험을 어떻게 쓸까</h2><p class="lead">항목이 묻는 것, 쓸 경험과 장면, 직무에 맞춰 쓰는 각도, 문단 흐름을 차례로 정리했습니다. <span class="status s-warn" style="vertical-align:1px">각도 바꿔 사용</span>은 경험이 딱 맞지 않아도 쓰는 각도를 잡으면 쓸 수 있는 항목, 빨간 점선은 아직 쓸 경험이 없는 항목입니다.</p><div class="board">'+cards+'</div></section>';
 }
-
+function gapHtml(g){
+  var qs=arr(g.questions).length?arr(g.questions):(g.question?[g.question]:[]),mb=arr(g.maybe);
+  return '<div class="gapbox">'+(qs.length?'<div class="gl">다시 답해볼 질문</div><ul>'+qs.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'')+
+    (mb.length?'<div class="gl">혹시 이런 경험은 없었나요?</div><ul>'+mb.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'')+'</div>';
+}
 /* ---------- 5. skeleton ---------- */
 function skeleton(){
   var sk=D.skeleton||[];if(!sk.length)return "";
@@ -1525,19 +1553,25 @@ function expCard(e,inWork){
       (e.apply?'<div class="applyl"><span class="k" style="display:block">직무 적용</span>'+esc(e.apply)+'</div>':'')+
       (jl.length?'<div><div class="k">직무 역량과의 연결</div><div class="chips">'+jl.slice().sort(function(a,b){return b.level-a.level;}).map(function(l){return fchip(l.factor,l.level,l.assumed);}).join("")+'</div></div>':'')+
       chk+
-      (e.status==="가정 중심"?'<div class="warnbox">⚠️ 행동이나 결과의 일부를 AI가 짐작해 채웠습니다. \'가정 다듬기\'에서 내 경험에 맞게 고쳐 주세요.</div>':'')+
+
       (e.narrative?'<details><summary>경험 원고 보기 · '+e.narrative.replace(/\s*\[가정\]/g,"").length+'자</summary><p>'+mark(e.narrative)+'</p></details>':'')+
+      (inWork?'':draftsOf(e).map(draftHtml).join(""))+
     '</article>';
 }
 function experiences(){
   var cards=(D.experiences||[]).filter(function(e){return e.spark;}).map(function(e){return expCard(e);}).join("");
   if(!cards)return "";
-  var ch=(D.chains||[]).map(function(c){var a=E[c.from],b=E[c.to];if(!a||!b)return "";
-    return '<div class="panel chain"><div class="pair">'+echip(c.from)+'<span class="arrow">──▶</span>'+echip(c.to)+'</div><div class="note">'+esc(c.note)+(c.assumed?' <span class="tag-as">가정 · 실제와 맞는지 확인</span>':'')+' <span class="chips" style="display:inline-flex;margin-left:6px">'+(c.factors||[]).map(function(id){return fchip(id);}).join("")+'</span></div></div>';}).join("");
-  return '<section id="exps"><p class="eyebrow">05 · 경험 카드</p><h2>깊게 정리한 경험</h2><p class="lead">행동은 단계별로 나누고, 그때의 생각·감정, 주고받은 말, 숫자를 따로 모았습니다. <mark class="as">노란 밑줄</mark>은 AI가 짐작해 채운 문장(가정), <span class="num">하늘색</span>은 직접 세어 확인할 숫자입니다.</p><div class="exps">'+cards+'</div>'+
-   (ch?'<h3 style="margin:34px 0 12px;font-size:18px">경험 간 연결 흐름</h3><div class="chains">'+ch+'</div>':'')+'</section>';
+  return '<section id="exps"><p class="eyebrow">03 · 경험 카드</p><h2>깊게 정리한 경험</h2><p class="lead">행동은 단계별로 나누고, 그때의 생각·감정, 주고받은 말, 숫자를 따로 모았습니다. 카드 아래에서 경험 원고와 이 경험으로 쓴 예시 글을 볼 수 있습니다.</p><div class="exps">'+cards+'</div></section>';
 }
-
+function draftsOf(e){
+  return (D.drafts||[]).filter(function(d){var q=Q[d.item];if(q&&q.primary[0]===e.id)return true;if(q&&q.primary.length)return false;return (d.paras||[]).some(function(p){return String(p.from||"").indexOf(e.alias||"@@")>=0;});});
+}
+function draftHtml(d){
+  var q=Q[d.item]||{},len=(d.paras||[]).map(function(p){return p.text;}).join(" ").replace(/\s*\[(가정|추정)\]/g,"").replace(/\[수치 확인:?[^\]]*\]/g,"").length;
+  return '<details><summary>예시 글 보기 · '+esc(q.name||d.question||"")+' · '+len+'자</summary><div class="exdraft"><p class="q">'+esc((d.company?d.company+" · ":"")+(d.question||""))+'</p>'+(d.title?'<b>['+esc(d.title)+']</b>':'')+
+    (d.paras||[]).map(function(p){return '<p>'+mark(p.text)+(p.from?'<span class="from">↳ '+esc(p.from)+'</span>':'')+'</p>';}).join("")+
+    ((d.rewrite||[]).length?'<p style="font-size:13px;color:#9a3412"><b>내 말로 고쳐 쓸 곳</b> · '+esc(d.rewrite.join(" / "))+'</p>':'')+'</div></details>';
+}
 /* ---------- 6b. drafts ---------- */
 function drafts(){
   var ds=D.drafts||[];if(!ds.length)return "";
@@ -1629,15 +1663,15 @@ function bindChecks(){
 
 /* ---------- 8. plan + memos ---------- */
 function plan(){
-  var g=D.gaps||[],b=D.boosts||[],m=D.memos||{};
-  var h='<section id="plan"><p class="eyebrow">08 · 보완 계획</p><h2>비어 있는 곳을 채우는 순서</h2><p class="lead">[제안]은 지금 상황에서 기간 안에 할 수 있는 수준으로만 적었습니다.</p>';
-  if(g.length)h+='<div class="panel tw"><table><thead><tr><th>항목</th><th>다시 답해볼 질문</th><th>2주</th><th>1개월</th><th>3개월</th></tr></thead><tbody>'+g.map(function(r){return '<tr><td><b>'+esc(r.item)+'</b></td><td>'+esc(r.question)+'</td><td>'+esc(r.w2||"-")+'</td><td>'+esc(r.m1||"-")+'</td><td>'+esc(r.m3||"-")+'</td></tr>';}).join("")+'</tbody></table></div>';
-  if(b.length)h+='<h3 style="margin:28px 0 12px;font-size:18px">보완 경험 인사이트</h3><div class="panel tw"><table><thead><tr><th>보완 대상</th><th>보완 경험 [제안]</th><th>이유</th><th>효과 항목</th></tr></thead><tbody>'+b.map(function(r){return '<tr><td>'+(F[r.factor]?fchip(r.factor):esc(r.group||""))+'</td><td>'+esc(r.idea)+'</td><td>'+esc(r.why)+'</td><td>'+esc(r.effect)+'</td></tr>';}).join("")+'</tbody></table></div>';
-  var keys=["성격","계기","기타","미배치"].filter(function(k){return (m[k]||[]).length;});
-  if(keys.length)h+='<h3 style="margin:28px 0 12px;font-size:18px">부록 · 메모</h3><div class="memos">'+keys.map(function(k){return '<div class="panel"><div class="k">'+esc(k)+' 메모</div><ul>'+m[k].map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>';}).join("")+'</div>';
-  return h+'</section>';
+  var g=(D.gaps||[]).filter(function(x){return arr(x.questions).length||x.question||arr(x.maybe).length;});
+  if(!g.length)return "";
+  return '<section id="plan"><p class="eyebrow">04 · 부족한 곳</p><h2>비어 있는 곳은 이렇게 채워 보세요</h2><p class="lead">잊고 있던 장면이 떠오르면 \'경험 더 추가하기\'로 넣으면 됩니다. 새로 만들 필요 없이, 이미 한 일 안에서 먼저 찾아보세요.</p><div class="board">'+
+    g.map(function(r){var q=Q[r.item]||(D.items||[]).filter(function(x){return x.name===r.item;})[0];
+      return '<article class="panel ic"><div class="hd"><h3>'+esc(q?q.name:r.item)+'</h3>'+(q?st(q.status):'')+'</div>'+(r.why?'<p class="q" style="margin:0">'+esc(r.why)+'</p>':'')+gapHtml(r)+'</article>';}).join("")+'</div></section>';
 }
-
+function saveBar(){
+  return '<section id="save" style="padding-top:8px"><div class="panel savebar2"><p>이 결과를 파일로 남기거나, 데이터를 복사해 채팅에 붙여넣고 이어서 고칠 수 있습니다.</p><button class="btn" id="btnCopy">데이터 복사</button><button class="btn primary" id="btnSave">HTML로 저장</button></div></section>';
+}
 /* ---------- W. AI 작업실 (Claude 자동 / 복붙 겸용) ---------- */
 var BASE=[["q1","지원동기·포부"],["q2","성장과정"],["q3","성격 장점"],["q4","성격 단점"],["q5","직무 준비 노력"],["q6","도전·열정"],["q7","문제해결·개선"],["q8","팀워크"],["q9","갈등 해결"],["q10","윤리적 행동"]];
 var AI={sample:null,state:"none",dl:null,db:null,uid:null};
@@ -1679,6 +1713,7 @@ spark:{tier:"default",label:"경험 심층 정리",rules:`[할 일] 입력의 �
 - links: 직무 과업·직무 역량은 반드시 판정하고 나머지는 근거 있을 때만. evidence는 "'장면 이름' \\"학생 표현\\"" 또는 "문제 \\"...\\"".
 - assumptions: [가정]을 붙인 모든 문장과 모든 [수치 확인]. text는 [가정]이 붙은 문장을 본문(spark, steps, hurdle, later 등)에 쓴 그대로 한 글자도 바꾸지 않고 옮긴다([가정] 표시만 뺀다). 같은 내용을 다른 문장으로 또 썼으면 그 문장을 alts에 넣는다. [수치 확인]은 대괄호 안 '무엇을 세어볼지'를 그대로 text에 넣고 type "수치 확인". part는 "행동 '장면 이름'"·"결과"처럼.
 - status: 확정([가정] 없음) / 가정 포함 / 가정 중심(행동의 한 일이나 결과에 [가정]).
+- items가 있으면 그것이 이 학생이 쓸 자소서 문항(기업별 분석) 또는 기본 항목(기본 분석)이다. 질문 중 1개 이상은 이 경험이 쓰일 만한 문항의 의도(예: 갈등 해결이면 상대와 직접 대화한 장면, 문제해결이면 1차 시도가 막힌 장면)에 맞는 장면을 묻는다.
 - questions: 깊이 질문 최대 4개. 목적은 글자수를 채우는 것이 아니라 경험을 더 구체적으로 만들고, 지원 직무에서 보여줄 모습이 드러나게 하는 것이다. 그 경험에 실제로 있었을 법한 장면 중 직무와 닮은 장면을 1개 이상 묻는다(억지로 직무에 맞추지 않는다). 모자란 내용부터, 장면을 다시 떠올리게 하는 회상형 한 줄("무엇을 느꼈나요?" 같은 추상 질문 금지). 우선순위: 목표·결과 → 행동이 1단계뿐 → 고른 이유 → 생각·감정 → 숫자 → 이후 적용 → 직무 연결 장면. slot은 어느 칸. 이미 answers로 답한 질문은 다시 묻지 않는다.
 - suggest: '이런 적 없나요?' 최대 2개. 같은 장소·사람·시기의 구체 장면으로 묻고, 아직 비어 있는 자소서 항목이나 요인을 겨냥한다.
 - 숫자가 불확실하면 "OO개를 넘었던 것으로 기억하나 정확하지 않음 [수치 확인: ...]"으로 쓴다.
@@ -1694,10 +1729,10 @@ narrative:{tier:"default",label:"800자 경험 원고",rules:`[할 일] 정리�
 - 정리본에서 [가정]이 붙은 문장은 글자 그대로 가져와 [가정]을 유지한다(체크리스트 반영에 쓰인다). 새로 보충한 문장에도 [가정]을 붙인다. 수치는 만들지 않는다.
 [출력 JSON]
 {"narrative":"","point":"원고에서 지원 직무와 닿는 문장 1개 → 〔분류〕 요인 이름"}`},
-match:{tier:"complex",label:"자소서 항목 매칭과 작성 흐름",rules:`[할 일] 정리된 경험들을 자소서 항목에 매칭하고, 항목마다 작성 흐름 예시를 만든다.
-- items: baseItems 10개를 모두 같은 id와 이름으로 넣는다. 학생 문항(questions) 중 10개에 맞지 않는 것은 id q11부터 extra: true로 추가하고 문항 원문을 asks에 쓴다. 학생 문항이 있으면 해당 항목의 chars를 그 글자수로, 없으면 800.
+match:{tier:"complex",label:"자소서 항목 매칭과 작성 흐름",rules:`[할 일] 정리된 경험들을 자소서 항목에 매칭하고, 항목마다 쓰는 법을 분석한다. 목표는 학생이 '내 경험이 지원처에 얼마나 준비되었는지, 무엇이 부족한지, 부족한 경험이라도 어떻게 맞춰 쓰는지'를 바로 알게 하는 것이다.
+- mode "company"이고 questions(기업 자소서 문항)가 있으면 items는 문항마다 하나다. id는 q1부터, name은 문항을 6~12자 항목 이름으로 줄이고(예: 지원동기·포부, 직무 역량, 갈등 해결), extra true, asks에 문항 원문을 그대로, chars는 문항에 적힌 글자수(없으면 800). 아래 기본 항목 의도 기준 중 가장 가까운 기준을 적용한다. questions가 없으면 baseItems 10개를 같은 id와 이름으로 모두 넣고 chars 800.
 - 항목별 의도 기준(1순위는 핵심 조건을 모두 충족해야 함, 제외 조건이면 매칭하지 않음):
-  지원동기·포부: 산업 변화 → 이 기업을 고른 이유 → 직무 역할 → 내 경험이 쓰이는 방식이 이어짐 / 제외: 요인 없이 "좋아서" / 필수: 산업 흐름·기업 방향·직무 과업 요인 / 흐름: 산업 변화를 체감한 장면 → 기업을 고른 이유 → 직무를 고른 이유와 준비 → 내 경험의 적용 → 포부
+  지원동기·포부: 산업 변화 → 이 기업을 고른 이유 → 직무 역할 → 내 경험이 쓰이는 방식이 이어짐 / 제외: 요인 없이 "좋아서" / 흐름: 산업 변화를 체감한 장면 → 기업을 고른 이유 → 직무를 고른 이유와 준비 → 내 경험의 적용 → 포부
   성장과정: 기업 가치·직무 태도와 같은 방향의 가치관이 생긴 장면과 그 뒤 행동 / 제외: 성과만 있음 / 흐름: 가치관 한 문장 → 생긴 장면 → 이후 그대로 행동한 장면 → 직무에서의 의미
   성격 장점: 직무에 쓰이는 장점이 행동으로 드러남 / 흐름: 장점 한 문장 → 대표 장면 → 장점이 결과를 바꾼 지점 → 직무에서 쓰이는 방식
   성격 단점: 단점 인식 장면 + 개선 행동과 변화 / 제외: 직무 핵심 태도와 정면 충돌, 조직에 치명적 / 흐름: 단점 한 문장 → 단점 때문에 생긴 장면 → 고치려고 한 행동 → 달라진 점
@@ -1707,15 +1742,16 @@ match:{tier:"complex",label:"자소서 항목 매칭과 작성 흐름",rules:`[�
   팀워크: 공동 목표, 나의 역할과 기여, 시너지 장면 / 제외: 혼자 한 일 / 흐름: 공동 목표 → 팀의 어려움 → 나의 역할과 행동 → 함께 만든 장면 → 결과와 협업 기준
   갈등 해결: 갈등 상대와 직접 대화, 서로 이기는 대안 / 제외: 대화 없음, 한쪽이 참음 / 흐름: 갈등 상황 → 고민과 선택 → 대화 장면 → 함께 찾은 대안 → 결과와 기준
   윤리적 행동: 편법을 쓸 수 있었지만 쓰지 않음 / 제외: 원래 지킬 규칙을 지킨 것뿐 / 흐름: 유혹·압박 → 쉬운 길과 대가 → 내가 고른 길과 이유 → 감수한 것 → 결과와 원칙
+- mode "basic"이면 기업 정보 없이 지원 직무의 과업·역량과 항목 의도에 맞춰 세팅한다.
 - 경험 하나는 최대 2개 항목의 1순위(직무 준비 노력과 지원동기의 '내 경험의 적용'은 예외). 같은 경험을 두 항목에 쓰면 쓸 장면과 각도를 다르게 나눈다.
-- 각 item: asks(확인하려는 것), primary·secondary(경험 id), fit("충족/조건 수 (빠진 조건)"), scene(「경험 이름」 경험의 칸 이름·'장면 이름'으로), angle(작성 각도), factors(요인 id), status(바로 사용|가정 확인 후 사용|요인 보강 후 사용|공백: 가정 포함·가정 중심 경험은 가정 확인 후 사용, [추정] 요인에 기대면 요인 보강 후 사용), flow(문단 역할 part, 글자수 chars, 쓸 재료 use, 그 문단 첫 문장이 될 예시 문장 example 1개. chars 합계 = 항목 chars, 행동 문단에 가장 많이), weak(흐름이 끊기기 쉬운 곳 1줄). 매칭할 경험이 없으면 primary [], status "공백", flow [], weak에 무엇이 비었는지. 재료 분량이 500자 수준 이하인 경험이 1순위면 angle에 "재료 보강 필요: 무엇".
-- example 문장은 정리본의 사실만 쓰고 [가정]·[수치 확인]을 그대로 남긴다. [가정] 문장을 그대로 쓸 수 있으면 글자 그대로 쓴다.
-- chains: 앞 경험의 결과나 배운 점이 뒤 경험의 계기가 된 조합 1~3개(직무 관심이 커져 간 순서 1개 이상). 학생이 말한 적 없는 연결은 assumed true.
-- skeleton: 왜 이 산업 / 왜 이 기업 / 왜 이 직무 / 내 경험의 적용 / 포부 다섯 줄. 근거 경험이 없으면 missing true.
-- gaps: 공백·약한 항목마다 다시 답해볼 질문과 2주·1개월·3개월 [제안](과거 회상이 필요한 항목은 "질문 답변으로 채웁니다").
-- boosts: 커버가 약하거나 빈 요인을 채울 보완 경험 [제안]. 학생이 기간 안에 할 수 있는 수준, 기관명·수상 금지.
+- 각 item: asks(문항 원문 또는 이 항목이 확인하려는 것 1줄), primary·secondary(경험 id), fit("충족/조건 수 (빠진 조건)"), scene(「경험 이름」 경험의 칸 이름·'장면 이름'으로), angle, factors(요인 id), status, flow(문단 역할 part, 글자수 chars, 쓸 재료 use, 그 문단 첫 문장이 될 예시 문장 example 1개. chars 합계 = 항목 chars, 행동 문단에 가장 많이), weak(흐름이 끊기기 쉬운 곳 1줄).
+- status: 바로 사용(핵심 조건을 모두 충족) | 각도 바꿔 사용(경험이 항목·직무와 딱 맞지는 않지만 쓰는 각도를 잡으면 쓸 수 있음) | 공백(쓸 경험이 없음). 각도 바꿔 사용이면 angle에 '어떤 장면을 앞세우고 무엇을 직무와 잇는지'를 구체적으로 2문장 이내로 쓴다. 바로 사용이면 angle에 작성 각도 1문장.
+- 매칭할 경험이 없으면 primary [], status "공백", flow [], weak에 무엇이 비었는지.
+- example 문장은 정리본의 사실만 쓰고 [가정]·[수치 확인]을 그대로 남긴다.
+- story: 내 경험들을 하나로 꿰어 지원 직무(기업이 있으면 기업)와 잇는 한 줄 지원 스토리. 정리본의 사실만.
+- gaps: 공백 항목과 fit이 절반 이하인 항목마다 {item(항목 id), why(무엇이 비었는지 1줄), questions(이미 한 경험 안에서 장면을 다시 떠올리게 하는 회상형 질문 1~2개), maybe("혹시 ~한 적은 없었나요?" 형태로 학생의 학교·알바·동아리·일상에서 있었을 법한 경험 1~2개)}. 앞으로 할 일이나 기간 계획은 쓰지 않는다.
 [출력 JSON]
-{"items":[{"id":"q1","name":"지원동기·포부","extra":false,"asks":"","chars":800,"primary":["e1"],"secondary":[],"fit":"3/4 (빠진 조건)","scene":"","angle":"","factors":["f1"],"status":"","flow":[{"part":"","chars":150,"use":"","example":""}],"weak":""}],"chains":[{"from":"e1","to":"e2","note":"","factors":[],"assumed":false}],"skeleton":[{"step":"왜 이 산업","factors":[],"exps":[],"text":"","missing":false}],"gaps":[{"item":"","question":"","w2":"","m1":"","m3":""}],"boosts":[{"group":"","factor":"f1","idea":"","why":"","effect":""}]}`},
+{"story":"","items":[{"id":"q1","name":"지원동기·포부","extra":false,"asks":"","chars":800,"primary":["e1"],"secondary":[],"fit":"3/4 (빠진 조건)","scene":"","angle":"","factors":["f1"],"status":"바로 사용","flow":[{"part":"","chars":150,"use":"","example":""}],"weak":""}],"gaps":[{"item":"q4","why":"","questions":[""],"maybe":[""]}]}`},
 draft:{tier:"complex",label:"기업·직무 맞춤 예시 사례",rules:`[할 일] 입력의 기업·직무·문항·글자수로 예시 사례(완성 원고) 한 편을 쓴다. 학생은 이것을 그대로 내지 않고 참고해 자기 말로 다시 쓴다.
 - 문항이 자소서 항목 중 무엇인지 판단해 item에 그 항목 id를 쓴다(둘에 걸치면 비중이 큰 쪽). 입력 item이 있으면 그 항목.
 - 그 항목의 매칭(primary, scene, flow)을 출발점으로 문단 순서를 정한다. 문항과 상관없는 장면은 뺀다.
@@ -1801,10 +1837,12 @@ function F0(){return D0.flow||(D0.flow={step:arr(D0.experiences).some(function(e
 function getE(id){return arr(D0.experiences).filter(function(x){return x.id===id;})[0];}
 function setStep(step,cur){var f=F0();f.step=step;if(cur!==undefined)f.cur=cur;}
 function doStart(){
-  var I=inp();if(!String(I.raw||"").trim())return toast("경험을 먼저 적어주세요");
-  return runTask("start",{target:{industry:I.industry||"미정",company:I.company||"미정",job:I.job||"미정"},questions:qLines(I.questions),analysis:"",materials:I.raw}).then(function(r){
+  var I=inp(),basic=I.mode==="basic";if(!String(I.raw||"").trim())return toast("경험을 먼저 적어주세요");
+  if(!basic&&!String(I.company||"").trim()&&!String(I.job||"").trim())return toast("지원 기업이나 직무를 적어주세요");
+  var qs=basic?[]:qLines(I.questions);
+  return runTask("start",{target:{industry:I.industry||"미정",company:basic?"미정":(I.company||"미정"),job:I.job||"미정"},questions:qs,analysis:"",materials:I.raw}).then(function(r){
     var keep=D0.input||{};D0=blank();D0.input=keep;
-    D0.meta={name:keep.name||"",date:today(),industry:keep.industry||"미정",company:keep.company||"미정",job:keep.job||"미정"};
+    D0.meta={name:keep.name||"",date:today(),mode:basic?"basic":"company",industry:keep.industry||"미정",company:basic?"미정":(keep.company||"미정"),job:keep.job||"미정"};
     D0.factors=arr(r.factors).map(function(f,i){f.id=f.id||("f"+(i+1));return f;});
     D0.experiences=arr(r.experiences).map(function(e,i){e.id=e.id||("e"+(i+1));e.no=e.no||String(i+1).padStart(2,"0");e.raw=arr(e.raw);e.links=arr(e.expected).map(function(id){return {factor:id,level:1,evidence:"예상 연결"};});e.status="대기";e.stage="대기";delete e.expected;return e;});
     D0.memos=r.memos||{};ED={};saveEdits();
@@ -1813,14 +1851,15 @@ function doStart(){
     return askQuestions(D0.experiences[0]);
   }).catch(fail);
 }
+function itemList(){var I=inp();var qs=I.mode==="basic"?[]:qLines(I.questions);return qs.length?qs:BASE.map(function(b){return b[1];});}
 function sparkCall(e,mode){
   var cur=e.spark?expFull(e):null;if(cur)delete cur.narrative;
-  return runTask("spark",{target:tgt(),factors:facLite(),others:arr(D0.experiences).filter(function(x){return x.id!==e.id;}).map(function(x){return "「"+x.alias+"」";}),mode:mode,experience:{id:e.id,alias:e.alias,title:e.title,when:e.when,raw:e.raw,answers:arr(e.answers),current:cur}}).then(function(r){
+  return runTask("spark",{target:tgt(),items:itemList(),factors:facLite(),others:arr(D0.experiences).filter(function(x){return x.id!==e.id;}).map(function(x){return "「"+x.alias+"」";}),mode:mode,experience:{id:e.id,alias:e.alias,title:e.title,when:e.when,raw:e.raw,answers:arr(e.answers),current:cur}}).then(function(r){
     var x=r.experience||{};
     ["title","when","status","spark","steps","hurdle","inner","quotes","numbers","later","depth","apply","check","links","assumptions"].forEach(function(k){if(x[k]!=null)e[k]=x[k];});
     e.assumptions=arr(e.assumptions).map(function(a,i){a.id=e.id+"-a"+(i+1);a.type=a.type||"가정";a.alts=arr(a.alts);return a;});
     e.questions=mode==="fill"?[]:arr(r.questions).slice(0,4).concat(arr(r.suggest).slice(0,1).filter(function(x){return x&&x.q;}).map(function(x){return {slot:"더 담으면 좋은 장면",q:x.q,extra:1};}));e.suggest=[];
-    e.stage=mode==="fill"?"확정":"질문";e._ans=[];
+    e.stage=mode==="fill"?"확정":"질문";e._ans=[];if(mode==="fill")D0._stale=true;
     commit();
   });
 }
@@ -1830,42 +1869,56 @@ function goExp(id){var x=getE(id);setStep("exp",id);commit();toWork();if(x&&!x.s
 function forwardFrom(e){
   var exps=arr(D0.experiences),i=exps.indexOf(e),nx=exps[i+1]||exps.filter(function(x){return x.stage!=="확정";})[0];
   if(nx&&nx!==e)return goExp(nx.id);
-  setStep("target");commit();toWork();
+  if(arr(D0.items).length&&!D0._stale){setStep("done");commit();return toWork();}
+  return finish();
 }
 function goBack(){
   var f=F0(),exps=arr(D0.experiences);
   if(f.step==="exp"){var e=getE(f.cur),i=exps.indexOf(e);if(i>0)return goExp(exps[i-1].id);setStep("input");commit();return toWork();}
-  if(f.step==="target"){var last=exps[exps.length-1];if(last)return goExp(last.id);setStep("input");commit();return toWork();}
-  if(f.step==="done"){setStep("target");commit();return toWork();}
+  var last=exps[exps.length-1];if(last)return goExp(last.id);setStep("input");commit();return toWork();
+}
+function saveAsm(e){
+  arr(e.assumptions).forEach(function(a,i){
+    var k="a:"+akey(e,a,i),t=document.querySelector('#work input[type=text][data-asm="'+k+'"]'),c=document.querySelector('#work input[type=checkbox][data-asm="'+k+'"]');
+    var v=t?t.value.trim():"";
+    if(v)ED[k]={on:true,v:v};else if(c&&c.checked)ED[k]={on:true,v:a.type==="수치 확인"?"":a.text};else delete ED[k];
+    if(ED[k]&&!ED[k].v)delete ED[k];
+  });
+  saveEdits();
 }
 function nextFromExp(e){
   if(e.stage==="확정"){
+    saveAsm(e);
     var t=document.getElementById("add-"+e.id),v=t?t.value.trim():"";
-    if(!v)return forwardFrom(e);
-    e.answers=arr(e.answers);e.answers.push({q:"추가로 보탠 내용",a:v});e._add="";
-    return sparkCall(e,"fill").then(function(){forwardFrom(e);}).catch(fail);
+    if(!v){applyEdits();return forwardFrom(e);}
+    e.answers=arr(e.answers);
+    arr(e.assumptions).forEach(function(a,i){var k="a:"+akey(e,a,i),ed=ED[k];if(ed&&ed.on&&ed.v&&ed.v!==a.text)e.answers.push({q:"AI가 짐작한 문장 고침: "+a.text,a:ed.v});delete ED[k];});
+    saveEdits();
+    e.answers.push({q:"추가로 보탠 내용",a:v});
+    return sparkCall(e,"fill").then(function(){setStep("exp",e.id);commit();toWork();}).catch(fail);
   }
   collectAns(e);
-  return sparkCall(e,"fill").then(function(){forwardFrom(e);}).catch(fail);
+  return sparkCall(e,"fill").then(function(){setStep("exp",e.id);commit();toWork();}).catch(fail);
 }
 function dropExp(e){
   D0.experiences=arr(D0.experiences).filter(function(x){return x.id!==e.id;});
   var nx=D0.experiences.filter(function(x){return x.stage!=="확정";})[0];
-  if(nx){setStep("exp",nx.id);commit();if(!nx.spark)askQuestions(nx).catch(fail);}else{setStep(D0.experiences.length?"target":"input");commit();}
+  if(nx){setStep("exp",nx.id);commit();if(!nx.spark)askQuestions(nx).catch(fail);}
+  else if(D0.experiences.length){finish();}else{setStep("input");commit();}
 }
 function finish(){
-  var I=inp();
-  var t={industry:I.industry||D0.meta.industry,company:I.company||D0.meta.company,job:I.job||D0.meta.job};
-  D0.meta.industry=t.industry;D0.meta.company=t.company;D0.meta.job=t.job;
+  var I=inp(),m=D0.meta||(D0.meta={}),basic=(I.mode||m.mode)==="basic";
+  m.mode=basic?"basic":"company";
+  if(I.industry)m.industry=I.industry;if(I.job)m.job=I.job;m.company=basic?"미정":(I.company||m.company||"미정");
+  var qs=basic?[]:qLines(I.questions);
   var ok=arr(D0.experiences).filter(function(e){return e.spark;});
-  return runTask("match",{target:tgt(),questions:qLines(I.questions),baseItems:BASE.map(function(b){return {id:b[0],name:b[1]};}),factors:facLite(),experiences:ok.map(expLite),memos:D0.memos}).then(function(r){
+  return runTask("match",{mode:m.mode,target:tgt(),questions:qs,baseItems:BASE.map(function(b){return {id:b[0],name:b[1]};}),factors:facLite(),experiences:ok.map(expLite)}).then(function(r){
     var items=arr(r.items),have={};items.forEach(function(q){have[q.id]=1;q.primary=arr(q.primary);q.secondary=arr(q.secondary);});
-    BASE.forEach(function(b){if(!have[b[0]])items.push({id:b[0],name:b[1],primary:[],secondary:[],status:"공백",flow:[],asks:"",fit:"0"});});
+    if(!qs.length)BASE.forEach(function(b){if(!have[b[0]])items.push({id:b[0],name:b[1],primary:[],secondary:[],status:"공백",flow:[],asks:"",fit:"0"});});
     items.sort(function(a,b){return (+a.id.slice(1))-(+b.id.slice(1));});
-    D0.items=items;D0.chains=arr(r.chains);D0.skeleton=arr(r.skeleton);D0.gaps=arr(r.gaps);D0.boosts=arr(r.boosts);
-    commit();
-    return makeSetup(t,qLines(I.questions));
-  }).then(function(){setStep("done");commit();toast("완성했습니다. 아래에서 확인하세요");var s=document.getElementById("setup");if(s)s.scrollIntoView({behavior:"instant"});}).catch(fail);
+    D0.items=items;D0._stale=false;D0.story=r.story||"";D0.gaps=arr(r.gaps);D0.chains=[];D0.skeleton=[];D0.boosts=[];D0.setups=[];
+    setStep("done");commit();toast("완성했습니다");window.scrollTo({top:0,behavior:"instant"});
+  }).catch(fail);
 }
 function makeSetup(t,qs){
   return runTask("setup",{target:t,currentTarget:tgt(),questions:qs,factors:facLite(),items:arr(D0.items).map(function(q){return {id:q.id,name:q.name,primary:q.primary,secondary:q.secondary,scene:q.scene,angle:q.angle,status:q.status,chars:q.chars};}),experiences:arr(D0.experiences).filter(function(e){return e.spark;}).map(expLite),previous:arr(D0.setups).map(function(S){return {company:S.company,job:S.job,roles:S.roles};})}).then(function(r){
@@ -1886,7 +1939,7 @@ function doDraft(){
   runTask("draft",{company:D0.meta.company,job:D0.meta.job,question:dq,limit:+I.dl||800,item:"",factors:facLite(),items:arr(D0.items).map(function(q){return {id:q.id,name:q.name,primary:q.primary,secondary:q.secondary,scene:q.scene,angle:q.angle,flow:q.flow};}),experiences:arr(D0.experiences).filter(function(e){return e.spark;}).map(expFull)}).then(function(r){
     var d=r.draft||r;if(!arr(d.paras).length)throw {msg:"예시 사례가 비어 있습니다. 다시 눌러주세요"};
     if(!Q[d.item])d.item="";d.company=d.company||D0.meta.company;d.job=d.job||D0.meta.job;d.question=d.question||dq;d.limit=d.limit||+I.dl||800;
-    D0.drafts.push(d);I.dq="";commit();toast("예시 사례를 만들었습니다");var x=document.getElementById("d-"+(D0.drafts.length-1));if(x)x.scrollIntoView({behavior:"instant"});
+    D0.drafts.push(d);I.dq="";commit();var q0=Q[d.item],x=q0&&q0.primary[0]?document.getElementById("x-"+q0.primary[0]):null;toast(x?"예시 글을 "+nm(E[q0.primary[0]])+" 경험 카드에 넣었습니다":"예시 글을 만들었습니다");if(x)x.scrollIntoView({behavior:"instant"});
   }).catch(fail);
 }
 function doSetupMore(){
@@ -1897,7 +1950,7 @@ function addExp(raw){
   var n=arr(D0.experiences).length+1,id="e"+n;while(getE(id))id="e"+(++n);
   var e={id:id,no:String(n).padStart(2,"0"),alias:"새 경험",title:"새 경험",when:"",raw:qLines(raw),links:[],status:"대기",stage:"대기"};
   D0.experiences.push(e);setStep("exp",id);commit();
-  return runTask("spark",{target:tgt(),factors:facLite(),others:[],mode:"draft",experience:{id:id,alias:"",title:"",when:"",raw:e.raw,answers:[],current:null},note:"alias가 비어 있으니 8~14자 경험 이름을 experience.alias에 넣는다"}).then(function(r){
+  return runTask("spark",{target:tgt(),items:itemList(),factors:facLite(),others:[],mode:"draft",experience:{id:id,alias:"",title:"",when:"",raw:e.raw,answers:[],current:null},note:"alias가 비어 있으니 8~14자 경험 이름을 experience.alias에 넣는다"}).then(function(r){
     var x=r.experience||{};if(x.alias)e.alias=x.alias;else if(x.title)e.alias=String(x.title).slice(0,14);
     ["title","when","status","spark","steps","hurdle","inner","quotes","numbers","later","depth","apply","check","links","assumptions"].forEach(function(k){if(x[k]!=null)e[k]=x[k];});
     e.assumptions=arr(e.assumptions).map(function(a,i){a.id=e.id+"-a"+(i+1);a.type=a.type||"가정";a.alts=arr(a.alts);return a;});
@@ -1908,17 +1961,22 @@ function addExp(raw){
 /* --- 화면 --- */
 function fld(k,label,ph,big,full){var v=inp()[k]||"";return '<label class="wf'+(full?" full":"")+'"><span>'+label+'</span>'+(big?'<textarea id="in-'+k+'" data-in="'+k+'" rows="'+big+'" placeholder="'+esc(ph||"")+'">'+esc(v)+'</textarea>':'<input id="in-'+k+'" data-in="'+k+'" value="'+esc(v)+'" placeholder="'+esc(ph||"")+'">')+'</label>';}
 function stepBar(cur){
-  var S=[["input","경험 적기"],["exp","질문에 답하기"],["target","기업·직무"],["done","완성"]],ix=S.map(function(s){return s[0];}).indexOf(cur);
+  var S=[["input","분석 방식·경험 적기"],["exp","질문에 답하기"],["done","완성"]],ix=S.map(function(s){return s[0];}).indexOf(cur);
   return '<ol class="wbar">'+S.map(function(s,i){return '<li class="'+(i<ix?"done":i===ix?"on":"")+'"><b>'+(i<ix?"✓":(i+1))+'</b>'+s[1]+'</li>';}).join("")+'</ol>';
 }
 function sInput(){
-  var has=arr(D0.experiences).length;
-  if(has)return '<div class="wstep"><h3>이미 나눠 둔 경험이 '+has+'개 있어요</h3><p class="wnote">이어서 하면 지금까지 답한 내용이 그대로 남습니다. \'처음부터 다시 나누기\'는 아래 내용을 새로 읽어 경험을 다시 나누고, 지금까지 정리한 내용은 지워집니다.</p>'+
-    fld("raw","내 경험","",6,1)+
-    '<div class="wact"><button class="btn primary big" data-act="resume">이어서 하기 →</button><button class="btn" data-act="restart">처음부터 다시 나누기</button></div></div>';
-  return '<div class="wstep"><h3>어떤 경험이든 편하게 적어주세요</h3><p class="wnote">아르바이트, 조별과제, 동아리, 혼자 꾸준히 한 일 모두 됩니다. 한 줄씩이어도 괜찮고, 이력서나 자기소개서를 그대로 붙여넣어도 됩니다.</p>'+
-    fld("raw","내 경험","예) 편의점 야간 알바를 하며 폐기가 너무 많아서 2주 동안 메모해 점장님께 보여드렸다.\n예) 조별과제에서 연락이 안 되는 팀원이 있었는데 따로 연락해서 이유를 물어봤다.",9,1)+
-    '<div class="wgrid" style="margin-top:12px">'+fld("industry","지원 산업","모르면 비워두세요")+fld("company","지원 기업","모르면 비워두세요")+fld("job","지원 직무","모르면 비워두세요")+fld("name","이름","표지에 쓰여요")+'</div>'+
+  var I=inp(),basic=I.mode==="basic",has=arr(D0.experiences).length;
+  var modes='<div class="modes"><button type="button" data-act="mode" data-m="company" class="'+(basic?"":"on")+'"><b>기업별 경험 분석</b><small>지원할 기업의 자소서 문항에 맞춰 경험을 세팅해요. 문항이 없으면 기본 항목으로 분석해요.</small></button>'+
+    '<button type="button" data-act="mode" data-m="basic" class="'+(basic?"on":"")+'"><b>기본 경험 분석</b><small>아직 기업이 정해지지 않았다면, 지원 직무와 자소서 기본 항목 10개의 의도에 맞춰 세팅해요.</small></button></div>';
+  var tg=basic?'<div class="wgrid">'+fld("job","지원 직무","예: 영업관리")+fld("industry","지원 산업 (선택)","예: 유통")+'</div>':
+    '<div class="wgrid">'+fld("company","지원 기업","예: OO리테일")+fld("job","지원 직무","예: 영업관리")+fld("industry","산업 (선택)","예: 유통")+'</div>'+
+    fld("questions","자소서 문항 붙여넣기 (한 줄에 하나, 없으면 비워두세요)","예: 지원동기와 입사 후 포부를 작성해 주십시오. (700자)\n예: 협업 과정에서 갈등을 해결한 경험을 작성해 주십시오. (500자)",4,1);
+  if(has)return '<div class="wstep"><h3>이미 나눠 둔 경험이 '+has+'개 있어요</h3><p class="wnote">이어서 하면 지금까지 답한 내용이 그대로 남습니다. 분석 방식이나 기업·문항을 바꿨다면 경험 정리를 다 한 뒤 완성 화면에서 다시 분석할 수 있어요.</p>'+modes+tg+
+    '<div class="wact"><button class="btn primary big" data-act="resume">이어서 하기 →</button><button class="btn" data-act="restart">경험을 처음부터 다시 나누기</button><button class="btn ghost" data-act="reset">전체 초기화</button></div></div>';
+  return '<div class="wstep"><h3>어떤 분석을 할까요?</h3>'+modes+tg+
+    '<h3 style="margin-top:10px;font-size:18px">내 경험을 편하게 적어주세요</h3><p class="wnote">아르바이트, 조별과제, 동아리, 혼자 꾸준히 한 일 모두 됩니다. 한 줄씩이어도 괜찮고, 이력서나 자기소개서를 그대로 붙여넣어도 됩니다.</p>'+
+    fld("raw","내 경험","예) 편의점 야간 알바를 하며 폐기가 너무 많아서 2주 동안 메모해 점장님께 보여드렸다.\n예) 조별과제에서 연락이 안 되는 팀원이 있었는데 따로 연락해서 이유를 물어봤다.",8,1)+
+    '<div class="wgrid" style="margin-top:4px">'+fld("name","이름","표지에 쓰여요")+'</div>'+
     '<div class="wact"><button class="btn primary big" data-act="start">다음 →</button><span class="wnote">Claude가 경험을 나누고 첫 질문을 준비합니다. 1분쯤 걸려요.</span></div></div>';
 }
 function sExp(){
@@ -1930,12 +1988,17 @@ function sExp(){
   }else{
     var qs=arr(e.questions);
     var doneE=e.stage==="확정";
-    if(doneE)h+='<p class="wnote">정리를 마친 경험입니다. 아래 정리를 보고 고치거나 보탤 내용이 있으면 적어주세요. 비워두고 다음을 누르면 그대로 넘어갑니다.</p><label class="wf full wadd"><span>고치거나 보탤 내용 (선택)</span><textarea id="add-'+e.id+'" rows="3" placeholder="예) 사실 두 번째 단계는 점장님이 먼저 제안하셨어요."></textarea></label>';
+    if(doneE)h+='<p class="wnote">정리를 마쳤어요. 답하지 않은 빈 곳은 AI가 자연스럽게 이어지도록 짐작해 채웠습니다. 아래에서 내 경험과 다른 문장만 고쳐 주세요.</p>'+asmHtml(e)+'<label class="wf full wadd"><span>그 밖에 고치거나 보탤 내용 (선택)</span><textarea id="add-'+e.id+'" rows="2" placeholder="예) 사실 두 번째 단계는 점장님이 먼저 제안하셨어요."></textarea></label>';
     else h+=qs.length?'<p class="wnote">이 경험을 <b>더 구체적으로</b>, 그리고 지원 직무에서 보여줄 수 있는 모습이 드러나게 다듬는 질문이에요. 기억나는 만큼만 짧게 적어주세요. 모르면 비워두고 다음을 눌러도 됩니다.</p><div class="wq">'+qs.map(function(q,j){return '<label class="wf full"><span>'+(q.extra?'<em style="font-style:normal;color:var(--blue);font-weight:700">이런 장면도 있었나요? </em>':(j+1)+'. ')+esc(q.q)+'</span><textarea id="ans-'+e.id+'-'+j+'" data-ans="'+e.id+':'+j+'" rows="2">'+esc(arr(e._ans)[j]||"")+'</textarea></label>';}).join("")+'</div>':'<p class="wnote">더 물어볼 것이 없습니다. 다음을 누르면 이 경험을 마무리합니다.</p>';
-    h+='<div class="wact"><button class="btn" data-act="back">← 이전</button><button class="btn primary big" data-act="next" data-id="'+e.id+'">'+(i<exps.length-1?"다음 경험 →":"다음 →")+'</button><button class="btn ghost" data-act="drop" data-id="'+e.id+'">이 경험은 빼기</button></div>'+
+    h+='<div class="wact"><button class="btn" data-act="back">← 이전</button><button class="btn primary big" data-act="next" data-id="'+e.id+'">'+(i<exps.length-1?"다음 경험 →":"다음 →")+'</button><button class="btn ghost" data-act="drop" data-id="'+e.id+'">이 경험은 빼기</button><button class="btn ghost" data-act="reset">전체 초기화</button></div>'+
       '<details class="wpeek"'+(doneE?' open':'')+'><summary>'+(doneE?'정리된 내용':'지금까지 정리된 내용 보기')+'</summary>'+expCard(E[e.id]||e,true)+'</details>';
   }
   return h+'</div>';
+}
+function asmHtml(e){
+  var as=arr(e.assumptions);if(!as.length)return "";
+  return '<div class="asm"><h4>AI가 짐작해 채운 부분 '+as.length+'곳</h4>'+as.map(function(a,i){var k="a:"+akey(e,a,i),ed=ED[k]||{},num=a.type==="수치 확인",same=ed.on&&ed.v===a.text;
+    return '<div class="row"><div class="t"><small>'+esc(a.part||"")+(num?" · 세어볼 숫자":"")+'</small>'+esc(a.text)+'</div><div class="ctl"><input type="text" data-asm="'+esc(k)+'" value="'+esc(ed.on&&!same?ed.v:"")+'" placeholder="'+(num?"예: 하루 14개 → 5개":"내 경험과 다르면 고쳐 쓰기")+'">'+(num?'':'<label><input type="checkbox" data-asm="'+esc(k)+'"'+(same?" checked":"")+'> 이대로 맞아요</label>')+'</div></div>';}).join("")+'</div>';
 }
 function sTarget(){
   return '<div class="wstep"><h3>어디에 지원하나요?</h3><p class="wnote">경험 '+arr(D0.experiences).length+'개 정리가 끝났습니다. 지원할 곳을 적으면 어떤 경험을 어느 항목에 쓸지 정리해 드려요.</p>'+
@@ -1944,16 +2007,15 @@ function sTarget(){
     '<div class="wact"><button class="btn" data-act="back">← 이전</button><button class="btn primary big" data-act="finish">'+(arr(D0.items).length?'다시 완성하기':'완성하기')+'</button>'+(arr(D0.items).length?'<button class="btn" data-act="todone">바꾸지 않고 완성 화면으로</button>':'<span class="wnote">매칭과 최종 세팅을 만듭니다. 2~3분쯤 걸려요.</span>')+'</div></div>';
 }
 function sDone(){
-  var S=arr(D0.setups)[curSetup]||arr(D0.setups)[0];
-  return '<div class="wstep"><h3>완성했어요</h3><p class="wnote">'+(S?esc(S.company)+' '+esc(S.job)+' 기준으로 정리했습니다. ':'')+'아래로 내려가면 최종 세팅, 연결 지도, 항목별 쓰는 법, 경험 카드가 이어집니다.</p>'+
-    '<div class="wlinks"><a href="#setup">최종 세팅</a><a href="#map">연결 지도</a><a href="#board">항목별 쓰는 법</a><a href="#exps">경험 카드</a><a href="#check">가정 다듬기</a></div>'+
+  return '<div class="wstep"><h3>더 해보기</h3><p class="wnote">결과는 위에 정리되어 있어요. 필요한 것만 펼쳐서 쓰세요.</p>'+
     '<div class="wmore">'+
-      '<details><summary>자소서 예시 글 만들기</summary>'+fld("dq","자소서 문항","예: 기존과 다른 방식으로 문제를 해결한 경험을 기술해 주십시오.",2,1)+'<div class="wgrid" style="margin-top:8px">'+fld("dl","글자수","800")+'</div><div class="wact"><button class="btn primary" data-act="draft">예시 글 만들기</button></div></details>'+
-      '<details><summary>경험마다 800자 원고 만들기</summary><p class="wnote">경험 하나를 처음부터 끝까지 이어 쓴 글입니다. 내 경험이 글로 쓰이면 어떻게 되는지 볼 수 있어요.</p><div class="wact"><button class="btn primary" data-act="narr">원고 만들기</button></div></details>'+
-      '<details><summary>다른 기업으로도 세팅하기</summary><div class="wgrid">'+fld("si","산업","")+fld("sc","기업","")+fld("sj","직무","")+'</div>'+fld("sq","자소서 문항 (있으면)","",2,1)+'<div class="wact"><button class="btn primary" data-act="setupmore">세팅 추가</button></div></details>'+
+      '<details><summary>자소서 예시 글 만들기</summary>'+fld("dq","자소서 문항","예: 기존과 다른 방식으로 문제를 해결한 경험을 기술해 주십시오.",2,1)+'<div class="wgrid" style="margin-top:8px">'+fld("dl","글자수","800")+'</div><div class="wact"><button class="btn primary" data-act="draft">예시 글 만들기</button></div><p class="wnote">만든 글은 가장 많이 쓴 경험의 카드 아래 \'예시 글 보기\'에 들어가요.</p></details>'+
+      '<details><summary>경험마다 원고 만들기</summary><p class="wnote">경험 하나를 처음부터 끝까지 이어 쓴 글입니다. 경험 카드의 \'경험 원고 보기\'에 들어가요.</p><div class="wact"><button class="btn primary" data-act="narr">원고 만들기</button></div></details>'+
+      '<details><summary>다른 기업·문항으로 다시 분석하기</summary><p class="wnote">정리한 경험은 그대로 두고 항목 분석만 새로 합니다. 문항을 비우면 기본 항목으로 분석해요.</p>'+modesMini()+'<div class="wgrid">'+fld("company","기업","")+fld("job","직무","")+fld("industry","산업","")+'</div>'+fld("questions","자소서 문항 (한 줄에 하나)","",3,1)+'<div class="wact"><button class="btn primary" data-act="refinish">다시 분석</button></div></details>'+
       '<details><summary>경험 더 추가하기</summary>'+fld("nraw","새 경험","떠오르는 대로 적어주세요",4,1)+'<div class="wact"><button class="btn primary" data-act="addexp">추가하고 질문 받기</button></div></details>'+
-    '</div><div class="wact"><button class="btn" data-act="back">← 기업·직무 다시 입력</button><button class="btn" data-act="toexp">경험 다시 보기</button><button class="btn ghost" data-act="reset">처음부터 다시</button></div></div>';
+    '</div><div class="wact"><button class="btn" data-act="back">← 경험 다시 보기</button><button class="btn ghost" data-act="reset">전체 초기화</button></div></div>';
 }
+function modesMini(){var b=inp().mode==="basic";return '<div class="seg" style="align-self:flex-start"><button type="button" data-act="mode" data-m="company" class="'+(b?"":"on")+'">기업별 분석</button><button type="button" data-act="mode" data-m="basic" class="'+(b?"on":"")+'">기본 분석</button></div>';}
 function noAI(){
   var checking=AI.state==="checking";
   return '<section id="work"><p class="eyebrow">시작하기</p><h2>'+(checking?"Claude 연결을 확인하는 중입니다":"ChatGPT·제미나이로 정리하기")+'</h2>'+
@@ -1966,7 +2028,9 @@ function noAI(){
 }
 function work(){
   if(AI.state!=="claude")return noAI();
-  var f=F0(),body={input:sInput,exp:sExp,target:sTarget,done:sDone}[f.step]||sInput;
+  var f=F0();
+  if(f.step==="done")return '<section id="work"><p class="eyebrow">더 해보기</p><div class="panel wk">'+sDone()+'</div></section>';
+  var body={input:sInput,exp:sExp}[f.step]||sInput;
   return '<section id="work"><p class="eyebrow">Claude와 함께 정리하기</p><h2>[다음]만 누르면 됩니다</h2><div class="panel wk">'+stepBar(f.step)+body()+'</div></section>';
 }
 function intro(){return '<div class="hero"><p class="eyebrow">SPARK 경험 지도</p><h1>내 경험을 <span>자소서에 쓸 재료</span>로<br>정리해 드려요</h1></div>';}
@@ -1979,22 +2043,27 @@ function onWorkClick(ev){
   var b=ev.target.closest("[data-act]");if(!b||!b.closest("#work"))return;
   var a=b.getAttribute("data-act"),e=getE(b.getAttribute("data-id"));
   if(a==="start")return doStart();
+  if(a==="mode"){inp().mode=b.getAttribute("data-m");saveAll();rerender();return;}
+  if(a==="refinish")return finish();
   if(a==="back")return goBack();
-  if(a==="resume"){var un=arr(D0.experiences).filter(function(x){return x.stage!=="확정";})[0];if(un)return goExp(un.id);setStep("target");commit();return toWork();}
+  if(a==="resume"){var un=arr(D0.experiences).filter(function(x){return x.stage!=="확정";})[0];if(un)return goExp(un.id);return forwardFrom(arr(D0.experiences).slice(-1)[0]);}
   if(a==="restart"){confirmBox("지금까지 정리한 경험을 지우고 새로 나눌까요?","새로 나누기").then(function(y){if(y)doStart();});return;}
-  if(a==="todone"){setStep("done");commit();return toWork();}
-  if(a==="toexp"){var f0=arr(D0.experiences)[0];if(f0)return goExp(f0.id);return;}
   if(a==="ask")return askQuestions(e).catch(fail);
   if(a==="next")return nextFromExp(e);
   if(a==="drop"){confirmBox("「"+e.alias+"」 경험을 빼고 넘어갈까요?","빼기").then(function(y){if(y)dropExp(e);});return;}
-  if(a==="finish"){if(!String(inp().company||"").trim()&&!String(inp().job||"").trim())return toast("기업이나 직무를 하나 이상 적어주세요");return finish();}
   if(a==="draft")return doDraft();
   if(a==="narr")return doNarrAll();
-  if(a==="setupmore")return doSetupMore();
   if(a==="addexp"){var r=String(inp().nraw||"").trim();if(!r)return toast("새 경험을 적어주세요");inp().nraw="";return addExp(r);}
-  if(a==="reset"){confirmBox("지금까지 정리한 내용을 모두 지우고 처음부터 할까요?","처음부터").then(function(y){if(!y)return;var keep={name:inp().name};D0=blank();D0.input=keep;ED={};saveEdits();commit();window.scrollTo({top:0,behavior:"instant"});});return;}
+  if(a==="reset")return wipeAll();
   if(a==="copyprompt"){var pt=document.getElementById("spark-prompt");return copyText(pt?pt.textContent.trim():"","프롬프트를 복사했습니다. ChatGPT나 제미나이 새 채팅에 붙여넣으세요");}
   if(a==="paste")return openDlg();
+}
+function wipeAll(){
+  confirmBox("정리한 경험, 답변, 분석 결과를 모두 지우고 처음부터 시작할까요? 되돌릴 수 없습니다.","전체 초기화").then(function(y){
+    if(!y)return;
+    D0=blank();D0.flow={step:"input"};ED={};saveEdits();pinned=null;curSetup=0;saveAll();
+    applyEdits();render();window.scrollTo({top:0,behavior:"instant"});toast("모두 지웠습니다. 처음부터 시작하세요");
+  });
 }
 function updBadge(){var el=document.getElementById("aiBadge");if(!el)return;var on=AI.state==="claude";el.className="aib "+(on?"on":"");el.textContent=on?"● Claude 연결":(AI.state==="checking"?"연결 확인 중":"ChatGPT·제미나이 모드");}
 function initRuntime(){
@@ -2018,10 +2087,14 @@ function initRuntime(){
 function render(){
   index();
   var hasE=(D.experiences||[]).some(function(e){return e.spark;}),hasI=(D.items||[]).length>0;
-  if(AI.state==="claude"&&F0().step!=="done")hasE=false;
-  app.innerHTML=(hasE?hero():intro())+work()+(hasE?setups()+(hasI?flowMap():"")+mindMap()+(hasI?board()+skeleton():"")+experiences()+drafts()+checklist()+plan():"")+'<footer>SPARK 경험 지도 · 이 파일은 정리 시점의 스냅샷입니다. 경험이 바뀌면 「데이터 복사」로 채팅에 붙여넣고 바뀐 경험만 다시 요청하세요.</footer>';
-  if(document.getElementById("flow"))bindMap();bindSetup();if(document.getElementById("check"))bindChecks();updBadge();
+  var claude=AI.state==="claude",step=F0().step;
+  if(claude&&step!=="done")hasE=false;
+  var top=hasE?hero():intro();
+  var w=(claude?(step==="done"&&hasE?"":work()):(hasE?"":work()));
+  app.innerHTML=top+w+(hasE?setups()+(hasI?flowMap():"")+board()+experiences()+plan()+(claude&&step==="done"?work():"")+saveBar():"")+'<footer>SPARK 경험 지도 · 정리 시점의 스냅샷입니다.</footer>';
+  if(document.getElementById("flow"))bindMap();if(document.getElementById("btnSave"))bindChecks();updBadge();
   document.querySelectorAll("#nav a").forEach(function(a){a.hidden=!document.getElementById(a.getAttribute("href").slice(1));});
+  var wb=document.getElementById("btnWipe");if(wb){wb.hidden=(EMB&&AI.state!=="claude")||!(arr(D0.experiences).length||String(inp().raw||"").trim());wb.onclick=wipeAll;}
   document.title="경험 지도 · "+((D.meta&&D.meta.name)||"SPARK");
 }
 function empty(){
