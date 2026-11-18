@@ -122,6 +122,7 @@ async function loadPromptsFromNotion() {
       title: i.title,
       description: i.description,
       subCategory: i.subCategory,
+      locked: Boolean(i.locked),
       prompt: null,
       notion: true,
     }));
@@ -216,7 +217,7 @@ function renderPromptCard(p, container) {
   card.className = "prompt-card";
   card.style.setProperty("--cat-color", getCategoryColor(p.category));
   card.innerHTML = `
-    <span class="card-tag">${p.category}</span>
+    <span class="card-tag">${p.category}</span>${Access.lockTag(p.locked)}
     <h3 class="card-title">${p.title}</h3>
     <p class="card-desc">${p.description}</p>
   `;
@@ -316,7 +317,21 @@ searchInput.addEventListener("input", (e) => {
   }
 });
 
+// 프롬프트 본문을 받아옵니다. 코드가 필요한 항목이면 코드를 입력받은 뒤 다시 시도합니다.
+// 돌려주는 값: 본문 문자열, 코드를 입력하지 않았으면 null
+async function fetchPromptBody(p) {
+  const url = "/api/items?id=" + encodeURIComponent(p.id);
+  let res = await fetch(url);
+  if (res.status === 403) {
+    if (!(await Access.ensure())) return null;
+    res = await fetch(url);
+  }
+  if (!res.ok) throw new Error("load failed");
+  return (await res.json()).body || "";
+}
+
 async function openModal(p) {
+  if (p.locked && p.prompt == null && !(await Access.ensure())) return;
   modalTag.textContent = p.category;
   modalTag.style.setProperty("--cat-color", getCategoryColor(p.category));
   modalTitle.textContent = p.title;
@@ -330,9 +345,12 @@ async function openModal(p) {
     modalPromptSections.textContent = "불러오는 중...";
     copyBtn.onclick = null;
     try {
-      const res = await fetch("/api/items?id=" + encodeURIComponent(p.id));
-      const data = await res.json();
-      p.prompt = data.body || "";
+      const body = await fetchPromptBody(p);
+      if (body === null) {
+        closeModal();
+        return;
+      }
+      p.prompt = body;
     } catch (e) {
       modalPromptSections.textContent = "프롬프트를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.";
       return;

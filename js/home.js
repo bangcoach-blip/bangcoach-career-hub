@@ -247,8 +247,10 @@ async function copyFromHome(p, btn) {
   btn.disabled = true;
   try {
     if (p.prompt == null) {
-      const res = await fetch("/api/items?id=" + encodeURIComponent(p.id));
-      p.prompt = (await res.json()).body || "";
+      if (p.locked && !(await Access.ensure())) return;
+      const body = await fetchPromptBody(p);
+      if (body === null) return;
+      p.prompt = body;
     }
     await navigator.clipboard.writeText(p.prompt);
     btn.textContent = "복사됨";
@@ -279,7 +281,7 @@ async function loadHomePrompts() {
     li.innerHTML = `
       <button type="button" class="share-main">
         <span class="share-cat">${hEsc(p.category)}</span>
-        <span class="share-text"><strong class="share-title">${hEsc(p.title)}</strong><span class="share-desc">${hEsc(p.description || "")}</span></span>
+        <span class="share-text"><strong class="share-title">${hEsc(p.title)}${Access.lockTag(p.locked)}</strong><span class="share-desc">${hEsc(p.description || "")}</span></span>
       </button>
       <button type="button" class="share-copy">복사</button>`;
     li.querySelector(".share-main").addEventListener("click", () => openModal(p));

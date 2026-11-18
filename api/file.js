@@ -1,4 +1,5 @@
 const { notion, listChildren } = require("./_notion");
+const { getAccess } = require("./_access");
 
 // 자료 공유: 노션 페이지 본문에 올린 첫 번째 파일(PDF 등)로 연결합니다.
 // 노션 파일 주소는 1시간 뒤 만료되므로, 누를 때마다 새 주소를 받아 바로 넘겨줍니다.
@@ -15,6 +16,19 @@ module.exports = async function handler(req, res) {
     const page = await notion(`/pages/${encodeURIComponent(id)}`);
     if ((page.properties["상태"]?.select?.name || null) !== "발행") {
       res.status(404).send("공개되지 않은 자료입니다.");
+      return;
+    }
+    const props = page.properties;
+    const locked = props["공개범위"]?.select?.name === "코드 필요" && ["자료", "프롬프트"].includes(props["유형"]?.select?.name);
+    if (locked && !(await getAccess(req))) {
+      res.status(403).setHeader("Content-Type", "text/html; charset=utf-8");
+      res.send("<p style=\"font-family:sans-serif;padding:40px\">코드가 필요한 자료입니다. 사이트에서 코드를 입력한 뒤 다시 눌러 주세요.</p>");
+      return;
+    }
+    // 잠긴 자료는 목록에 링크를 숨겨 두었으므로, 코드를 확인한 뒤 원래 링크로 보냅니다
+    const given = props["링크"]?.url || "";
+    if (locked && given && given.replace(/\/$/, "") !== "https://drive.google.com") {
+      res.redirect(302, given);
       return;
     }
     const blocks = await listChildren(page.id);

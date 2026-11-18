@@ -2178,3 +2178,146 @@ body[data-tab="prompts"] { --accent: #0369a1; --accent-strong: #075985; --accent
 .home-spark .spark-tool-card { margin-top: 20px; }
 
 .about-hero + .photo-strip { margin: 48px auto 40px; }
+
+/* ── 접근 코드 ───────────────────────────────────────── */
+.lock-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+body.has-access .lock-tag {
+  display: none;
+}
+
+.access-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 10, 10, 0.5);
+}
+
+.access-overlay.visible {
+  display: flex;
+}
+
+.access-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 26px 22px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+}
+
+.access-box h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.access-sub {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.access-form {
+  display: flex;
+  gap: 8px;
+}
+
+.access-input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.access-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.access-submit {
+  padding: 0 22px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.access-submit:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.access-error {
+  min-height: 20px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+.access-close {
+  display: block;
+  margin: 6px auto 0;
+  padding: 6px 12px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.lock-panel {
+  margin-top: 20px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f9fafb;
+  text-align: center;
+}
+
+.lock-panel p {
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+.lock-panel-btn {
+  padding: 11px 24px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--ink);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}

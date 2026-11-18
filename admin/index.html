@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
-<title>자료 올리기 | 방영황 관리자</title>
+<title>관리자 | 방영황</title>
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <style>
   :root { --ink:#0a0a0a; --muted:#6b7280; --line:#e5e7eb; --accent:#4f46e5; --soft:#eef2ff; --bg:#f8f9fc; --err:#dc2626; --ok:#15803d; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:Pretendard,"Malgun Gothic","Apple SD Gothic Neo",sans-serif; line-height:1.6; }
-  .wrap { max-width:680px; margin:0 auto; padding:32px 16px 72px; }
+  .wrap { max-width:760px; margin:0 auto; padding:32px 16px 72px; }
   header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; }
   h1 { margin:0; font-size:22px; }
   h2 { margin:0 0 14px; font-size:16px; }
@@ -45,13 +45,28 @@
   .row:first-child { border-top:0; }
   .row b { font-weight:700; word-break:break-all; }
   .row small { display:block; color:var(--muted); }
+  input[type=date] { display:block; margin-top:6px; padding:9px 10px; border:1px solid var(--line); border-radius:10px; font:inherit; background:#fff; }
+  .inline { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:14px; }
+  .inline label.field { flex:1 1 180px; margin:0; }
+  .inline .primary { width:auto; padding:11px 22px; }
+  .code { font-family:Consolas,"Courier New",monospace; font-size:15px; font-weight:800; letter-spacing:.04em; }
+  .badge { display:inline-block; padding:2px 9px; border-radius:999px; font-size:12px; font-weight:700; background:#dcfce7; color:#166534; }
+  .badge.off { background:#f3f4f6; color:#6b7280; }
+  .badge.end { background:#fee2e2; color:#b91c1c; }
+  .tools { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:flex-end; }
+  .tools input[type=date] { margin:0; padding:6px 8px; font-size:13px; }
+  .note { margin:0 0 14px; font-size:13px; color:var(--muted); }
+  .lockrow { display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--line); font-size:14px; cursor:pointer; }
+  .lockrow b { font-weight:600; }
+  .lockrow small { color:var(--muted); margin-left:auto; white-space:nowrap; }
+  .lockgroup { margin:18px 0 4px; font-size:13px; font-weight:800; color:var(--muted); }
   .hidden { display:none !important; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>자료 올리기</h1>
+    <h1>관리자</h1>
     <div>
       <a class="ghost" href="/" style="text-decoration:none;color:inherit">사이트 보기</a>
       <button class="ghost hidden" id="logoutBtn" type="button">로그아웃</button>
@@ -99,11 +114,33 @@
       <textarea id="body" maxlength="8000"></textarea>
     </label>
     <label class="check"><input type="checkbox" id="published" checked /> 바로 사이트에 공개</label>
+    <label class="check" id="lockWrap"><input type="checkbox" id="lockNew" /> 코드를 입력한 사람만 내려받기 (자료만 해당)</label>
 
     <button class="primary" id="submitBtn" type="submit">올리기</button>
     <div class="progress hidden" id="progress"><i id="progressBar"></i></div>
     <p class="status" id="uploadStatus" role="status"></p>
   </form>
+
+  <!-- 접근 코드 -->
+  <div class="card hidden" id="codeCard">
+    <h2>접근 코드</h2>
+    <p class="note">강의 기관·기수별로 코드를 하나 만들어 수강생에게 알려 주세요. 만료일이 지나거나 '중지'하면 그 코드로는 더 이상 열리지 않습니다(최대 1분 안에 반영).</p>
+    <form class="inline" id="codeForm">
+      <label class="field">기관·기수 이름 <input type="text" id="codeName" maxlength="80" placeholder="예) ○○대학교 2026-2학기" required /></label>
+      <label class="field">코드 <small>(비우면 자동 생성)</small> <input type="text" id="codeValue" maxlength="40" placeholder="BANG-XXXX-XXXX" autocomplete="off" /></label>
+      <label class="field">만료일 <small>(비우면 기간 제한 없음)</small> <input type="date" id="codeExpires" /></label>
+      <button class="primary" id="codeBtn" type="submit">코드 만들기</button>
+    </form>
+    <p class="status" id="codeStatus" role="status"></p>
+    <div id="codeList"></div>
+  </div>
+
+  <!-- 잠금 설정 -->
+  <div class="card hidden" id="lockCard">
+    <h2>코드로 잠글 프롬프트·자료</h2>
+    <p class="note">체크한 항목은 코드를 입력한 사람만 프롬프트 복사·자료 내려받기를 할 수 있습니다. 제목과 설명은 누구에게나 보입니다. 체크하면 바로 저장됩니다.</p>
+    <div id="lockList"></div>
+  </div>
 
   <!-- 최근 목록 -->
   <div class="card hidden" id="listCard">
@@ -145,12 +182,120 @@
         .join("") || "<p>아직 없습니다.</p>";
   }
 
+  // ── 접근 코드 ──
+  async function renderCodes() {
+    const { codes } = await api("codeList");
+    $("codeList")._codes = codes;
+    $("codeList").innerHTML =
+      codes
+        .map((c) => {
+          const state = !c.active ? ["중지됨", "off"] : c.expired ? ["만료됨", "end"] : ["사용 중", ""];
+          return `<div class="row"><div><b>${esc(c.name)}</b> <span class="badge ${state[1]}">${state[0]}</span>
+            <small><span class="code">${esc(c.code)}</span> · ${c.expires ? `${esc(c.expires)}까지` : "기간 제한 없음"}</small></div>
+            <div class="tools">
+              <button class="ghost" type="button" data-copy="${esc(c.id)}">안내문 복사</button>
+              <input type="date" value="${esc(c.expires)}" data-expires="${esc(c.id)}" aria-label="만료일 변경" />
+              <button class="ghost" type="button" data-toggle="${esc(c.id)}" data-active="${c.active}">${c.active ? "중지" : "다시 사용"}</button>
+              <button class="ghost" type="button" data-del="${esc(c.id)}">삭제</button>
+            </div></div>`;
+        })
+        .join("") || "<p>아직 만든 코드가 없습니다.</p>";
+  }
+
+  $("codeForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $("codeBtn").disabled = true;
+    try {
+      const { code } = await api("codeCreate", { name: $("codeName").value, code: $("codeValue").value, expires: $("codeExpires").value });
+      setStatus($("codeStatus"), `만들었습니다. 코드: ${code.code}`, "ok");
+      $("codeForm").reset();
+      await renderCodes();
+    } catch (err) {
+      setStatus($("codeStatus"), err.message, "err");
+    } finally {
+      $("codeBtn").disabled = false;
+    }
+  });
+
+  $("codeList").addEventListener("click", async (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    const codes = $("codeList")._codes || [];
+    try {
+      if (btn.dataset.copy) {
+        const c = codes.find((x) => x.id === btn.dataset.copy);
+        const until = c.expires ? `사용 기간: ${c.expires}까지\n` : "";
+        await navigator.clipboard.writeText(`[방영황 취업 교육 자료 안내]\n접속: ${location.origin}\n접근 코드: ${c.code}\n${until}사이트에서 🔒 표시가 있는 프롬프트·자료를 열면 코드를 입력하는 창이 나옵니다.`);
+        btn.textContent = "복사됨";
+        setTimeout(() => (btn.textContent = "안내문 복사"), 1500);
+      } else if (btn.dataset.toggle) {
+        await api("codeUpdate", { id: btn.dataset.toggle, active: btn.dataset.active !== "true" });
+        await renderCodes();
+      } else if (btn.dataset.del) {
+        if (!confirm("이 코드를 삭제할까요? 이 코드를 쓰던 사람들은 더 이상 열 수 없습니다.")) return;
+        await api("codeDelete", { id: btn.dataset.del });
+        await renderCodes();
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  $("codeList").addEventListener("change", async (e) => {
+    const input = e.target.closest("[data-expires]");
+    if (!input) return;
+    try {
+      await api("codeUpdate", { id: input.dataset.expires, expires: input.value });
+      await renderCodes();
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  // ── 잠금 설정 ──
+  async function renderLocks() {
+    const { items } = await api("lockList");
+    let html = "";
+    ["프롬프트", "자료"].forEach((type) => {
+      const rows = items.filter((i) => i.type === type);
+      if (!rows.length) return;
+      html += `<div class="lockgroup">${type} ${rows.length}개</div>`;
+      html += rows
+        .map(
+          (i) => `<label class="lockrow"><input type="checkbox" data-lock="${esc(i.id)}" ${i.locked ? "checked" : ""} />
+            <b>${esc(i.title)}</b><small>${esc(i.category)}${i.status === "초안" ? " · 비공개" : ""}</small></label>`
+        )
+        .join("");
+    });
+    $("lockList").innerHTML = html || "<p>아직 없습니다.</p>";
+  }
+
+  $("lockList").addEventListener("change", async (e) => {
+    const box = e.target.closest("[data-lock]");
+    if (!box) return;
+    box.disabled = true;
+    try {
+      await api("setLock", { id: box.dataset.lock, locked: box.checked });
+    } catch (err) {
+      box.checked = !box.checked;
+      alert(err.message);
+    } finally {
+      box.disabled = false;
+    }
+  });
+
+  document.querySelectorAll("input[name=type]").forEach((r) =>
+    r.addEventListener("change", () => show($("lockWrap"), document.querySelector("input[name=type]:checked").value === "자료"))
+  );
+
   async function enter() {
     show($("loginCard"), false);
     show($("uploadCard"));
+    show($("codeCard"));
+    show($("lockCard"));
     show($("listCard"));
     show($("logoutBtn"));
-    await renderList();
+    await Promise.all([renderList(), renderCodes(), renderLocks()]);
   }
 
   // ── 시작 ──
@@ -240,11 +385,12 @@
         description: $("description").value,
         body: $("body").value,
         published: $("published").checked,
+        locked: type === "자료" && $("lockNew").checked,
       });
       setStatus($("uploadStatus"), $("published").checked ? "올렸습니다. 1분 안에 사이트에 나타납니다." : "비공개로 저장했습니다.", "ok");
       $("uploadCard").reset();
       picked();
-      await renderList();
+      await Promise.all([renderList(), renderLocks()]);
     } catch (err) {
       setStatus($("uploadStatus"), err.message || "올리지 못했습니다. 다시 시도해 주세요.", "err");
     } finally {

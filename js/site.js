@@ -409,7 +409,7 @@ async function loadMaterials() {
   let materials;
   if (notionItems) {
     materials = notionItems
-      .map((i) => ({ id: i.id, notion: true, title: i.title, link: i.link, description: i.description }))
+      .map((i) => ({ id: i.id, notion: true, locked: Boolean(i.locked), title: i.title, link: i.link, description: i.description }))
       .filter((m) => m.link);
   } else {
     const rows = await fetchCsvRows(MATERIALS_CSV_URL);
@@ -435,7 +435,7 @@ async function loadMaterials() {
     card.dataset.material = idx;
     card.innerHTML = `
       <div class="material-card-text">
-        <h3 class="material-card-title">${escHtml(m.title)}</h3>
+        <h3 class="material-card-title">${escHtml(m.title)}${Access.lockTag(m.locked)}</h3>
         <p class="material-card-desc">${escHtml(m.description || "")}</p>
       </div>
       <span class="material-card-arrow">자세히 보기 →</span>
@@ -465,6 +465,16 @@ async function openMaterial(idx) {
     materialDetailBodyEl.innerHTML = '<p class="empty-state">불러오는 중...</p>';
     try {
       const res = await fetch(`/api/items?id=${encodeURIComponent(m.id)}&html=1`);
+      if (res.status === 403) {
+        // 코드가 필요한 자료: 안내와 입력 버튼만 보여주고, 코드를 입력하면 다시 엽니다
+        materialDetailBodyEl.innerHTML = `${m.description ? `<p>${escHtml(m.description)}</p>` : ""}
+          <div class="lock-panel"><p>이 자료는 강의에서 안내받은 코드가 있어야 볼 수 있어요.</p>
+          <button type="button" class="lock-panel-btn">코드 입력하기</button></div>`;
+        materialDetailBodyEl.querySelector(".lock-panel-btn").addEventListener("click", async () => {
+          if (await Access.ensure()) openMaterial(idx);
+        });
+        return;
+      }
       html = (await res.json()).html || "";
     } catch (e) {
       html = "";

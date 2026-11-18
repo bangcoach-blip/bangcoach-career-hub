@@ -1,6 +1,11 @@
 const { notion, listChildren, renderBlocks } = require("./_notion");
+const { getAccess } = require("./_access");
 
 const text = (arr = []) => arr.map((t) => t.plain_text).join("");
+
+// '공개범위'가 '코드 필요'인 프롬프트·자료는 코드를 입력한 방문자에게만 본문과 파일을 줍니다.
+const LOCKABLE = ["프롬프트", "자료"];
+const isLocked = (p) => LOCKABLE.includes(p["유형"]?.select?.name) && p["공개범위"]?.select?.name === "코드 필요";
 
 module.exports = async function handler(req, res) {
   const dbId = process.env.NOTION_CONTENT_DB_ID;
@@ -16,6 +21,10 @@ module.exports = async function handler(req, res) {
       const page = await notion(`/pages/${encodeURIComponent(req.query.id)}`);
       if ((page.properties["상태"]?.select?.name || null) !== "발행") {
         res.status(404).json({ error: "not found" });
+        return;
+      }
+      if (isLocked(page.properties) && !(await getAccess(req))) {
+        res.status(403).json({ locked: true, error: "코드가 필요한 자료입니다." });
         return;
       }
       const blocks = await listChildren(page.id);
@@ -51,8 +60,15 @@ module.exports = async function handler(req, res) {
           link = `/api/file?id=${page.id}`;
           uploaded = true;
         }
+        const locked = isLocked(p);
+        // 잠긴 자료는 실제 파일·링크 주소를 목록에 내보내지 않고, 코드를 확인하는 /api/file로만 연결합니다
+        if (locked && itemType === "자료") {
+          link = `/api/file?id=${page.id}`;
+          uploaded = true;
+        }
         items.push({
           id: page.id,
+          locked,
           subCategory: text(p["소분류"]?.rich_text),
           period: text(p["기간"]?.rich_text),
           audience: text(p["대상"]?.rich_text),
