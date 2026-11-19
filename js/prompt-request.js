@@ -51,10 +51,11 @@
     submit.disabled = true;
     submit.textContent = "보내는 중...";
     try {
-      const res = await fetch("/api/prompt-request", {
+      const res = await fetch("/api/question", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          kind: "prompt",
           need: f.need.value,
           name: f.name.value,
           contact: f.contact.value,

@@ -1,4 +1,6 @@
-// 수강생 질문함: 질문은 노션 '질문' 유형(상태=접수)으로 쌓이고, 방영황이 '발행'으로 바꾼 것만 메인에 이름 없이 보입니다.
+// 수강생 질문함 + 프롬프트 신청 접수 창구.
+// 질문은 노션 '질문' 유형(상태=접수)으로 쌓이고, 방영황이 '발행'으로 바꾼 것만 메인에 이름 없이 보입니다.
+// 프롬프트 신청(kind="prompt")은 '프롬프트신청' 유형으로만 쌓이고 사이트에는 공개되지 않습니다.
 // 스팸 방지: 숨은 입력칸, 너무 빠른 제출 거부, 같은 접속지의 연속 제출 제한, 링크 많은 글 거부.
 const { notion } = require("./_notion");
 const { notifyInquiry } = require("./_notify");
@@ -41,13 +43,17 @@ module.exports = async function handler(req, res) {
       res.status(200).json({ ok: true }); // 봇은 성공한 것처럼 보이게 하고 저장하지 않음
       return;
     }
+    // kind가 "prompt"이면 프롬프트 신청입니다. 함수 개수 제한 때문에 같은 접수 창구를 함께 씁니다.
+    const isPrompt = b.kind === "prompt";
     const name = clip(b.name, 40);
     const contact = clip(b.contact, 120);
     const course = clip(b.course, 100);
-    const message = clip(b.message, 500);
+    const message = isPrompt ? clip(b.need, 1000) : clip(b.message, 500);
     const category = CATEGORIES.includes(b.category) ? b.category : "기타";
-    if (!name || message.length < 5 || b.consent !== true) {
-      res.status(400).json({ error: "이름(닉네임)과 질문 내용을 입력하고 동의해 주세요." });
+    if ((!isPrompt && !name) || message.length < 5 || b.consent !== true) {
+      res.status(400).json({
+        error: isPrompt ? "필요한 프롬프트를 5자 이상 적고 동의해 주세요." : "이름(닉네임)과 질문 내용을 입력하고 동의해 주세요.",
+      });
       return;
     }
     const opened = Number(b.openedAt) || 0;
@@ -61,7 +67,7 @@ module.exports = async function handler(req, res) {
     }
     const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim() || "unknown";
     if (tooMany(ip)) {
-      res.status(429).json({ error: "질문을 연달아 많이 보내셨어요. 잠시 후 다시 남겨 주세요." });
+      res.status(429).json({ error: `${isPrompt ? "신청을" : "질문을"} 연달아 많이 보내셨어요. 잠시 후 다시 남겨 주세요.` });
       return;
     }
 
@@ -69,12 +75,12 @@ module.exports = async function handler(req, res) {
     const title = message.replace(/\s+/g, " ").slice(0, 40);
     const props = {
       이름: { title: rt(title) },
-      유형: { select: { name: "질문" } },
+      유형: { select: { name: isPrompt ? "프롬프트신청" : "질문" } },
       상태: { select: { name: "접수" } },
       담당자: { rich_text: rt(course ? `${name} (${course})` : name) }, // '담당자'·'연락처'는 공개 목록에 나가지 않는 칸
       연락처: { rich_text: rt(contact) },
-      소분류: { rich_text: rt(category) },
-      설명: { rich_text: rt(message) },
+      소분류: { rich_text: rt(isPrompt ? "프롬프트 신청" : category) },
+      설명: { rich_text: rt(message.slice(0, 1900)) },
     };
     const children = [];
     for (let i = 0; i < message.length; i += 1900) {
@@ -89,7 +95,16 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({ parent: { database_id: dbId }, properties: props, children }),
     });
     await notifyInquiry(
-      { orgType: "수강생", org: `${category}${course ? " · " + course : ""}`, name, contact: contact || "(연락처 없음)", message, people: "", schedule: "", programs: "" },
+      {
+        orgType: isPrompt ? "프롬프트 신청" : "수강생",
+        org: isPrompt ? "프롬프트 신청" : `${category}${course ? " · " + course : ""}`,
+        name: name || "(이름 없음)",
+        contact: contact || "(연락처 없음)",
+        message,
+        people: "",
+        schedule: "",
+        programs: "",
+      },
       created?.url
     ).catch(() => {});
     res.status(200).json({ ok: true });
