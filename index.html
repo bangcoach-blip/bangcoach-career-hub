@@ -100,6 +100,19 @@
     <ul class="share-list" id="homePromptList"></ul>
   </section>
 
+  <section class="home-section home-questions" id="homeQuestions" aria-label="수강생 질문">
+    <div class="section-head section-head-row">
+      <div>
+        <h2 class="section-title">취업·AI, 이런 질문을 받았어요</h2>
+        <p class="section-sub">수강생과 방문자가 남긴 질문 중 일부를 소개합니다. 궁금한 점은 언제든 남겨 주세요.</p>
+      </div>
+      <button class="link-more" type="button" id="askQuestionBtn" data-goto="contact">질문 남기기 →</button>
+    </div>
+    <div class="qt-window" id="qtWindow" aria-live="off">
+      <ul class="qt-list" id="qtList"></ul>
+    </div>
+  </section>
+
   <section class="home-section">
     <div class="section-head section-head-row">
       <div>
@@ -232,6 +245,42 @@
       <a class="aside-link" href="mailto:bang125@naver.com">bang125@naver.com</a>
       <a class="cta-ghost profile-pdf-btn" href="/files/bang-profile-2026.pdf" download="방영황_강사소개서_2026.pdf">강사 소개서 PDF 받기 <span aria-hidden="true">↓</span></a>
       <p class="aside-note">문의 폼 대신 전화나 이메일로 연락하셔도 됩니다. 유튜브·블로그·인스타·스레드에서 "방영황"을 검색하시면 최근 활동도 보실 수 있습니다.</p>
+    </aside>
+  </div>
+
+  <div class="contact-programs contact-form-head" id="questionAnchor">
+    <h3 class="sub-title">수강생 질문함</h3>
+    <p class="section-sub">취업 고민이나 AI 활용에 대해 궁금한 점을 남겨 주세요. 방영황이 확인한 질문은 이름·연락처 없이 홈 화면에 소개될 수 있어요.</p>
+  </div>
+  <div class="contact-layout">
+    <form class="contact-form" id="questionForm" novalidate>
+      <div class="form-row">
+        <span class="form-label">질문 분야</span>
+        <div class="radio-chips">
+          <label class="radio-chip"><input type="radio" name="category" value="취업 고민" checked /><span>취업 고민</span></label>
+          <label class="radio-chip"><input type="radio" name="category" value="AI 활용" /><span>AI 활용</span></label>
+          <label class="radio-chip"><input type="radio" name="category" value="면접·자소서" /><span>면접·자소서</span></label>
+          <label class="radio-chip"><input type="radio" name="category" value="기타" /><span>기타</span></label>
+        </div>
+      </div>
+      <div class="form-grid">
+        <label class="form-field"><span class="form-label">이름 또는 닉네임 *</span><input type="text" name="name" maxlength="40" required /></label>
+        <label class="form-field"><span class="form-label">수강한 수업·소속 <em>(선택)</em></span><input type="text" name="course" maxlength="100" placeholder="예: ○○대학교 AI 면접 특강" /></label>
+      </div>
+      <label class="form-field"><span class="form-label">답변 받을 이메일·연락처 <em>(선택)</em></span><input type="text" name="contact" maxlength="120" placeholder="비워 두면 답변을 받기 어려울 수 있어요" /></label>
+      <label class="form-field"><span class="form-label">질문 내용 *</span><textarea name="message" rows="5" maxlength="500" required placeholder="500자까지 적을 수 있어요. 이름·학교·연락처 같은 개인정보는 적지 마세요."></textarea></label>
+      <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <label class="consent-row">
+        <input type="checkbox" name="consent" required />
+        <span>개인정보 수집·이용에 동의합니다. (필수)</span>
+      </label>
+      <p class="consent-note">수집 항목: 이름(닉네임), 수강 수업·소속, 연락처(선택), 질문 내용 · 이용 목적: 질문 답변, 질문 내용의 홈 화면 소개(이름·연락처·소속은 제외, 게시 전 검토) · 보관 기간: 답변 후 1년 보관 뒤 파기</p>
+      <button type="submit" class="cta-primary form-submit" id="questionSubmit">질문 보내기</button>
+      <p class="form-status" id="questionStatus" role="status"></p>
+    </form>
+    <aside class="contact-aside">
+      <h3 class="aside-title">이렇게 답해 드려요</h3>
+      <p class="aside-note">남기신 연락처로 확인 후 답변드립니다. 연락처를 적지 않으시면 답변을 보내 드리기 어려워요.</p>
     </aside>
   </div>
 </section>
@@ -791,6 +840,7 @@
 <script src="js/home.js"></script>
 <script src="js/tools-shelf.js"></script>
 <script src="js/lecture-ticker.js"></script>
+<script src="js/question-ticker.js"></script>
 <script src="js/hero-motion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="js/confetti-fx.js"></script>

@@ -193,6 +193,58 @@ inquiryForm.addEventListener("submit", async (e) => {
   }
 });
 
+// ── 수강생 질문함 ────────────────────────────────────────────────────
+const questionForm = document.getElementById("questionForm");
+if (questionForm) {
+  const qStatus = document.getElementById("questionStatus");
+  const qSubmit = document.getElementById("questionSubmit");
+  const openedAt = Date.now();
+  questionForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = questionForm.elements;
+    qStatus.className = "form-status";
+    if (!f.name.value.trim() || f.message.value.trim().length < 5) {
+      qStatus.textContent = "이름(닉네임)과 질문 내용을 입력해 주세요.";
+      qStatus.classList.add("err");
+      return;
+    }
+    if (!f.consent.checked) {
+      qStatus.textContent = "개인정보 수집·이용에 동의해 주셔야 보낼 수 있어요.";
+      qStatus.classList.add("err");
+      return;
+    }
+    qSubmit.disabled = true;
+    qSubmit.textContent = "보내는 중...";
+    try {
+      const res = await fetch("/api/question", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          category: questionForm.querySelector('input[name="category"]:checked')?.value || "기타",
+          name: f.name.value,
+          course: f.course.value,
+          contact: f.contact.value,
+          message: f.message.value,
+          website: f.website.value,
+          consent: f.consent.checked,
+          openedAt,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "접수 중 오류가 발생했습니다.");
+      questionForm.reset();
+      qStatus.textContent = "질문이 전달되었습니다. 확인 후 답변드리고, 소개할 만한 질문은 이름 없이 홈 화면에 올라갈 수 있어요.";
+      qStatus.classList.add("ok");
+    } catch (err) {
+      qStatus.textContent = err.message || "접수 중 오류가 발생했습니다.";
+      qStatus.classList.add("err");
+    } finally {
+      qSubmit.disabled = false;
+      qSubmit.textContent = "질문 보내기";
+    }
+  });
+}
+
 loadPrograms();
 
 // ── 소개 탭 이력 필터 (전체 / 취업 교육 / AI 교육) ─────────────

@@ -2706,3 +2706,65 @@ body.has-access .lock-tag {
   padding: 5px 10px;
   font-size: 12.5px;
 }
+
+/* ── 수강생 질문 (홈: 위로 올라가는 목록) ─────────────────── */
+.qt-window {
+  --qt-h: 92px;
+  --qt-rows: 3;
+  height: calc(var(--qt-h) * var(--qt-rows));
+  overflow: hidden;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.qt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  will-change: transform;
+}
+
+.qt-item {
+  height: var(--qt-h);
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+}
+
+.qt-item:last-child {
+  border-bottom: 0;
+}
+
+.qt-cat {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.qt-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.qt-empty .qt-text {
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .qt-window {
+    --qt-h: 96px;
+  }
+  .qt-text {
+    font-size: 14px;
+  }
+}
