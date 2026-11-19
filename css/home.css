@@ -2045,12 +2045,26 @@ button.avail-day:not(:disabled):hover {
   }
 }
 
-/* ── 메뉴별 색상 (body[data-tab]이 바뀔 때 링크·강조색·메뉴 표시가 함께 바뀜) ── */
-body[data-tab="about"] { --accent: #334155; --accent-strong: #1e293b; --accent-soft: #e2e8f0; }
-body[data-tab="blog"] { --accent: #b45309; --accent-strong: #92400e; --accent-soft: #fef3c7; }
-body[data-tab="videos"] { --accent: #be123c; --accent-strong: #9f1239; --accent-soft: #ffe4e6; }
-body[data-tab="materials"] { --accent: #047857; --accent-strong: #065f46; --accent-soft: #d1fae5; }
-body[data-tab="prompts"] { --accent: #0369a1; --accent-strong: #075985; --accent-soft: #e0f2fe; }
+/* ── 강조색은 인디고 하나로 통일. 메뉴 구분은 메뉴 이름 옆 작은 점으로만 합니다 ── */
+.nav-tab[data-tab="about"]::before,
+.nav-tab[data-tab="blog"]::before,
+.nav-tab[data-tab="videos"]::before,
+.nav-tab[data-tab="materials"]::before,
+.nav-tab[data-tab="prompts"]::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  vertical-align: 2px;
+  background: var(--dot);
+}
+.nav-tab[data-tab="about"] { --dot: #64748b; }
+.nav-tab[data-tab="blog"] { --dot: #d97706; }
+.nav-tab[data-tab="videos"] { --dot: #e11d48; }
+.nav-tab[data-tab="materials"] { --dot: #059669; }
+.nav-tab[data-tab="prompts"] { --dot: #0284c7; }
 
 .nav-tab.active:not(.nav-cta) {
   color: var(--accent-strong);
@@ -2062,9 +2076,6 @@ body[data-tab="prompts"] { --accent: #0369a1; --accent-strong: #075985; --accent
 
 /* ── 홈: 프롬프트 공유 목록 (카드가 아니라 색인표처럼) ─────────── */
 .home-prompts {
-  --accent: #0369a1;
-  --accent-strong: #075985;
-  --accent-soft: #e0f2fe;
   margin-top: 64px;
 }
 
@@ -2169,10 +2180,10 @@ body[data-tab="prompts"] { --accent: #0369a1; --accent-strong: #075985; --accent
 }
 
 /* N 표시는 지금 보는 탭이 아니라, 새 글이 있는 그 메뉴의 색으로 */
-.nav-tab[data-tab="blog"] .nav-new { background: #b45309; }
-.nav-tab[data-tab="videos"] .nav-new { background: #be123c; }
-.nav-tab[data-tab="materials"] .nav-new { background: #047857; }
-.nav-tab[data-tab="prompts"] .nav-new { background: #0369a1; }
+.nav-tab[data-tab="blog"] .nav-new { background: #d97706; }
+.nav-tab[data-tab="videos"] .nav-new { background: #e11d48; }
+.nav-tab[data-tab="materials"] .nav-new { background: #059669; }
+.nav-tab[data-tab="prompts"] .nav-new { background: #0284c7; }
 
 .home-spark { margin-top: 64px; }
 .home-spark .spark-tool-card { margin-top: 20px; }
@@ -2324,9 +2335,6 @@ body.has-access .lock-tag {
 
 /* ── 내 AI로 해보는 도구 ─────────────────────────────── */
 .home-tools {
-  --accent: #0369a1;
-  --accent-strong: #075985;
-  --accent-soft: #e0f2fe;
   margin-top: 64px;
 }
 
