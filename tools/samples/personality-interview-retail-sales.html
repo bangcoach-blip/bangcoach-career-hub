@@ -54,7 +54,7 @@ th{background:#f8fafc;width:34%}
 </head>
 <body>
 <header class="top"><b id="ttl">인성면접 연습 시험지</b><small id="sub"></small><span class="sp"></span>
-<span id="prog" class="tag"></span><button class="btn" id="bSave">내 답변 저장(.txt)</button><button class="btn" onclick="window.print()">인쇄</button></header>
+<span id="prog" class="tag"></span><button class="btn" id="bSave">내 답변 저장(.txt)</button></header>
 <div class="layout">
   <aside class="side panel" id="side"></aside>
   <main id="main"></main>
@@ -1317,6 +1317,11 @@ function review(q,s){
 $("#bSave").onclick=()=>{const t=DATA.qs.map((q,i)=>`Q${i+1}. ${q.q}\n${(st[q.id]||{}).text||"(미작성)"}\n`).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/plain"}));a.download="인성면접_내답변.txt";a.click()};
 render();
+/* 다운로드(MD·Word·PDF): 방코치 사이트의 공용 모듈을 불러와 질문 전체를 한 문서로 내려받는다 */
+(function(){var s=document.createElement("script");s.src="https://bangcoach-ai-career-site.vercel.app/js/export-kit.js";s.onload=function(){var m=DATA.meta;BCExport.mount({host:".top",menuDown:true,
+name:function(){return "인성면접_"+[m.company,m.job].filter(Boolean).join("_")},
+title:function(){return "인성면접 연습 시험지 · "+[m.company,m.job].filter(Boolean).join(" · ")},
+target:function(){var d=document.createElement("div");d.innerHTML="<h1>인성면접 연습 시험지</h1><p>"+esc([m.company,m.job,m.track].filter(Boolean).join(" · "))+"</p>"+DATA.qs.map(function(q,i){var x=st[q.id]||{};var r={text:x.text||"",rate:x.rate||[3,3,3,3]};return "<h2>Q"+(i+1)+". "+esc(q.q)+"</h2><p>["+esc(q.cat)+"]</p><h3>내 답변</h3><div class=\"bcx-answer\">"+(esc(r.text)||"(작성하지 않음)")+"</div>"+guide(q)+review(q,r)}).join("");return d}})};document.head.appendChild(s)})();
 </script>
 <a class="bc-back" href="/#prompts">← 방영황 사이트</a><style>.bc-back{position:fixed;left:14px;bottom:14px;z-index:2147483000;padding:9px 14px;border-radius:999px;background:#0a0a0a;color:#fff!important;font:700 13px/1 'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}.bc-back:hover{background:#4f46e5}@media print{.bc-back{display:none}}</style></body>
 </html>

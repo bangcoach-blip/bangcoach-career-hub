@@ -439,7 +439,7 @@ dialog::backdrop{background:rgba(15,23,42,.35)}
   <nav class="nav" id="nav">
     <a href="#work">작업실</a><a href="#setup">한눈에 보기</a><a href="#map">연결 지도</a><a href="#board">항목별 분석</a><a href="#exps">경험 카드</a><a href="#plan">부족한 곳</a>
   </nav>
-  <div class="tools"><span class="aib" id="aiBadge">연결 확인 중</span><button class="btn" id="btnWipe" hidden>전체 초기화</button><button class="btn" id="btnLoad">데이터 불러오기</button><button class="btn primary" id="btnPrint" onclick="window.print()">PDF 저장</button></div>
+  <div class="tools"><span class="aib" id="aiBadge">연결 확인 중</span><button class="btn" id="btnWipe" hidden>전체 초기화</button><button class="btn" id="btnLoad">데이터 불러오기</button></div>
 </div></header>
 
 <main id="app" class="wrap"></main>
@@ -2137,5 +2137,7 @@ var done=false;function go(){if(done)return;done=true;boot();}
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(go);setTimeout(go,1500);}else go();
 })();
 </script>
+<script src="/js/export-kit.js"></script>
+<script>window.BCExport&&BCExport.mount({host:".top .tools",menuDown:true,target:"#app",exclude:"#work,.busy,.mapbar .seg",avoid:[".panel",".card",".xc",".st",".chain"],name:function(){return "SPARK_경험지도"},title:function(){return "SPARK 경험 지도"}});</script>
 </body>
 </html>
