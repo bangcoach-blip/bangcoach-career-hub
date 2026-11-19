@@ -21,6 +21,7 @@
 <meta name="theme-color" content="#4f46e5" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/home.css" />
+<link rel="stylesheet" href="css/prompts.css" />
 </head>
 <body data-tab="home">
 
@@ -765,12 +766,7 @@
     <div class="request-inner">
       <h2 class="request-title">필요한 프롬프트가 없나요?</h2>
       <p class="request-desc">어떤 상황에 AI 프롬프트가 있으면 좋을지 알려주세요. 검토 후 추가해드릴게요.</p>
-      <a
-        class="request-btn"
-        href="https://docs.google.com/forms/d/e/1FAIpQLSc00spMP9NrzOKdTV2iDn8Qn0xvaZDHQ_hsS0SJDOjfBxHlfA/viewform"
-        target="_blank"
-        rel="noopener"
-      >프롬프트 신청하기 →</a>
+      <button type="button" class="request-btn" id="requestOpen">프롬프트 신청하기 →</button>
     </div>
   </section>
 </section>
@@ -786,6 +782,29 @@
       <button class="copy-btn" id="copyBtn">프롬프트 복사</button>
       <button type="button" class="like-btn hidden" id="modalLike"></button>
     </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="requestOverlay" role="dialog" aria-modal="true" aria-labelledby="requestTitle">
+  <div class="modal-box request-modal">
+    <button type="button" class="modal-close" id="requestClose" aria-label="닫기">✕</button>
+    <h2 class="modal-title" id="requestTitle">필요한 프롬프트를 알려주세요</h2>
+    <p class="modal-desc">어떤 상황에 어떤 프롬프트가 있으면 좋을지 적어 주세요. 검토 후 추가해드릴게요.</p>
+    <form class="contact-form request-form" id="requestForm" novalidate>
+      <label class="form-field"><span class="form-label">필요한 프롬프트 *</span><textarea name="need" rows="5" maxlength="1000" required placeholder="예: 면접을 본 뒤 감사 메일을 쓸 때 쓰는 프롬프트가 있으면 좋겠어요."></textarea></label>
+      <div class="form-grid">
+        <label class="form-field"><span class="form-label">이름 또는 닉네임 <em>(선택)</em></span><input type="text" name="name" maxlength="40" /></label>
+        <label class="form-field"><span class="form-label">완성 알림 받을 연락처 <em>(선택)</em></span><input type="text" name="contact" maxlength="120" placeholder="이메일 또는 전화번호" /></label>
+      </div>
+      <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <label class="consent-row">
+        <input type="checkbox" name="consent" required />
+        <span>개인정보 수집·이용에 동의합니다. (필수)</span>
+      </label>
+      <p class="consent-note">수집 항목: 신청 내용, 이름(선택), 연락처(선택) · 이용 목적: 프롬프트 제작 검토, 완성 알림 · 보관 기간: 처리 후 1년 보관 뒤 파기</p>
+      <button type="submit" class="cta-primary form-submit" id="requestSend">신청 보내기</button>
+      <p class="form-status" id="requestStatus" role="status"></p>
+    </form>
   </div>
 </div>
 
@@ -841,6 +860,7 @@
 <script src="js/tools-shelf.js"></script>
 <script src="js/lecture-ticker.js"></script>
 <script src="js/question-ticker.js"></script>
+<script src="js/prompt-request.js"></script>
 <script src="js/hero-motion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="js/confetti-fx.js"></script>
