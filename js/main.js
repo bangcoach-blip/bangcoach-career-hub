@@ -123,6 +123,7 @@ async function loadPromptsFromNotion() {
       description: i.description,
       subCategory: i.subCategory,
       locked: Boolean(i.locked),
+      likes: i.likes || 0,
       prompt: null,
       notion: true,
     }));
@@ -220,6 +221,7 @@ function renderPromptCard(p, container) {
     <span class="card-tag">${p.category}</span>${Access.lockTag(p.locked)}
     <h3 class="card-title">${p.title}</h3>
     <p class="card-desc">${p.description}</p>
+    ${p.notion ? `<div class="card-foot">${Likes.chip(p.id, p.likes)}</div>` : ""}
   `;
   card.addEventListener("click", () => openModal(p));
   container.appendChild(card);
@@ -336,6 +338,9 @@ async function openModal(p) {
   modalTag.style.setProperty("--cat-color", getCategoryColor(p.category));
   modalTitle.textContent = p.title;
   modalDesc.textContent = p.description;
+  const modalLike = document.getElementById("modalLike");
+  if (p.notion) Likes.bind(modalLike, p.id, "item", p.likes);
+  else modalLike.classList.add("hidden");
 
   copyBtn.textContent = "프롬프트 복사";
   copyBtn.classList.remove("copied");

@@ -165,6 +165,7 @@ function renderBlogList() {
         <h3 class="blog-card-title">${escHtml(post.title)}</h3>
         <p class="blog-card-summary">${escHtml(post.summary || "")}</p>
         <span class="blog-card-date">${meta}</span>
+        ${post.notion ? `<div class="card-foot">${Likes.chip(post.id, post.likes)}</div>` : ""}
       </div>
       ${post.cover ? `<div class="blog-card-thumb"><img src="${escHtml(post.cover)}" alt="" loading="lazy" /></div>` : ""}
     `;
@@ -178,6 +179,9 @@ async function openBlogPost(idx) {
   if (!post) return;
   blogDetailDateEl.textContent = post.date;
   blogDetailTitleEl.textContent = post.title;
+  const blogLike = document.getElementById("blogLike");
+  if (post.notion) Likes.bind(blogLike, post.id, "post", post.likes);
+  else blogLike.classList.add("hidden");
   blogListViewEl.classList.add("hidden");
   blogDetailViewEl.classList.remove("hidden");
   window.scrollTo({ top: 0 });
@@ -241,6 +245,7 @@ async function loadVideos() {
         // 노션 본문에 올렸거나 관리자 페이지로 올린 영상 파일
         uploaded: i.uploaded || /\.(mp4|webm|mov|m4v)(\?|$)/i.test(i.link),
         description: i.description,
+        likes: i.likes || 0,
       }))
       .filter((v) => v.url);
   } else {
@@ -278,6 +283,7 @@ async function loadVideos() {
       <div class="video-card-body">
         <h3 class="video-card-title">${escHtml(v.title)}</h3>
         <p class="video-card-desc">${escHtml(v.description || "")}</p>
+        ${v.notion ? `<div class="card-foot">${Likes.chip(v.id, v.likes)}</div>` : ""}
       </div>
     `;
     videoGridEl.appendChild(card);
@@ -301,6 +307,9 @@ async function openVideo(idx) {
   if (!v) return;
   const ytId = extractYoutubeId(v.url);
   document.getElementById("videoDetailTitle").textContent = v.title;
+  const videoLike = document.getElementById("videoLike");
+  if (v.notion) Likes.bind(videoLike, v.id, "item", v.likes);
+  else videoLike.classList.add("hidden");
   videoEmbedEl.innerHTML = ytId
     ? `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?rel=0" title="${escHtml(v.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
     : v.uploaded

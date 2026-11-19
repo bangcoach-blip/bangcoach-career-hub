@@ -158,6 +158,7 @@ function pageMeta(page) {
     summary,
     category,
     cover: page.cover ? (page.cover.type === "external" ? page.cover.external.url : page.cover.file.url) : "",
+    likes: Math.max(0, Number(props["좋아요"]?.number) || 0),
     published: status === null ? true : status === "발행",
   };
 }

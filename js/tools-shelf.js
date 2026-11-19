@@ -18,6 +18,7 @@
     return `<article class="ai-tool-card">
       <div class="ai-tool-card-head">
         <span class="ai-tool-cat">${esc(t.subCategory || "AI 도구")}</span>${Access.lockTag(t.locked)}
+        <span class="ai-tool-like">${Likes.button(t.id, "item", t.likes)}</span>
       </div>
       <h3 class="ai-tool-title">${esc(t.title)}</h3>
       <p class="ai-tool-desc">${esc(t.description || "")}</p>

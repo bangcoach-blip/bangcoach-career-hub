@@ -95,6 +95,8 @@ module.exports = async function handler(req, res) {
           description: text(p["설명"]?.rich_text),
           category: p["카테고리"]?.select?.name || "",
           order: p["순서"]?.number ?? 9999,
+          date: p["일정일"]?.date?.start || "",
+          likes: Math.max(0, Number(p["좋아요"]?.number) || 0),
           createdTime: page.created_time,
         });
       }

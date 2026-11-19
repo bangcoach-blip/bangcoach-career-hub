@@ -26,6 +26,7 @@ async function loadHomeBlog() {
         <span class="home-post-meta">${[post.date, post.category].filter(Boolean).map(hEsc).join(" · ")}</span>
         <h3 class="home-post-title">${hEsc(post.title)}</h3>
         <p class="home-post-summary">${hEsc(post.summary || "")}</p>
+        ${post.notion ? `<div class="card-foot">${Likes.chip(post.id, post.likes)}</div>` : ""}
       </div>`;
     card.addEventListener("click", () => {
       switchTab("blog");
