@@ -149,12 +149,25 @@
 }
 
 #tab-prompts .category-grid,
-#tab-prompts .card-grid,
-#tab-prompts .subgroup .card-grid,
 #tab-prompts .tool-grid-outer,
 #tab-prompts .ai-tool-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+/* 소분류 묶음(경험정리·기본 항목 작성 등)은 가로로 나란히 두지 않고 세로로 쌓음 */
+#tab-prompts .card-grid:has(> .subgroup) {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* 프롬프트 카드: 폭이 좁아도 제목이 잘리지 않게 칸 너비를 최소 260px로 */
+#tab-prompts .card-grid,
+#tab-prompts .subgroup .card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--gap);
 }
 
@@ -212,8 +225,18 @@
   color: var(--muted);
 }
 
-#tab-prompts .card-title { font-size: 16px; }
-#tab-prompts .card-desc { font-size: 13.5px; line-height: 1.55; }
+#tab-prompts .card-title {
+  font-size: 15.5px;
+  line-height: 1.4;
+  word-break: keep-all;
+  -webkit-line-clamp: 3;
+}
+#tab-prompts .card-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  word-break: keep-all;
+  -webkit-line-clamp: 3;
+}
 
 /* ── AI 도구 사용법 카드: 색 글씨를 없애고 인디고 하나로 ───── */
 #tab-prompts .guide-card { padding: 22px 24px; gap: 10px; }
@@ -330,8 +353,6 @@
 /* ── 화면 폭별 ──────────────────────────────────────────── */
 @media (max-width: 960px) {
   #tab-prompts .category-grid,
-  #tab-prompts .card-grid,
-  #tab-prompts .subgroup .card-grid,
   #tab-prompts .tool-grid-outer,
   #tab-prompts .ai-tool-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
