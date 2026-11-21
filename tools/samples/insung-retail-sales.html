@@ -138,7 +138,6 @@ dialog::backdrop{background:rgba(15,23,42,.5)}
    - exclude: 내려받을 때 뺄 부분(CSS 선택자) */
 (function () {
   if (window.BCExport) return;
-  var PDF_LIB = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
   var CSS =
     '.bcx-wrap{position:relative;display:inline-block;font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif}' +
     '.bcx-float{position:fixed;right:18px;bottom:18px;z-index:2147482000}' +
@@ -265,35 +264,102 @@ dialog::backdrop{background:rgba(15,23,42,.5)}
       '<style>@page{size:21cm 29.7cm;margin:2cm 1.8cm}' + DOC_CSS + '</style></head><body>' + c.innerHTML + '</body></html>';
   }
 
+  /* PDF: A4 본문 폭(186mm≈703px)에 맞춰 다시 배치 → 쪽 경계를 직접 정해 몇 쪽씩 나눠 그린다.
+     (한 번에 통째로 그리면 휴대폰에서 캔버스 한도를 넘어 빈 쪽·잘림이 생김) */
+  var PDF_LIBS = [
+    ['html2canvas', 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'],
+    ['jspdf', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js']
+  ];
   function loadPdfLib() {
-    return new Promise(function (res, rej) {
-      if (window.html2pdf) return res();
-      var s = document.createElement('script'); s.src = PDF_LIB; s.onload = res; s.onerror = rej; document.head.appendChild(s);
-    });
+    return Promise.all(PDF_LIBS.map(function (L) {
+      return new Promise(function (res, rej) {
+        if (window[L[0]]) return res();
+        var s = document.createElement('script'); s.src = L[1]; s.onload = res; s.onerror = rej; document.head.appendChild(s);
+      });
+    }));
   }
   function busy(on, msg) {
     var b = document.getElementById('bcx-busy');
     if (on) { if (!b) { b = el('div', { id: 'bcx-busy', 'class': 'bcx-busy' }, '<div></div>'); document.body.appendChild(b); } b.firstChild.textContent = msg; }
     else if (b) b.remove();
   }
+  var PDF_FIX =
+    '.bcx-pdf,.bcx-pdf *{box-sizing:border-box!important;max-width:100%!important;overflow-wrap:anywhere;word-break:keep-all;animation:none!important;transition:none!important}' +
+    '.bcx-pdf{width:703px!important;margin:0!important;padding:4px 2px!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important;overflow:visible!important}' +
+    '.bcx-pdf table{table-layout:fixed;width:100%!important}.bcx-pdf pre{white-space:pre-wrap}' +
+    '.bcx-pdf [style*="position:sticky"],.bcx-pdf [style*="position: sticky"]{position:static!important}' +
+    '.bcx-pdf img,.bcx-pdf svg,.bcx-pdf canvas{height:auto}';
+  /* 쪽 경계: 잘리면 안 되는 덩어리(표 줄·제목·문항 카드 등) 중간이면 그 덩어리 위에서 끊는다 */
+  function pageCuts(c, pageH, avoidSel) {
+    var top0 = c.getBoundingClientRect().top, total = c.scrollHeight;
+    var blocks = Array.prototype.map.call(c.querySelectorAll(avoidSel), function (b) {
+      var r = b.getBoundingClientRect(); return [r.top - top0, r.bottom - top0];
+    }).filter(function (r) { return r[1] - r[0] > 0 && r[1] - r[0] < pageH * 0.9; });
+    var heads = Array.prototype.map.call(c.querySelectorAll('h1,h2,h3,h4'), function (h) { return h.getBoundingClientRect().top - top0; });
+    var cuts = [0], y = 0;
+    while (y + pageH < total) {
+      var cut = y + pageH, moved = true, guard = 0;
+      while (moved && guard++ < 50) {
+        moved = false;
+        for (var i = 0; i < blocks.length; i++) {
+          if (blocks[i][0] < cut - 1 && blocks[i][1] > cut + 1 && blocks[i][0] > y + pageH * 0.3) { cut = Math.floor(blocks[i][0]) - 2; moved = true; }
+        }
+        for (var j = 0; j < heads.length; j++) {   /* 제목이 쪽 맨 아래에 홀로 남지 않게 */
+          if (heads[j] < cut && heads[j] > cut - 60 && heads[j] > y + pageH * 0.3) { cut = Math.floor(heads[j]) - 4; moved = true; }
+        }
+      }
+      if (cut <= y + 40) cut = y + pageH;
+      cuts.push(cut); y = cut;
+    }
+    cuts.push(total);
+    return cuts;
+  }
   function toPdf(c, name, o) {
+    var W = 703, MX = 12, MT = 12, MB = 14, PW = 210, PH = 297;
+    var pxPerMm = W / (PW - MX * 2), pageH = Math.floor((PH - MT - MB) * pxPerMm);
+    c.classList.add('bcx-pdf'); c.removeAttribute('style');
+    c.insertBefore(el('style', {}, PDF_FIX), c.firstChild);
     var box = el('div', { 'class': 'bcx-pdfbox' });
-    box.style.cssText = 'position:fixed;left:-20000px;top:0;width:' + (o.pdfWidth || 794) + 'px;background:#fff';
-    c.style.margin = '0'; c.style.boxShadow = 'none'; c.style.maxWidth = 'none';
+    box.style.cssText = 'position:absolute;left:0;top:0;width:' + W + 'px;background:#fff;z-index:-1;pointer-events:none';
     box.appendChild(c); document.body.appendChild(box);
+    var sx = window.scrollX, sy = window.scrollY;
     busy(true, 'PDF를 만드는 중입니다… (내용이 길면 10초 정도 걸려요)');
+    var avoid = ['tr', 'h1', 'h2', 'h3', 'h4', 'li', 'p', 'img', 'figure', 'blockquote', '.bcx-answer', '.bcx-avoid'].concat(o.avoid || []).join(',');
     return loadPdfLib().then(function () {
-      return window.html2pdf().set({
-        margin: [12, 12, 14, 12], filename: name + '.pdf',
-        image: { type: 'jpeg', quality: 0.88 },
-        html2canvas: { scale: 1.6, useCORS: true, backgroundColor: '#ffffff', windowWidth: (o.pdfWidth || 794) + 40, scrollX: 0, scrollY: 0 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'h2', 'h3', 'li', '.bcx-avoid'].concat(o.avoid || []) }
-      }).from(c).save();
-    }).catch(function () {
+      return (document.fonts && document.fonts.ready) || null;
+    }).then(function () {
+      window.scrollTo(0, 0);
+      var cuts = pageCuts(c, pageH, avoid);
+      var JsPDF = window.jspdf.jsPDF, pdf = new JsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+      var scale = Math.min(2, Math.max(1, window.devicePixelRatio || 1.6));
+      var rect = c.getBoundingClientRect(), ox = rect.left + window.scrollX, oy = rect.top + window.scrollY;
+      var p = 0, PER = 3;   /* 한 번에 3쪽씩 그림(휴대폰 캔버스 한도 안쪽) */
+      function step() {
+        if (p >= cuts.length - 1) return;
+        var from = cuts[p], last = Math.min(p + PER, cuts.length - 1), to = cuts[last];
+        busy(true, 'PDF를 만드는 중입니다… (' + Math.min(last, cuts.length - 1) + ' / ' + (cuts.length - 1) + '쪽)');
+        return window.html2canvas(c, {
+          scale: scale, useCORS: true, backgroundColor: '#ffffff', logging: false,
+          x: ox, y: oy + from, width: W, height: to - from,
+          windowWidth: Math.max(document.documentElement.clientWidth, W + 40), scrollX: 0, scrollY: 0
+        }).then(function (cv) {
+          for (var k = p; k < last; k++) {
+            var h = cuts[k + 1] - cuts[k]; if (h <= 0) continue;
+            var pc = document.createElement('canvas'); pc.width = cv.width; pc.height = Math.round(h * scale);
+            var g = pc.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, pc.width, pc.height);
+            g.drawImage(cv, 0, Math.round((cuts[k] - from) * scale), cv.width, pc.height, 0, 0, pc.width, pc.height);
+            if (k > 0) pdf.addPage();
+            pdf.addImage(pc.toDataURL('image/jpeg', 0.92), 'JPEG', MX, MT, PW - MX * 2, h / pxPerMm);
+          }
+          p = last; return step();
+        });
+      }
+      return Promise.resolve(step()).then(function () { pdf.save(name + '.pdf'); });
+    }).catch(function (e) {
+      if (window.console) console.error(e);
       alert('PDF 파일을 바로 만들지 못해 인쇄 창을 엽니다. 대상(프린터)에서 ‘PDF로 저장’을 고르세요.');
       window.print();
-    }).then(function () { busy(false); box.remove(); });
+    }).then(function () { window.scrollTo(sx, sy); busy(false); box.remove(); });
   }
 
   function run(kind, o) {
@@ -479,12 +545,17 @@ function home() {
       h += '<div class="ahead"><b>' + a + '</b><span class="note">' + L.length + '문항</span>' + (a !== '내 질문' ? '<button class="btn s" data-act="ask2" data-a="' + a + '" style="margin-left:auto">다른 질문으로 다시 받기</button>' : '') + '</div><div class="qlist">' + L.map((q, qi) => { const s = st().ok[q.id] ? '<span class="tag ok">확정</span>' : st().ans[q.id] != null ? '<span class="tag w">고치는 중</span>' : '<span class="tag g">연습 전</span>'; return '<div class="qrow" data-go="' + esc(q.id) + '"><span class="id">' + (qi + 1) + '</span><span class="t">' + (q.surprise ? '⚡ ' : '') + esc(q.q) + '</span>' + s + '</div>'; }).join('') + '</div>'; });
     h += '<div class="card" style="margin-top:18px"><h3>내가 받은 질문 넣기</h3><p class="note">실제로 받았거나 걱정되는 질문을 적고 복사해 AI 채팅창에 보내면, 그 질문의 5WHY·베스트 답변·꼬리질문이 JSON으로 나옵니다.</p><div class="acts"><input id="myq" value="' + esc(store.get('ins3:draft:myq') || '') + '" style="flex:1;min-width:220px;font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px" placeholder="예) 팀에 무임승차하는 사람이 있다면 어떻게 하시겠습니까?"><button class="btn p" data-act="myq">요청 문구 복사</button></div></div>';
   }
+  h += '<div class="card" style="border-left:4px solid #f59e0b"><h3>주의사항 · 내 답변 저장</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.9">' +
+    ['쓰는 즉시 <b>지금 쓰는 컴퓨터의 이 브라우저</b>에 자동 저장됩니다. 새로고침하거나 창을 닫았다 다시 열어도, 탭을 두 개 열어도 남아 있습니다.',
+     '<b>다른 컴퓨터·다른 브라우저(크롬↔엣지)·휴대폰</b>에서는 보이지 않습니다. 같은 컴퓨터, 같은 브라우저로 이어서 하세요.',
+     '<b>시크릿 창</b>은 창을 닫으면 지워지고, 브라우저의 <b>방문 기록·쿠키를 지우면</b> 사라집니다.',
+     '수업이 끝나면 <b>종합 리포트 → 다운로드(MD/Word/PDF)</b>로 꼭 파일을 남겨 두세요.'].map(x => '<li>' + x + '</li>').join('') + '</ul></div>';
   h += '<div class="card faq"><h3>자주 묻는 질문</h3>' + [
     ['AI가 JSON 말고 글로만 답해요', '“JSON 코드블록으로 다시 출력해줘”라고 요청하세요. 코드블록의 복사 버튼으로 전체를 복사하면 됩니다.'],
     ['붙여넣기에서 ‘읽을 수 없습니다’가 나와요', 'JSON이 중간에 끊긴 경우가 많습니다. AI에게 “이어서”라고 말한 뒤 이어진 부분까지 합쳐 붙이거나, “JSON을 처음부터 다시 출력해줘”라고 요청하세요.'],
     ['다른 영역은 새 채팅에서 만들어도 되나요?', '처음 쓰던 채팅에서 “회사관련 만들어줘”라고 하면 서류 정보가 이어집니다. 새 채팅이라면 프롬프트를 다시 붙여넣고 시작하세요.'],
     ['말로 입력은 어디서 되나요?', '크롬·엣지에서 마이크를 허용하면 됩니다. 말한 내용이 글로 들어가고 타이머가 함께 돌아갑니다.'],
-    ['내 답변은 어디에 저장되나요?', '이 브라우저에만 저장됩니다. 리포트의 다운로드로 파일을 남겨 두세요.']
+    ['내 답변은 어디에 저장되나요? (꼭 읽어 주세요)', '쓰는 즉시 지금 쓰는 컴퓨터의 이 브라우저에 자동 저장됩니다. 새로고침하거나 창을 닫았다 다시 열어도, 탭을 두 개 열어도 그대로 남습니다. 다만 다른 컴퓨터·다른 브라우저(크롬↔엣지)·휴대폰에서는 보이지 않고, 시크릿 창은 창을 닫으면 지워지며, 브라우저의 방문 기록·쿠키를 지우면 사라집니다. 수업이 끝나면 리포트의 다운로드(MD/Word/PDF)로 꼭 파일을 남겨 두세요.']
   ].map(([q, a]) => '<details><summary>' + q + '</summary><p class="note">' + a + '</p></details>').join('') + '<details class="pv" data-noexport><summary>프롬프트 전문 보기 (' + PROMPT.length.toLocaleString() + '자)</summary><pre>' + esc(PROMPT) + '</pre></details></div>';
   $('#app').innerHTML = h;
 }
