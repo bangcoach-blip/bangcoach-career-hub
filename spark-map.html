@@ -297,6 +297,11 @@ td.qcol small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .wtabs small{font-size:11.5px;font-weight:700;color:var(--soft)}
 .wtabs button.on small{color:var(--blue)}
 .wbody{padding:22px 24px;min-width:0}
+.xadd{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:180px;border:2px dashed var(--rule-2);border-radius:16px;background:#fff;color:var(--ink);font:inherit;cursor:pointer;padding:24px;transition:border-color .15s,background .15s}
+.xadd:hover,.xadd[aria-expanded="true"]{border-color:var(--blue);background:var(--blue-tint)}
+.xadd .plus{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;font-size:32px;font-weight:400;line-height:1}
+.xadd b{font-size:16px}.xadd small{font-size:13px;color:var(--muted)}
+@media print{.xadd{display:none!important}}
 .wgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .wf{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-2);font-weight:600}
 .wf.full{grid-column:1/-1}
@@ -1566,6 +1571,7 @@ function expCard(e,inWork){
 function experiences(){
   var cards=(D.experiences||[]).filter(function(e){return e.spark;}).map(function(e){return expCard(e);}).join("");
   if(!cards)return "";
+  if(AI.state!=="claude")cards+='<button type="button" class="xadd" data-act="axopen" aria-expanded="'+(inp().ax_open?"true":"false")+'"><span class="plus">+</span><b>빠진 경험 더 넣기</b><small>정리할 때 빠뜨린 경험을 추가해요</small></button>';
   return '<section id="exps"><p class="eyebrow">03 · 경험 카드</p><h2>깊게 정리한 경험</h2><p class="lead">행동은 단계별로 나누고, 그때의 생각·감정, 주고받은 말, 숫자를 따로 모았습니다. 카드 아래에서 경험 원고와 이 경험으로 쓴 예시 글을 볼 수 있습니다.</p><div class="exps">'+cards+'</div></section>';
 }
 function draftsOf(e){
@@ -2021,7 +2027,8 @@ function axDone(e,msg){
 }
 function addPanel(){
   var I=inp(),tab=I.ax_tab==="manual"?"manual":"ai";
-  var h='<section id="addx"><p class="eyebrow">경험 추가</p><h2>빠진 경험 더 넣기</h2><p class="lead">정리할 때 빠뜨린 경험이 떠올랐다면 여기서 지도에 더할 수 있습니다. 지금까지 정리한 경험과 답변은 그대로 남습니다.</p><div class="panel wk"><div class="wstep">'+
+  if(!I.ax_open)return "";
+  var h='<section id="addx"><p class="eyebrow">경험 추가</p><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h2 style="margin:0">빠진 경험 더 넣기</h2><button type="button" class="btn ghost" data-act="axclose">닫기 ×</button></div><p class="lead">정리할 때 빠뜨린 경험이 떠올랐다면 여기서 지도에 더할 수 있습니다. 지금까지 정리한 경험과 답변은 그대로 남습니다.</p><div class="panel wk"><div class="wstep">'+
     '<div class="seg" style="align-self:flex-start"><button type="button" data-act="axtab" data-t="ai" class="'+(tab==="ai"?"on":"")+'">AI로 정리해서 넣기 (추천)</button><button type="button" data-act="axtab" data-t="manual" class="'+(tab==="manual"?"on":"")+'">직접 적어서 넣기</button></div>';
   if(tab==="ai"){
     h+='<p class="wnote">평소 쓰는 AI(ChatGPT·Claude·제미나이)가 이 경험을 SPARK로 깊게 정리하고, 어느 자소서 항목에 쓸지도 다시 맞춰 줍니다.</p>'+
@@ -2135,6 +2142,8 @@ function onWorkInput(ev){
 function onWorkClick(ev){
   var b=ev.target.closest("[data-act]");if(!b)return;
   var a=b.getAttribute("data-act");
+  if(a==="axopen"){inp().ax_open=!inp().ax_open;saveAll();rerender();var ax=document.getElementById("addx");if(ax)ax.scrollIntoView({behavior:"instant",block:"start"});return;}
+  if(a==="axclose"){inp().ax_open=false;saveAll();rerender();var xb=document.querySelector(".xadd");if(xb)xb.scrollIntoView({behavior:"instant",block:"center"});return;}
   if(b.closest("#addx")){if(a==="axtab"){inp().ax_tab=b.getAttribute("data-t");saveAll();rerender();return;}return onAddClick(a);}
   if(!b.closest("#work"))return;
   var e=getE(b.getAttribute("data-id"));
