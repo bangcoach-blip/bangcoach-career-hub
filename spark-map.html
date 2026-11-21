@@ -430,7 +430,12 @@ dialog::backdrop{background:rgba(15,23,42,.35)}
   details{display:block}
   details>*{display:block}
   h2{break-after:avoid}
+  .wrap,main{max-width:100%!important;width:auto!important;padding-left:0!important;padding-right:0!important;overflow:visible!important}
+  img,svg,table,pre,.panel,.card{max-width:100%!important}
+  .scroll svg{width:100%!important;height:auto!important}
+  *{overflow-wrap:anywhere}
 }
+@page{size:A4;margin:12mm}
 </style>
 </head>
 <body>
