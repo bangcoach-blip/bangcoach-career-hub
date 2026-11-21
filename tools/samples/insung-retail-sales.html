@@ -422,7 +422,7 @@ const findQ = id => allQ().find(q => q.id === id);
 const fin = q => st().ans[q.id] != null ? st().ans[q.id] : (q.best || '');
 
 const dlg = $('#dlg');
-function openDlg() { $('#err').textContent = ''; $('#ta2').value = ''; dlg.showModal(); setTimeout(() => $('#ta2').focus(), 50); }
+function openDlg() { $('#err').textContent = ''; $('#ta2').value = store.get('ins3:draft:paste') || ''; dlg.showModal(); setTimeout(() => $('#ta2').focus(), 50); }
 $('#dlgClose').onclick = () => dlg.close();
 $('#dlgOk').onclick = () => {
   try {
@@ -452,7 +452,7 @@ $('#dlgOk').onclick = () => {
         base.areas[area] = L;
       }
     }
-    setData(base, 'user'); dlg.close(); toast(area + ' ' + d.qs.length + '문항을 불러왔습니다' + (d._cut ? ' · 끊긴 뒷부분은 AI에 “이어서”라고 해서 받아 붙여넣으세요' : ''));
+    setData(base, 'user'); store.set('ins3:draft:paste', ''); dlg.close(); toast(area + ' ' + d.qs.length + '문항을 불러왔습니다' + (d._cut ? ' · 끊긴 뒷부분은 AI에 “이어서”라고 해서 받아 붙여넣으세요' : ''));
     nav('q=' + d.qs[0].id);
   } catch (e) { $('#err').textContent = '읽을 수 없습니다: ' + e.message; }
 };
@@ -477,7 +477,7 @@ function home() {
       '<p class="note" style="margin:12px 0 0">빈 영역은 버튼으로 문구를 복사해 처음 쓰던 AI 채팅창에 보내고, 받은 JSON을 붙여넣으세요.</p></div>';
     [...AREAS, '내 질문'].forEach(a => { const L = D.areas[a] || []; if (!L.length) return;
       h += '<div class="ahead"><b>' + a + '</b><span class="note">' + L.length + '문항</span>' + (a !== '내 질문' ? '<button class="btn s" data-act="ask2" data-a="' + a + '" style="margin-left:auto">다른 질문으로 다시 받기</button>' : '') + '</div><div class="qlist">' + L.map((q, qi) => { const s = st().ok[q.id] ? '<span class="tag ok">확정</span>' : st().ans[q.id] != null ? '<span class="tag w">고치는 중</span>' : '<span class="tag g">연습 전</span>'; return '<div class="qrow" data-go="' + esc(q.id) + '"><span class="id">' + (qi + 1) + '</span><span class="t">' + (q.surprise ? '⚡ ' : '') + esc(q.q) + '</span>' + s + '</div>'; }).join('') + '</div>'; });
-    h += '<div class="card" style="margin-top:18px"><h3>내가 받은 질문 넣기</h3><p class="note">실제로 받았거나 걱정되는 질문을 적고 복사해 AI 채팅창에 보내면, 그 질문의 5WHY·베스트 답변·꼬리질문이 JSON으로 나옵니다.</p><div class="acts"><input id="myq" style="flex:1;min-width:220px;font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px" placeholder="예) 팀에 무임승차하는 사람이 있다면 어떻게 하시겠습니까?"><button class="btn p" data-act="myq">요청 문구 복사</button></div></div>';
+    h += '<div class="card" style="margin-top:18px"><h3>내가 받은 질문 넣기</h3><p class="note">실제로 받았거나 걱정되는 질문을 적고 복사해 AI 채팅창에 보내면, 그 질문의 5WHY·베스트 답변·꼬리질문이 JSON으로 나옵니다.</p><div class="acts"><input id="myq" value="' + esc(store.get('ins3:draft:myq') || '') + '" style="flex:1;min-width:220px;font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px" placeholder="예) 팀에 무임승차하는 사람이 있다면 어떻게 하시겠습니까?"><button class="btn p" data-act="myq">요청 문구 복사</button></div></div>';
   }
   h += '<div class="card faq"><h3>자주 묻는 질문</h3>' + [
     ['AI가 JSON 말고 글로만 답해요', '“JSON 코드블록으로 다시 출력해줘”라고 요청하세요. 코드블록의 복사 버튼으로 전체를 복사하면 됩니다.'],
@@ -517,7 +517,7 @@ function chk() {
   if (bl) f.unshift('[ ] ' + bl + '곳을 내 사실로 바꾸세요'); if (yo) f.push('해요체 ' + yo + '곳 → 합쇼체(~습니다)로');
   $('#chk').innerHTML = f.map(x => '<span>' + esc(x) + '</span>').join('');
 }
-function tmStart() { if (tint) return; tint = setInterval(() => { tsec++; const e = $('#tm'); if (e) e.textContent = fmt(tsec); }, 1000); const b = $('#tmb'); if (b) b.textContent = '⏸ 멈춤'; }
+function tmStart() { if (tint) return; tint = setInterval(() => { tsec++; const e = $('#tm'); if (e) e.textContent = fmt(tsec); if (tsec % 5 === 0) { const id = curId(); if (id) { st().sec[id] = tsec; saveST(); } } }, 1000); const b = $('#tmb'); if (b) b.textContent = '⏸ 멈춤'; }
 function tmStop() { clearInterval(tint); tint = null; const id = curId(); if (id) { st().sec[id] = tsec; saveST(); } const b = $('#tmb'); if (b) b.textContent = '⏱ 타이머'; }
 function recToggle() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition; if (!SR) return toast('말로 입력은 크롬·엣지에서 쓸 수 있어요');
@@ -615,7 +615,28 @@ document.addEventListener('input', e => {
   const t = e.target, id = curId();
   if (t.id === 'ta' && id) { st().ans[id] = t.value; saveST(); chk(); }
   else if (t.dataset.tl) { st().tl[t.dataset.tl] = t.value; saveST(); }
+  else if (t.id === 'ta2') store.set('ins3:draft:paste', t.value);
+  else if (t.id === 'myq') store.set('ins3:draft:myq', t.value);
 });
+/* 새로고침·탭 닫기 직전에 화면의 입력값을 한 번 더 저장 (한글 조합 중인 마지막 글자 포함) */
+function flushInputs() {
+  const id = curId(), ta = $('#ta');
+  if (ta && id) { const q = findQ(id); if (q && ta.value !== fin(q)) st().ans[id] = ta.value; }
+  document.querySelectorAll('[data-tl]').forEach(x => { if (x.value || st().tl[x.dataset.tl] != null) st().tl[x.dataset.tl] = x.value; });
+  if (id && tint) st().sec[id] = tsec;
+  if (D) saveST();
+}
+window.addEventListener('pagehide', flushInputs);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushInputs(); });
+/* 같은 페이지를 탭 두 개로 열어도 서로 덮어쓰지 않도록, 다른 탭에서 저장하면 최신 내용을 다시 읽는다 */
+window.addEventListener('storage', e => {
+  if (!e.key || !e.key.startsWith('ins3:')) return;
+  if (e.key === skey()) ST = null;
+  else if (e.key === 'ins3:data' && SRC === 'user') { D = jget('ins3:data', null); ST = null; }
+});
+/* 시크릿 창 등 저장이 막힌 브라우저면 미리 알린다 */
+(() => { let ok = true; try { localStorage.setItem('ins3:t', '1'); localStorage.removeItem('ins3:t'); } catch (e) { ok = false; }
+  if (!ok) { const b = document.createElement('div'); b.style.cssText = 'position:sticky;top:0;z-index:50;background:#fef2f2;color:#991b1b;border-bottom:1px solid #fecaca;padding:10px 16px;font-size:14px;text-align:center'; b.textContent = '이 브라우저(시크릿 창 등)는 저장이 막혀 있어 새로고침하면 쓴 내용이 사라집니다. 일반 창에서 열어 주세요.'; document.body.prepend(b); } })();
 render();
 </script>
 <a class="bc-back" href="/#prompts">← 방영황 사이트</a><style>.bc-back{position:fixed;left:14px;bottom:14px;z-index:2147483000;padding:9px 14px;border-radius:999px;background:#0a0a0a;color:#fff!important;font:700 13px/1 'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}.bc-back:hover{background:#4f46e5}@media print{.bc-back{display:none}}</style></body>
