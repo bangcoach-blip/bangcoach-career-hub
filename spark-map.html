@@ -437,7 +437,7 @@ dialog::backdrop{background:rgba(15,23,42,.35)}
 <header class="top"><div class="wrap">
   <div class="brand"><i></i>SPARK 경험 지도</div>
   <nav class="nav" id="nav">
-    <a href="#work">작업실</a><a href="#setup">한눈에 보기</a><a href="#map">연결 지도</a><a href="#board">항목별 분석</a><a href="#exps">경험 카드</a><a href="#plan">부족한 곳</a>
+    <a href="#work">작업실</a><a href="#setup">한눈에 보기</a><a href="#map">연결 지도</a><a href="#board">항목별 분석</a><a href="#exps">경험 카드</a><a href="#plan">부족한 곳</a><a href="#resume">이력서</a>
   </nav>
   <div class="tools"><span class="aib" id="aiBadge">연결 확인 중</span><button class="btn" id="btnWipe" hidden>전체 초기화</button><button class="btn" id="btnLoad">데이터 불러오기</button><button class="btn primary" id="btnPrint" onclick="window.print()">PDF 저장</button></div>
 </div></header>
@@ -485,6 +485,7 @@ STEP 4 자소서 항목별 경험 매칭 + 항목별 작성 흐름 예시
 STEP 5 기업·직무 맞춤 예시 사례
 STEP 6 최종 세팅 _ 산업·기업·직무를 넣으면 경험 배치를 한 장으로
 STEP 7 경험 지도 내보내기
+STEP 8 이력서 만들기 _ 정리한 경험 + 산업·기업·직무 자료 → 채용 사이트 이력서 칸별 원고
 
 [게이트 규칙]
 - 한 응답에는 하나의 STEP만 출력합니다.
@@ -747,6 +748,7 @@ STEP 7 경험 지도 내보내기
 - 답하지 않은 칸을 가상의 내용으로 채우고, 문장 끝에 [가정]을 붙입니다. 가정 문장도 자소서 문장처럼 단정하는 과거형('~했습니다', '~라고 생각했습니다')으로 씁니다. '~했을 것입니다' 같은 추측형은 쓰지 않습니다.
 - 가정으로 채울 때도 목표, 목표와 결과의 연결, 네 연결 고리가 모두 ○가 되고 재료 분량이 800자 가능이 되도록 채웁니다.
 - 생각·감정과 고민도 [가정]으로 채울 수 있습니다. 학생의 상황에서 누구나 느낄 법한 수준으로만 씁니다.
+- 그때 한 말·들은 말이 없으면 그 상황에서 실제로 오갔을 법한 짧은 일상 대사로 채우고 [가정]을 붙입니다. 대사로 성과나 칭찬을 만들지 않습니다.
 - 학생의 전공, 역할, 상황에서 흔히 일어날 수준의 장면으로만 채웁니다. 직무 연결을 만들기 위해 가정을 넣지 않습니다.
 - 숫자, 수상, 직책, 기관명, 회사명은 만들지 않습니다. 수치 자리는 [수치 확인: 무엇을 세어볼지]로 둡니다.
 - 학생이 이미 말한 사실은 바꾸거나 덜어내지 않습니다.
@@ -809,13 +811,29 @@ STEP 7 경험 지도 내보내기
 - 분량 배분: 상황 10% 이내, 문제와 고민 20%, 행동 45%, 결과 15%, 배운 점 10%
 - 행동은 단계별로 쓰고, 단계마다 "무엇을 보고 이렇게 했는지"와 "앞 단계 결과가 다음 단계의 계기가 된 지점"을 씁니다.
 - 생각·감정과 고민은 설명하지 말고 장면으로 보여줍니다. "책임감을 느꼈다"보다 "폐기 봉투가 무거워질수록 '이걸 매일 버려도 되나' 싶었다"처럼 씁니다.
-- 한 말·들은 말이 있으면 1개 이상 직접 인용합니다.
+- 대사: 그때 한 말·들은 말을 큰따옴표로 본문에 1~2개 넣고, 속으로 한 말은 작은따옴표로 씁니다. 문제를 알아챈 순간, 설득·협의한 순간, 결과에 대한 반응처럼 장면이 바뀌는 곳에 둡니다. (예: 점장님이 "그냥 하던 대로 넣어"라고 하셨지만, 속으로 '이걸 매일 버려도 되나' 싶었습니다.)
 - 목표 문장과 결과 문장이 각각 분명히 드러나고, 결과는 목표에 대한 답이 되게 씁니다.
 - 문장 사이에 "그래서", "이를 보고", "그런데"처럼 원인과 결과를 잇는 연결을 둡니다.
 - STEP 2 확정본의 내용을 모두 담습니다. 900자를 넘어도 원문 조각은 빼지 않습니다.
 - 항목 중립 원고이므로 산업·기업 이야기를 끼워 넣지 않습니다.
 - STEP 2의 [가정]을 그대로 가져오고, 새로 보충한 문장에도 [가정]을 붙입니다. 수치는 만들지 않습니다.
 - 원고 끝에 "[가정] 표시는 실제와 다르면 고쳐주세요. 실제와 다른 내용은 면접 추가 질문에 답할 수 없습니다."를 안내하고, 면접관이 가장 먼저 물을 가정 문장 1개를 짚어줍니다.
+- 문체는 3-4 규칙을 따릅니다.
+
+3-4. 문체 규칙 (AI 티가 나지 않게)
+경험 원고(STEP 3)와 예시 사례(STEP 5)에 모두 적용합니다. 목표는 잘 다듬어진 AI 문장이 아니라, 학생이 자기 경험을 직접 설명하듯 쓴 글입니다.
+- 어휘: 학생이 면접에서 자기 말로 그대로 설명할 수 있는 단어를 씁니다. 지나치게 매끄럽거나 문학적인 표현, 어려운 한자어는 쓰지 않습니다.
+- 리듬: 문장 길이를 섞습니다. 상황 설명은 이어서 충분히 쓰고, 핵심 행동·성과는 짧은 문장으로 강조합니다. 모든 문장을 짧게 끊지 않습니다. "저는 ~했습니다 / 이를 통해 ~할 수 있었습니다 / 이 경험을 통해 ~을 배웠습니다"처럼 같은 어순·종결을 연달아 쓰지 않습니다.
+- 판단: "~라고 판단했습니다", "~을 고민했습니다", "~을 제안했습니다", "~을 선택했습니다"는 사고 과정을 보여주므로 지우지 않습니다. 경험을 활동 나열로 만들지 않습니다.
+- 흐름: 상황 → 문제 인식 → 원인 판단 → 행동 → 결과 → 배운 점이 인과로 이어지게 씁니다. "당시", "그 결과", "이후"는 필요할 때만 쓰고, 같은 연결어를 반복하지 않습니다.
+- 바꿀 표현: 아래 표현은 구체적인 행동·판단으로 바꿉니다. 다만 문맥상 자연스러우면 기계적으로 지우지 않습니다.
+  · 번역투: ~에 대해, ~에 있어, ~를 가지고, ~되어진다, ~하는 과정을 경험할 수 있었습니다, ~할 수 있는 기회를 얻었습니다
+  · 정형 문장: 이 경험을 통해 많은 것을 배웠습니다, 성장의 계기가 되었습니다, 앞으로도 끊임없이 노력하겠습니다
+  · 인위적 대조: 단순히 A가 아니라 B, A를 넘어 B, 실패를 성장의 발판으로 삼았습니다
+  · 과한 수사: 몸소 체감했습니다, 깊이 깨달았습니다, 한 단계 도약하겠습니다, 새로운 가치를 창출하겠습니다
+  · 추상적 기업 찬사: 비전에 깊이 공감했습니다, 가치관이 일치합니다 → 기업의 사업·제품과 지원 직무의 역할로 바꿉니다
+- 사실: 경험을 과장하거나 원문에 없는 성과를 보태지 않습니다.
+- 마지막 점검(소리 내어 읽기): 면접에서 그대로 말해도 어색하지 않은가? 모든 문장이 모범답안처럼 매끈하지 않은가? 실제 경험보다 거창하지 않은가?
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -979,11 +997,11 @@ STEP 7 경험 지도 내보내기
 - 기업 정보는 타겟 맥락 카드나 이번 사례용 요인 카드에 있는 것만 쓰고, [추정] 정보에 기댄 문장 끝에 [추정]을 붙입니다.
 - 두괄식으로 씁니다. 첫 문장에 이 문항에 대한 답(결론)을 씁니다.
 - 경험 부분은 STEP 3 원고를 그대로 옮기지 말고, 이 문항이 확인하려는 것에 맞춰 장면을 고르고 순서를 바꿉니다. 문항과 상관없는 장면은 과감히 뺍니다. 예시 사례에서 뺀 재료는 원문 반영 원칙의 예외입니다. 단, 재료 출처 표 아래에 "이번에 쓰지 않은 재료"로 1줄 적습니다.
-- 생각·감정·고민을 최소 1곳 장면으로 보여주고, 한 말·들은 말이 있으면 1개 이상 인용합니다.
+- 생각·감정·고민을 최소 1곳 장면으로 보여주고, 대사(한 말·들은 말·속으로 한 말)를 1개 이상 따옴표로 인용합니다. [가정] 대사는 [가정]을 유지합니다.
 - 행동 문단마다 "무엇을 보고 이렇게 했는지"를 넣어 나열식을 피합니다.
 - 마지막 문단은 경험에서 얻은 기준을 지원 직무의 과업·기업 방향과 구체적으로 잇습니다. "열정", "최선을 다하겠습니다", "기여하고 싶습니다"처럼 누구나 쓸 수 있는 마무리로 끝내지 않습니다.
 - 피할 표현: "~라고 생각합니다"의 반복, "다양한", "많은", "여러" 같은 흐린 수량 표현, 같은 접속어 3회 이상 반복
-- 문장은 짧게, 한 문장에 한 가지 행동만 씁니다.
+- 문체는 3-4 규칙을 따릅니다. 모든 문장을 짧게 끊지 말고 길이를 섞습니다.
 
 5-4. 예시 사례 후 선택
 "1 다른 문항으로 / 2 이 사례 수정 (어디를 어떻게) / 3 다른 경험으로 다시 쓰기 / 4 최종 세팅으로 / 5 내보내기"
@@ -1043,7 +1061,7 @@ STEP 7 경험 지도 내보내기
 - 확정 > 가정 포함 > 가정 중심 순으로 경험을 우선합니다. 같은 조건이면 재료 분량이 큰 경험을 고릅니다.
 - 경험은 「경험 이름」으로, 위치는 칸 이름·장면 이름으로 씁니다.
 - 학생이 말하지 않은 사실을 새로 만들지 않습니다. 세팅표는 배치와 각도까지만 쓰고, 완성 원고는 STEP 5에서 씁니다.
-- 끝에 "1 다른 타겟으로 세팅 / 2 이 타겟 문항으로 예시 사례 쓰기(STEP 5) / 3 내보내기"를 묻습니다.
+- 끝에 "1 다른 타겟으로 세팅 / 2 이 타겟 문항으로 예시 사례 쓰기(STEP 5) / 3 이력서 만들기(STEP 8) / 4 내보내기"를 묻습니다.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1129,7 +1147,8 @@ STEP 7 경험 지도 내보내기
      "points": ["기업·직무 맞춤 포인트"], "rewrite": ["내 말로 고쳐 쓸 곳"], "questions": ["면접 꼬리 질문"]}
   ],
   "gaps": [{"item": "q4", "why": "비어 있는 것", "questions": ["다시 답해볼 질문"], "maybe": ["혹시 ~한 적은 없었나요?"]}],
-  "memos": {"성격": [], "계기": [], "기타": [], "미배치": []}
+  "memos": {"성격": [], "계기": [], "기타": [], "미배치": []},
+  "resume": "STEP 8을 했으면 8-4의 resume 객체를 그대로, 안 했으면 이 키를 뺍니다"
 }
 ```
 - level: 3 = ◎ 직접 증명, 2 = ○ 비슷한 경험, 1 = △ 맥락만. 연결 없음은 넣지 않습니다.
@@ -1148,6 +1167,82 @@ STEP 7 경험 지도 내보내기
 
 7-8. 최종 안내
 "이 파일은 지금까지의 정리 스냅샷입니다. 경험이 바뀌면 '데이터 복사'로 이 채팅에 붙여넣고 바뀐 경험만 다시 요청하세요. 예시 사례는 참고용이며, 그대로 제출하지 말고 내 말로 다시 쓰세요."
+
+[STEP 8] 이력서 만들기 _ 정리한 경험을 채용 사이트 이력서 칸에 맞춰
+
+8-1. 진입 조건
+- STEP 2 확정본이 1개 이상 있고 학생이 "이력서", "이력서 만들어줘"를 요청하면 진입합니다. STEP 4 전이어도 됩니다.
+- 먼저 한 번에 묻습니다(이미 받은 것은 다시 묻지 않음).
+"이력서를 만들기 전에 두 가지만 확인할게요.
+① 지원 기업·직무와 산업·기업·직무 자료(채용공고, 직무기술서, 인재상, 분석 메모). STEP 1에서 받은 자료가 있으면 그대로 써요.
+② 경험 정리에 없는 이력: 학력(학교·전공·기간·학점), 자격증, 어학, 교육 이수, 수상, 경력. 없으면 '없음'이라고 적어주세요."
+
+8-2. 분류
+- 정리한 경험과 추가 이력을 하나씩 다음 칸에 넣습니다. 정리한 경험은 하나도 빠뜨리지 않습니다.
+  · 직장경력: 급여를 받은 인턴·계약직·정규직
+  · 프로젝트: 학부연구, 캡스톤, 공모전, 팀 프로젝트처럼 목표와 결과물이 있는 과제
+  · 학내외활동: 동아리, 대외활동, 봉사, 아르바이트, 학생회 (활동구분: 동아리/대외활동/봉사활동/기타사회활동/팀 프로젝트)
+  · 교육이수사항, 수상경력, 자격증, 공인외국어시험, 학력
+- 같은 칸 안에서는 지원 직무와 가까운 경험부터 씁니다.
+
+8-3. 항목별 작성 형식
+모든 항목의 첫 줄은 그 경험으로 얻은 직무 관련 핵심 역량 2~3개입니다. 핵심 역량 → 한 일 → 결과 → 적용 순서로 씁니다.
+
+[직장경력] 근무처 / 기간 / 부서 / 직급 / 담당업무 / 퇴직사유
+[제목]
+핵심 역량: (2~3개)
+1. 상세 업무 (일의 범위, 쓴 도구, 팀 안 역할 3~5줄)
+2. 주요 성과 (수치 또는 문제 해결형 2~3줄. 성과 요약 문단을 따로 두지 않고 상세 업무 뒤에 둡니다)
+3. 직무 적용 방안 (1줄)
+
+[프로젝트] 근무처·기관 / 프로젝트명 / 기간 / 참여역할("역할 / 한 일 요약") / 기여도
+핵심 역량: (2~3개)
+1. 목적 (1~2줄)
+2. 역할 (2~4줄)
+3. 문제 분석 및 개선 과정
+1) 소제목 — 2~3줄 (문제 확인 → 원인 판단 → 행동 → 검증 흐름, 2~3단계)
+[성과] / [기여도] / [직무 적용]
+
+[학내외활동] 활동구분 / 기관 및 조직명 / 활동기간 / 역할("역할 / 한 일 요약")
+[제목]
+핵심 역량: (2~3개)
+활동 배경: (1줄)
+1. 소제목 — 활동 내용 2~4줄 (2~3묶음)
+[성과] / [기여도] / [업무 적용 방안]
+
+[교육이수사항] 교육명 / 교육기관명 / 기간 / 교육시간
+핵심 학습 역량: (2~3개)
+- 배운 지식·도구·실습 3~5줄
+[실무 적용]
+
+[수상경력] 상훈명 / 수여기관 / 발급일
+[제목]
+- 수상 과정에서 맡은 역할 1~2줄
+[기여도]
+
+작성 규칙
+- 문체: 개조식 명사형 종결(~확인, ~수행, ~설정, ~개선, ~협의). 한 줄에 한 행동을 쓰고, 무엇을 보고 그렇게 했는지가 드러나게 씁니다.
+- 학생이 쓴 구체 명사(도구, 대상, 수량)를 살립니다. "다양한", "적극적으로", "원활한", "성공적으로" 같은 흐린 말과 "~에 기여", "역량 강화" 같은 빈말은 쓰지 않습니다.
+- 항목 하나는 공백 포함 400~900자로, 너무 길게 늘이지 않습니다.
+- 산업·기업·직무 자료가 있으면 그 자료의 과업·용어에 맞춰 핵심 역량과 적용 방안의 각도를 정합니다. 자료에 없는 기업 사실은 쓰지 않습니다.
+- 회사명·기관명·날짜·학점·점수·수치·기여도는 만들지 않습니다. 모르는 칸은 [기간 확인], [기여도 확인], [수치 확인: 무엇을 세어볼지]로 둡니다. STEP 2의 [가정] 내용을 쓴 줄 끝에는 [가정]을 붙입니다.
+
+8-4. 출력
+- 맨 위에 기본정보: 이름, 지원분야, 자기소개 요약 2문장(경험 근거), 핵심 역량 키워드 5~8개. 생년월일·연락처·주소는 "직접 입력"으로 둡니다.
+- 칸 순서: 기본정보 → 학력 → 직장경력 → 프로젝트 → 공인외국어시험 → 자격증 → 수상경력 → 교육이수사항 → 학내외활동 → 제출 전에 채우거나 확인할 곳
+- 항목마다 위 형식 그대로, 채용 사이트 칸에 바로 붙여넣을 수 있는 텍스트로 씁니다.
+- 내보내기 ② 데이터에 넣을 때는 아래 resume 객체를 씁니다(키 이름 그대로).
+```json
+{"resume":{"target":{"industry":"","company":"","job":""},"summary":"","skills":[],
+ "education":[{"school":"","major":"","period":"","gpa":"","status":""}],
+ "career":[{"org":"","period":"","dept":"","position":"","task":"","reason":"","title":"","core":"","details":[],"results":[],"apply":""}],
+ "projects":[{"org":"","title":"","period":"","role":"","contrib":"","core":"","purpose":"","roles":[],"process":[{"h":"","items":[]}],"results":[],"apply":""}],
+ "activities":[{"kind":"","org":"","period":"","role":"","title":"","core":"","background":"","contents":[{"h":"","items":[]}],"results":[],"contrib":"","apply":""}],
+ "courses":[{"name":"","org":"","period":"","hours":"","title":"","core":"","contents":[],"apply":""}],
+ "awards":[{"name":"","org":"","date":"","title":"","role":"","contrib":""}],
+ "certs":[{"name":"","org":"","date":""}],"langs":[{"name":"","score":"","date":""}],"missing":[]}}
+```
+- 끝에 "1 다른 기업·직무로 다시 만들기 / 2 이 항목 고치기 (어디를 어떻게) / 3 내보내기"를 묻습니다.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1676,6 +1771,125 @@ function plan(){
     g.map(function(r){var q=Q[r.item]||(D.items||[]).filter(function(x){return x.name===r.item;})[0];
       return '<article class="panel ic"><div class="hd"><h3>'+esc(q?q.name:r.item)+'</h3>'+(q?st(q.status):'')+'</div>'+(r.why?'<p class="q" style="margin:0">'+esc(r.why)+'</p>':'')+gapHtml(r)+'</article>';}).join("")+'</div></section>';
 }
+/* ---------- 이력서 ---------- */
+var RVCSS=`.rv{display:flex;flex-direction:column;gap:22px}
+.rv .rvtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.rv h3.rvh{font-size:19px;margin:6px 0 10px;color:var(--ink,#0f172a)}
+.rv .rvcard{background:var(--paper,#fff);border:1px solid var(--rule,#e2e8f0);border-radius:14px;padding:6px 22px}
+.rv .rvit{padding:18px 0;border-top:1px solid var(--rule,#e2e8f0)}
+.rv .rvit:first-child{border-top:0}
+.rv .rvno{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--blue,#1c60ef);margin-bottom:10px}
+.rv .rvno button{font-size:12px;padding:3px 10px;border:1px solid var(--rule-2,#cbd5e1);border-radius:8px;background:var(--paper,#fff);cursor:pointer;color:var(--ink-2,#334155)}
+.rv .rvmeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:7px 18px;margin-bottom:12px}
+.rv .rvf{display:flex;gap:8px;align-items:baseline;font-size:14px;color:var(--ink,#0f172a);min-width:0}
+.rv .rvf b{flex:none;font-weight:500;font-size:12px;color:var(--ink-2,#334155);border:1px solid var(--rule-2,#cbd5e1);border-radius:6px;padding:1px 8px;background:var(--paper,#fff)}
+.rv .rvf.dim span{color:var(--soft,#94a3b8)}
+.rv .rvbody{font-size:14.5px;line-height:1.75;color:var(--ink,#0f172a)}
+.rv .rvbody p{margin:0}
+.rv .rvbody .t{font-weight:700;margin-bottom:6px}
+.rv .rvbody .core{background:var(--blue-tint,#eef4ff);border-radius:8px;padding:7px 12px;margin:4px 0 8px;font-weight:600}
+.rv .rvbody .h1{font-weight:700;margin-top:8px}
+.rv .rvbody .h2{font-weight:600;margin-top:4px}
+.rv .rvbody .li{padding-left:14px;text-indent:-10px}
+.rv .rvchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rv .rvchips span{font-size:13px;background:var(--blue-tint,#eef4ff);color:var(--blue,#1c60ef);border-radius:999px;padding:3px 11px}
+.rv .rvmiss{border:1.5px dashed #f59e0b;background:#fffbeb;border-radius:14px;padding:14px 20px;font-size:14px}
+.rv .rvmiss li{margin:3px 0}
+.rvdoc{max-width:860px;margin:0 auto;padding:32px 16px;font-family:"Pretendard","Noto Sans KR",system-ui,sans-serif}
+@media print{.rv .rvtools,.rv .rvno button{display:none}.rv .rvit{break-inside:avoid}}`;
+(function(){var s=document.createElement("style");s.textContent=RVCSS;document.head.appendChild(s);})();
+function rvR(){var r=(typeof D!=="undefined"&&D&&D.resume)||D0.resume;return r&&typeof r==="object"&&!Array.isArray(r)?r:null;}
+function rvL(x){return arr(x).filter(function(s){return String(s||"").trim();});}
+var RVH=/^\[(성과|기여도|직무 적용|업무 적용 방안|실무 적용)\]/;
+function rvText(kind,o){
+  var L=[];function b(a){rvL(a).forEach(function(s){L.push("- "+s);});}
+  if(o.title&&kind!=="projects")L.push("["+o.title+"]");
+  if(o.core)L.push((kind==="courses"?"핵심 학습 역량: ":"핵심 역량: ")+o.core);
+  if(kind==="career"){L.push("1. 상세 업무");b(o.details);L.push("2. 주요 성과");b(o.results);if(o.apply){L.push("3. 직무 적용 방안");b([o.apply]);}}
+  else if(kind==="projects"){var n=1;if(o.purpose){L.push((n++)+". 목적");b([o.purpose]);}if(rvL(o.roles).length){L.push((n++)+". 역할");b(o.roles);}
+    var pr=arr(o.process).filter(function(p){return p&&(p.h||rvL(p.items).length);});if(pr.length){L.push((n++)+". 문제 분석 및 개선 과정");pr.forEach(function(p,i){L.push((i+1)+") "+(p.h||""));b(p.items);});}
+    if(rvL(o.results).length){L.push("[성과]");b(o.results);}if(o.apply){L.push("[직무 적용]");b([o.apply]);}}
+  else if(kind==="activities"){if(o.background)L.push("활동 배경: "+o.background);
+    arr(o.contents).filter(function(c){return c&&(c.h||rvL(c.items).length);}).forEach(function(c,i){L.push((i+1)+". "+(c.h||""));b(c.items);});
+    if(rvL(o.results).length){L.push("[성과]");b(o.results);}if(o.contrib)L.push("[기여도] "+o.contrib);if(o.apply){L.push("[업무 적용 방안]");b([o.apply]);}}
+  else if(kind==="courses"){b(o.contents);if(o.apply){L.push("[실무 적용]");b([o.apply]);}}
+  else if(kind==="awards"){b(o.role?[o.role]:[]);if(o.contrib)L.push("[기여도] "+o.contrib);}
+  return L;
+}
+var RVK={career:["직장경력",[["근무처","org"],["기간","period"],["부서","dept"],["직급","position"],["담당업무","task"],["퇴직사유","reason"]]],
+  projects:["프로젝트",[["근무처·기관","org"],["프로젝트명","title"],["기간","period"],["참여역할","role"],["기여도","contrib"]]],
+  awards:["수상경력",[["상훈명","name"],["수여기관","org"],["발급일","date"]]],
+  courses:["교육이수사항",[["교육명","name"],["교육기관명","org"],["기간","period"],["교육시간","hours"]]],
+  activities:["학내외활동",[["활동구분","kind"],["기관 및 조직명","org"],["활동기간","period"],["역할","role"]]]};
+function rvMeta(F,o){return '<div class="rvmeta">'+F.filter(function(f){return o[f[1]];}).map(function(f){return '<div class="rvf"><b>'+esc(f[0])+'</b><span>'+esc(o[f[1]])+'</span></div>';}).join("")+'</div>';}
+function rvBody(L){
+  return '<div class="rvbody">'+L.map(function(s){var c="";
+    if(RVH.test(s)||/^\d+\. /.test(s))c="h1";
+    else if(/^\[[^\]]+\]$/.test(s))c="t";
+    else if(/^핵심 (학습 )?역량: /.test(s))c="core";
+    else if(/^\d+\) /.test(s))c="h2";else if(/^- /.test(s))c="li";
+    return '<p class="'+c+'">'+esc(s)+'</p>';}).join("")+'</div>';
+}
+function rvSimple(title,rows,F){
+  rows=arr(rows).filter(function(o){return o&&(o.name||o.school);});if(!rows.length)return "";
+  return '<div><h3 class="rvh">'+title+' ('+rows.length+'건)</h3><div class="rvcard">'+rows.map(function(o){return '<div class="rvit">'+rvMeta(F,o)+'</div>';}).join("")+'</div></div>';
+}
+function rvSec(k,R,tools){
+  var rows=arr(R[k]).filter(Boolean);if(!rows.length)return "";var K=RVK[k];
+  return '<div><h3 class="rvh">'+K[0]+' ('+rows.length+'건)</h3><div class="rvcard">'+rows.map(function(o,i){
+    return '<div class="rvit"><div class="rvno"><span>'+K[0]+' '+(i+1)+'</span>'+(tools?'<button type="button" data-rv="copy" data-k="'+k+'" data-i="'+i+'">이 칸 복사</button>':'')+'</div>'+rvMeta(K[1],o)+rvBody(rvText(k,o))+'</div>';}).join("")+'</div></div>';
+}
+function rvInner(R,tools){
+  var m=D.meta||{},t=R.target||{},h='';
+  h+='<div><h3 class="rvh">기본정보</h3><div class="rvcard"><div class="rvit">'+
+    '<div class="rvmeta">'+[["이름",m.name],["지원분야",[t.company&&t.company!=="미정"?t.company:"",t.job].filter(Boolean).join(" · ")],["생년월일",""],["이메일",""],["휴대폰",""],["주소",""]].map(function(f){return '<div class="rvf'+(f[1]?"":" dim")+'"><b>'+f[0]+'</b><span>'+esc(f[1]||"직접 입력")+'</span></div>';}).join("")+'</div>'+
+    (R.summary?'<div class="rvbody"><p class="core">'+esc(R.summary)+'</p></div>':'')+
+    (rvL(R.skills).length?'<div class="rvchips">'+rvL(R.skills).map(function(s){return '<span>'+esc(s)+'</span>';}).join("")+'</div>':'')+'</div></div></div>';
+  h+=rvSimple("학력",R.education,[["학교","school"],["전공","major"],["기간","period"],["학점","gpa"],["구분","status"]]);
+  ["career","projects"].forEach(function(k){h+=rvSec(k,R,tools);});
+  h+=rvSimple("공인외국어시험",R.langs,[["시험명","name"],["점수·등급","score"],["취득일","date"]]);
+  h+=rvSimple("자격증",R.certs,[["자격증명","name"],["발급기관","org"],["취득일자","date"]]);
+  ["awards","courses","activities"].forEach(function(k){h+=rvSec(k,R,tools);});
+  if(rvL(R.missing).length)h+='<div class="rvmiss"><b>제출 전에 채우거나 확인할 곳</b><ul>'+rvL(R.missing).map(function(s){return '<li>'+esc(s)+'</li>';}).join("")+'</ul></div>';
+  return h;
+}
+function rvAll(R){
+  var out=[],m=D.meta||{},t=R.target||{};
+  out.push("■ 기본정보\n이름: "+(m.name||"")+"\n지원분야: "+[t.company,t.job].filter(Boolean).join(" · ")+(R.summary?"\n자기소개 요약: "+R.summary:"")+(rvL(R.skills).length?"\n핵심 역량: "+rvL(R.skills).join(", "):""));
+  function simple(title,rows,F){rows=arr(rows).filter(function(o){return o&&(o.name||o.school);});if(rows.length)out.push("■ "+title+"\n"+rows.map(function(o){return F.map(function(f){return o[f]||"";}).filter(Boolean).join(" / ");}).join("\n"));}
+  function sec(k){var K=RVK[k];arr(R[k]).filter(Boolean).forEach(function(o,i){out.push("■ "+K[0]+" "+(i+1)+"\n"+K[1].filter(function(f){return o[f[1]];}).map(function(f){return f[0]+": "+o[f[1]];}).join("\n")+"\n\n"+rvText(k,o).join("\n"));});}
+  simple("학력",R.education,["school","major","period","gpa","status"]);
+  sec("career");sec("projects");simple("공인외국어시험",R.langs,["name","score","date"]);simple("자격증",R.certs,["name","org","date"]);sec("awards");sec("courses");sec("activities");
+  if(rvL(R.missing).length)out.push("■ 제출 전에 채우거나 확인할 곳\n"+rvL(R.missing).map(function(s){return "- "+s;}).join("\n"));
+  return out.join("\n\n");
+}
+function resumeSec(){
+  var R=rvR();if(!R)return "";
+  return '<section id="resume"><p class="eyebrow">05 · 이력서</p><h2>정리한 경험으로 만든 이력서</h2><p class="lead">채용 사이트 이력서 칸에 항목별로 붙여넣을 수 있게 정리했습니다. 경험마다 핵심 역량 → 한 일 → 성과 → 직무 적용 순서입니다. [가정]과 [확인] 표시는 실제 내용으로 고친 뒤 제출하세요.</p>'+
+    '<div class="rv"><div class="rvtools"><button class="btn" type="button" data-rv="all">전체 텍스트 복사</button><button class="btn primary" type="button" data-rv="save">이력서만 HTML로 저장</button></div>'+rvInner(R,true)+'</div></section>';
+}
+function rvSave(){
+  var R=rvR();if(!R)return;var nmx=String((D.meta&&D.meta.name)||"이력서").replace(/[\\\/:*?"<>|]/g,"");
+  var html='<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(nmx)+' 이력서</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>body{margin:0;background:#f6f8fc}'+RVCSS+'</style></head><body><main class="rvdoc"><div class="rv">'+rvInner(R,false)+'</div></main></body></html>';
+  var fn=nmx+"_이력서.html";
+  if(AI.dl){AI.dl.save({filename:fn,data:html}).then(function(){toast("이력서를 저장했습니다");}).catch(function(e){if(e&&e.code!=="declined")toast("저장하지 못했습니다");});return;}
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));a.download=fn;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);
+}
+document.addEventListener("click",function(ev){
+  var b=ev.target.closest&&ev.target.closest("[data-rv]");if(!b)return;var R=rvR();if(!R)return;var a=b.getAttribute("data-rv");
+  if(a==="all")return copyText(rvAll(R),"이력서 전체를 복사했습니다");
+  if(a==="save")return rvSave();
+  if(a==="copy"){var k=b.getAttribute("data-k"),o=arr(R[k])[+b.getAttribute("data-i")];if(o)copyText(rvText(k,o).join("\n"),"이 칸을 복사했습니다. 이력서 상세 내용 칸에 붙여넣으세요");}
+});
+function doResume(){
+  var I=inp(),m=D0.meta||{},src=(typeof D!=="undefined"&&D&&arr(D.experiences).length?D:D0);
+  var ok=arr(src.experiences).filter(function(e){return e.spark;});if(!ok.length)return toast("정리된 경험이 없습니다");
+  var t={industry:I.rs_industry||m.industry||"",company:I.rs_company||(m.company!=="미정"?m.company:"")||"",job:I.rs_job||m.job||""};
+  runTask("resume",{target:t,info:String(I.rs_info||I.analysis||"").slice(0,12000),extra:String(I.rs_extra||"").slice(0,6000),factors:facLite(),experiences:ok.map(expFull)}).then(function(r){
+    var R=r.resume||r;if(!(arr(R.career).length||arr(R.projects).length||arr(R.activities).length))throw {msg:"이력서 항목이 비어 있습니다. 다시 눌러주세요"};
+    R.target=R.target||t;D0.resume=R;commit();toast("이력서를 만들었습니다");var x=document.getElementById("resume");if(x)x.scrollIntoView({behavior:"instant"});
+  }).catch(fail);
+}
 function saveBar(){
   return '<section id="save" style="padding-top:8px"><div class="panel savebar2"><p>이 결과를 파일로 남기거나, 데이터를 복사해 채팅에 붙여넣고 이어서 고칠 수 있습니다.</p><button class="btn" id="btnCopy">데이터 복사</button><button class="btn primary" id="btnSave">HTML로 저장</button></div></section>';
 }
@@ -1737,14 +1951,14 @@ start:{tier:"default",label:"타겟 카드와 경험 목록",rules:`[할 일] �
 spark:{tier:"default",label:"경험 심층 정리",rules:`[할 일] 입력의 경험 하나를 심층 SPARK로 정리한다. raw(원문)와 answers(학생이 깊이 질문에 한 답)를 모두 반영한다. current가 있으면 그 정리를 고쳐 쓴다. mode가 "fill"이면 학생이 답하지 않은 빈 곳을 [가정]으로 채워 완성하고 questions와 suggest는 빈 배열로 둔다.
 - spark.S 상황: 배경(언제·어디서·역할), 조건·제약, 그때 나의 처지. spark.P 문제와 목표: 눈에 보인 현상(숫자), 원인, 왜 내가 신경 썼나(감정, 학생 말 그대로), 목표. spark.A 행동 요약 2~3문장. spark.R 결과: 숫자 전후, 주변 반응(들은 말), 목표 대비, 아쉬움. spark.K 배운 점: 얻은 기준 한 문장과 그 의미. 각 칸 2~5문장.
 - steps: 행동을 단계별로. name(장면 이름 2~8자), did(한 일, 구체 명사), why(무엇을 보고 이렇게 했나), alt(떠올렸지만 고르지 않은 방법과 이유, 없으면 "-"), result(그 결과, 다음 단계의 계기면 그 연결). 단계 사이는 '앞 단계 결과 → 다음 단계 계기'로 이어진다.
-- hurdle 어려웠던 점과 넘은 방법. inner [{"type":"생각|감정|고민","text":""}] 장면마다 1줄. 가정이면 '~했을 것입니다'가 아니라 '~라는 생각이 들었습니다' 같은 단정형으로 쓰고 [가정]. quotes 그때 한 말·들은 말(학생이 말한 것만, "누구: \\"말\\"" 형식). numbers [{"label":"","value":""}]. later 이 기준을 다른 경험에서 다시 쓴 장면. apply 직무 적용 한 줄.
+- hurdle 어려웠던 점과 넘은 방법. inner [{"type":"생각|감정|고민","text":""}] 장면마다 1줄. 가정이면 '~했을 것입니다'가 아니라 '~라는 생각이 들었습니다' 같은 단정형으로 쓰고 [가정]. quotes 그때 한 말·들은 말·속으로 한 말 1~3개("누구: \\"말\\"" 형식). 학생이 말하지 않았으면 그 상황에서 오갔을 법한 짧은 일상 대사로 채우고 끝에 [가정]. 성과·칭찬을 대사로 만들지 않는다. numbers [{"label":"","value":""}]. later 이 기준을 다른 경험에서 다시 쓴 장면. apply 직무 적용 한 줄.
 - check: goal과 result는 ○|△|×, flow는 상황→문제·문제→행동·행동→결과·결과→배운 점 네 고리를 ○/△ 네 글자로, source는 "반영 수/원문 조각 수".
 - depth.grade: 800자 가능(행동 2단계 이상+단계마다 고른 이유+생각·감정 2개 이상+숫자 1개 이상+결과 전후 비교+이후 적용) / 500자 수준 / 300자 수준. lacks는 더 담으면 좋은 내용: 내용을 구체적으로 만드는 것(판단 근거, 생각·감정, 숫자)과 지원 직무에서 보여줄 모습을 살리는 것(직무와 닮은 장면). 글자수를 채우기 위한 항목이 아니다.
 - links: 직무 과업·직무 역량은 반드시 판정하고 나머지는 근거 있을 때만. evidence는 "'장면 이름' \\"학생 표현\\"" 또는 "문제 \\"...\\"".
 - assumptions: [가정]을 붙인 모든 문장과 모든 [수치 확인]. text는 [가정]이 붙은 문장을 본문(spark, steps, hurdle, later 등)에 쓴 그대로 한 글자도 바꾸지 않고 옮긴다([가정] 표시만 뺀다). 같은 내용을 다른 문장으로 또 썼으면 그 문장을 alts에 넣는다. [수치 확인]은 대괄호 안 '무엇을 세어볼지'를 그대로 text에 넣고 type "수치 확인". part는 "행동 '장면 이름'"·"결과"처럼.
 - status: 확정([가정] 없음) / 가정 포함 / 가정 중심(행동의 한 일이나 결과에 [가정]).
 - items가 있으면 그것이 이 학생이 쓸 자소서 문항(기업별 분석) 또는 기본 항목(기본 분석)이다. 질문 중 1개 이상은 이 경험이 쓰일 만한 문항의 의도(예: 갈등 해결이면 상대와 직접 대화한 장면, 문제해결이면 1차 시도가 막힌 장면)에 맞는 장면을 묻는다.
-- questions: 깊이 질문 최대 4개. 목적은 글자수를 채우는 것이 아니라 경험을 더 구체적으로 만들고, 지원 직무에서 보여줄 모습이 드러나게 하는 것이다. 그 경험에 실제로 있었을 법한 장면 중 직무와 닮은 장면을 1개 이상 묻는다(억지로 직무에 맞추지 않는다). 모자란 내용부터, 장면을 다시 떠올리게 하는 회상형 한 줄("무엇을 느꼈나요?" 같은 추상 질문 금지). 우선순위: 목표·결과 → 행동이 1단계뿐 → 고른 이유 → 생각·감정 → 숫자 → 이후 적용 → 직무 연결 장면. slot은 어느 칸. 이미 answers로 답한 질문은 다시 묻지 않는다.
+- questions: 깊이 질문 최대 4개. 목적은 글자수를 채우는 것이 아니라 경험을 더 구체적으로 만들고, 지원 직무에서 보여줄 모습이 드러나게 하는 것이다. 그 경험에 실제로 있었을 법한 장면 중 직무와 닮은 장면을 1개 이상 묻는다(억지로 직무에 맞추지 않는다). 모자란 내용부터, 장면을 다시 떠올리게 하는 회상형 한 줄("무엇을 느꼈나요?" 같은 추상 질문 금지). 우선순위: 목표·결과 → 행동이 1단계뿐 → 고른 이유 → 생각·감정 → 그때 한 말·들은 말 → 숫자 → 이후 적용 → 직무 연결 장면. slot은 어느 칸. 이미 answers로 답한 질문은 다시 묻지 않는다.
 - suggest: '이런 적 없나요?' 최대 2개. 같은 장소·사람·시기의 구체 장면으로 묻고, 아직 비어 있는 자소서 항목이나 요인을 겨냥한다.
 - 숫자가 불확실하면 "OO개를 넘었던 것으로 기억하나 정확하지 않음 [수치 확인: ...]"으로 쓴다.
 [출력 JSON]
@@ -1753,7 +1967,16 @@ narrative:{tier:"default",label:"800자 경험 원고",rules:`[할 일] 정리�
 - 공백 포함 750~900자. 1인칭 과거형. 소제목, 번호, 칸 이름을 본문에 넣지 않는다.
 - 분량 배분: 상황 10% 이내, 문제와 고민 20%, 행동 45%, 결과 15%, 배운 점 10%.
 - 행동은 단계별로, 단계마다 "무엇을 보고 이렇게 했는지"와 "앞 단계 결과가 다음 단계 계기가 된 지점"을 쓴다.
-- 감정·고민은 설명하지 말고 장면으로 보여준다. 들은 말이 있으면 1개 이상 직접 인용한다.
+- 감정·고민은 설명하지 말고 장면으로 보여준다.
+- 대사: 그때 한 말·들은 말을 큰따옴표로 본문에 1~2개 넣고, 속으로 한 말은 작은따옴표로 쓴다. 문제를 알아챈 순간, 설득·협의한 순간, 결과에 대한 반응처럼 장면이 바뀌는 곳에 둔다. 학생이 말한 대사가 없으면 그 상황에서 실제로 오갔을 법한 짧은 일상 대사로 채우고 [가정]. 대사로 성과·칭찬을 만들지 않는다.
+[문체 — AI 티가 나지 않게]
+- 학생이 면접에서 자기 말로 그대로 설명할 수 있는 어휘로 쓴다. 지나치게 매끄럽거나 문학적인 표현, 어려운 한자어를 쓰지 않는다.
+- 문장 길이를 섞는다. 상황 설명은 이어서 충분히 쓰고 핵심 행동·성과는 짧은 문장으로 강조한다. 모든 문장을 짧게 끊지 않는다. "저는 ~했습니다", "이를 통해 ~할 수 있었습니다"처럼 같은 어순·종결을 연달아 쓰지 않는다.
+- "~라고 판단했습니다", "~을 고민했습니다", "~을 제안했습니다"처럼 생각과 판단이 드러나는 문장은 지우지 않는다. 활동 나열로 만들지 않는다.
+- 상황 → 문제 인식 → 원인 판단 → 행동 → 결과 → 배운 점이 인과로 이어지게 쓴다. "당시", "그 결과", "이후"는 필요할 때만 쓰고 같은 연결어를 반복하지 않는다.
+- 바꿀 표현(구체적인 행동·판단으로): 번역투(~에 대해, ~에 있어, ~를 가지고, ~되어진다, ~하는 과정을 경험할 수 있었습니다, ~할 수 있는 기회를 얻었습니다), 정형 문장(이 경험을 통해 많은 것을 배웠습니다, 성장의 계기가 되었습니다, 앞으로도 끊임없이 노력하겠습니다), 인위적 대조(단순히 A가 아니라 B, A를 넘어 B, 실패를 성장의 발판으로), 과한 수사(몸소 체감했습니다, 깊이 깨달았습니다, 한 단계 도약, 새로운 가치 창출), 추상적 기업 찬사(비전에 깊이 공감, 가치관이 일치). 문맥상 자연스러우면 기계적으로 지우지 않는다.
+- 경험을 과장하거나 원문에 없는 성과를 보태지 않는다.
+- 다 쓴 뒤 소리 내어 읽듯 점검한다: 면접에서 그대로 말해도 어색하지 않은가, 모든 문장이 모범답안처럼 매끈하지 않은가, 실제 경험보다 거창하지 않은가.
 - 목표 문장과 결과 문장이 분명하고, 결과는 목표에 대한 답이다. "그래서", "이를 보고", "그런데"처럼 원인과 결과를 잇는다.
 - 산업·기업 이야기를 넣지 않는다. 정리본의 내용을 모두 담는다.
 - 정리본에서 [가정]이 붙은 문장은 글자 그대로 가져와 [가정]을 유지한다(체크리스트 반영에 쓰인다). 새로 보충한 문장에도 [가정]을 붙인다. 수치는 만들지 않는다.
@@ -1786,12 +2009,37 @@ draft:{tier:"complex",label:"기업·직무 맞춤 예시 사례",rules:`[할 �
 - 문항이 자소서 항목 중 무엇인지 판단해 item에 그 항목 id를 쓴다(둘에 걸치면 비중이 큰 쪽). 입력 item이 있으면 그 항목.
 - 그 항목의 매칭(primary, scene, flow)을 출발점으로 문단 순서를 정한다. 문항과 상관없는 장면은 뺀다.
 - 정리본과 원고에 있는 사실만 쓴다. 새 사건·숫자·수상·기관명 금지. [가정] 문장과 [수치 확인]은 본문에 그대로 남긴다([가정] 문장은 가능하면 글자 그대로). 기업 정보는 요인 카드에 있는 것만, [추정] 정보에 기댄 문장 끝에 [추정].
-- 두괄식: 첫 문장에 이 문항에 대한 답. 생각·감정·고민을 최소 1곳 장면으로 보여주고, 들은 말이 있으면 1개 이상 인용. 행동 문단마다 "무엇을 보고 이렇게 했는지". 마지막 문단은 경험에서 얻은 기준을 지원 직무의 과업·기업 방향과 구체적으로 잇는다. "열정", "최선을 다하겠습니다", "기여하고 싶습니다" 같은 마무리 금지. "다양한", "많은" 같은 흐린 수량 표현과 같은 접속어 3회 이상 반복 금지. 문장은 짧게.
+- 두괄식: 첫 문장에 이 문항에 대한 답. 생각·감정·고민을 최소 1곳 장면으로 보여주고, 정리본의 대사(quotes)를 1개 이상 큰따옴표로 인용([가정] 대사는 [가정] 유지). 행동 문단마다 "무엇을 보고 이렇게 했는지". 마지막 문단은 경험에서 얻은 기준을 지원 직무의 과업·기업 방향과 구체적으로 잇는다. "열정", "최선을 다하겠습니다", "기여하고 싶습니다" 같은 마무리 금지. "다양한", "많은" 같은 흐린 수량 표현과 같은 접속어 3회 이상 반복 금지.
+[문체 — AI 티가 나지 않게]
+- 학생이 면접에서 자기 말로 그대로 설명할 수 있는 어휘로 쓴다. 지나치게 매끄럽거나 문학적인 표현, 어려운 한자어를 쓰지 않는다.
+- 문장 길이를 섞는다. 상황 설명은 이어서 충분히 쓰고 핵심 행동·성과는 짧은 문장으로 강조한다. 모든 문장을 짧게 끊지 않는다. "저는 ~했습니다", "이를 통해 ~할 수 있었습니다"처럼 같은 어순·종결을 연달아 쓰지 않는다.
+- "~라고 판단했습니다", "~을 고민했습니다", "~을 제안했습니다"처럼 생각과 판단이 드러나는 문장은 지우지 않는다. 활동 나열로 만들지 않는다.
+- 상황 → 문제 인식 → 원인 판단 → 행동 → 결과 → 배운 점이 인과로 이어지게 쓴다. "당시", "그 결과", "이후"는 필요할 때만 쓰고 같은 연결어를 반복하지 않는다.
+- 바꿀 표현(구체적인 행동·판단으로): 번역투(~에 대해, ~에 있어, ~를 가지고, ~되어진다, ~하는 과정을 경험할 수 있었습니다, ~할 수 있는 기회를 얻었습니다), 정형 문장(이 경험을 통해 많은 것을 배웠습니다, 성장의 계기가 되었습니다, 앞으로도 끊임없이 노력하겠습니다), 인위적 대조(단순히 A가 아니라 B, A를 넘어 B, 실패를 성장의 발판으로), 과한 수사(몸소 체감했습니다, 깊이 깨달았습니다, 한 단계 도약, 새로운 가치 창출), 추상적 기업 찬사(비전에 깊이 공감, 가치관이 일치). 문맥상 자연스러우면 기계적으로 지우지 않는다.
+- 경험을 과장하거나 원문에 없는 성과를 보태지 않는다.
+- 다 쓴 뒤 소리 내어 읽듯 점검한다: 면접에서 그대로 말해도 어색하지 않은가, 모든 문장이 모범답안처럼 매끈하지 않은가, 실제 경험보다 거창하지 않은가.
 - 글자수: [가정]·[추정]·[수치 확인] 표시를 뺀 공백 포함 글자수가 기준의 90~100%.
 - paras: 문단마다 text와 from(「경험 이름」 경험의 어느 칸·'장면 이름'에서 왔는지, 요인을 썼으면 〔분류〕 이름).
 - points 기업·직무 맞춤 포인트 2~3개, rewrite 학생이 내 말로 고쳐 쓸 곳 2~3개와 이유, questions 면접 꼬리 질문 2개.
 [출력 JSON]
 {"draft":{"item":"q7","company":"","job":"","question":"","limit":800,"title":"","paras":[{"text":"","from":""}],"points":[],"rewrite":[],"questions":[]}}`},
+resume:{tier:"complex",label:"이력서",rules:`[할 일] 정리된 경험(experiences)과 추가 이력(extra), 지원 정보(target, info)로 이력서 항목을 쓴다. 학생은 채용 사이트 이력서의 경력·프로젝트·학내외활동·교육·수상 칸에 항목별로 붙여넣는다.
+- 분류: 경험과 추가 이력을 하나씩 다음 중 하나로 넣는다. career 급여를 받은 인턴·계약직·정규직. projects 학부연구, 캡스톤, 공모전, 팀 프로젝트처럼 목표와 결과물이 있는 과제. activities 동아리, 대외활동, 봉사, 아르바이트, 학생회 등(kind에 동아리/대외활동/봉사활동/기타사회활동/팀 프로젝트 중 하나). courses 교육 이수. awards 수상. 학력은 education, 자격증은 certs, 어학은 langs. 정리한 경험은 하나도 빠뜨리지 않는다. 같은 경험에서 나온 수상은 awards에도 따로 넣는다.
+- 각 분류 안의 순서는 지원 직무와 가까운 순.
+- core(첫 줄): 그 경험으로 얻은 직무 관련 핵심 역량 2~3개를 한 줄로. info와 요인 카드(factors)의 〔직무 과업〕·〔직무 역량〕 표현에 맞추되, 경험에서 실제로 한 일보다 부풀리지 않는다.
+- career: core → details 상세 업무 3~5줄(일의 범위, 쓴 도구, 팀 안 역할) → results 주요 성과 2~3줄(수치 또는 문제 해결형. 성과 요약 문단을 따로 두지 않고 상세 업무 뒤에) → apply 직무 적용 방안 1줄. task는 담당업무 한 줄.
+- projects: core → purpose 목적 1~2줄 → roles 역할 2~4줄 → process 문제 분석 및 개선 과정 2~3단계(단계마다 h 소제목과 items 2~3줄, 문제 확인 → 원인 판단 → 행동 → 검증 흐름) → results 성과 → contrib 기여도 → apply.
+- activities: core → background 활동 배경 1줄 → contents 활동 내용 2~3묶음(h 소제목과 items 2~4줄) → results 성과 → contrib 기여도 → apply 업무 적용 방안.
+- courses: core 핵심 학습 역량 → contents 배운 지식·도구·실습 3~5줄 → apply 실무 적용.
+- awards: name, org, date → role 수상 과정에서 맡은 역할 1~2줄 → contrib 기여도.
+- role(참여역할·역할 칸)은 "역할 / 한 일 요약" 한 줄. title은 [ ] 안에 들어갈 결과물 중심 제목(예: 명절 배송 운영 및 고객 컴플레인 대응).
+- 문체: 개조식 명사형 종결(~확인, ~수행, ~설정, ~개선, ~협의). 한 줄에 한 행동을 쓰고, 무엇을 보고 그렇게 했는지가 드러나게 쓴다. 학생이 쓴 구체 명사(도구, 대상, 수량)를 살린다. "다양한", "적극적으로", "원활한", "성공적으로" 같은 흐린 말과 "~에 기여", "역량 강화" 같은 빈말은 쓰지 않는다. 항목 하나는 공백 포함 400~900자로, 너무 길게 늘이지 않는다.
+- 사실: 정리본과 extra에 있는 사실만 쓴다. 회사명·기관명·날짜·학점·점수·수치·기여도를 만들지 않는다. 모르는 칸은 "[기간 확인]", "[기여도 확인]", "[수치 확인: 무엇을 세어볼지]"로 둔다. 정리본의 [가정] 내용을 쓴 줄 끝에는 [가정]을 붙인다.
+- info(산업·기업·직무 자료)가 있으면 그 자료의 과업·용어에 맞춰 core, apply, summary의 각도를 정한다. 자료에 없는 기업 사실은 쓰지 않는다.
+- summary: 지원 분야 기준 자기소개 요약 2문장(경험 근거로). skills: 이력서 전체를 대표하는 핵심 역량 키워드 5~8개.
+- missing: 제출 전에 학생이 직접 채우거나 확인해야 할 것(기간, 기여도, 학점, 수치, [가정] 문장)을 짧게.
+[출력 JSON]
+{"resume":{"target":{"industry":"","company":"","job":""},"summary":"","skills":[],"education":[{"school":"","major":"","period":"","gpa":"","status":""}],"career":[{"org":"","period":"","dept":"","position":"","task":"","reason":"","title":"","core":"","details":[],"results":[],"apply":""}],"projects":[{"org":"","title":"","period":"","role":"","contrib":"","core":"","purpose":"","roles":[],"process":[{"h":"","items":[]}],"results":[],"apply":""}],"activities":[{"kind":"","org":"","period":"","role":"","title":"","core":"","background":"","contents":[{"h":"","items":[]}],"results":[],"contrib":"","apply":""}],"courses":[{"name":"","org":"","period":"","hours":"","title":"","core":"","contents":[],"apply":""}],"awards":[{"name":"","org":"","date":"","title":"","role":"","contrib":""}],"certs":[{"name":"","org":"","date":""}],"langs":[{"name":"","score":"","date":""}],"missing":[]}}`},
 setup:{tier:"complex",label:"최종 세팅",rules:`[할 일] 입력의 산업·기업·직무 하나에 맞춰 어떤 경험을 어느 항목에 어떤 장면과 각도로 쓸지 최종 세팅한다. 경험 내용은 바꾸지 않고 배치와 각도까지만 쓴다(완성 원고 금지).
 - 입력 타겟이 기존 요인 카드의 타겟(currentTarget)과 다르면 이번 타겟 요인을 분류별 1~3개, 모두 4~10개 factorCard로 정리한다(근거 없으면 source "추정"). 같으면 factorCard는 빈 배열.
 - story: 내 경험들을 하나로 꿰는 한 줄 지원 스토리.
@@ -2084,6 +2332,7 @@ function sDone(){
       '<details><summary>자소서 예시 글 만들기</summary>'+fld("dq","자소서 문항","예: 기존과 다른 방식으로 문제를 해결한 경험을 기술해 주십시오.",2,1)+'<div class="wgrid" style="margin-top:8px">'+fld("dl","글자수","800")+'</div><div class="wact"><button class="btn primary" data-act="draft">예시 글 만들기</button></div><p class="wnote">만든 글은 가장 많이 쓴 경험의 카드 아래 \'예시 글 보기\'에 들어가요.</p></details>'+
       '<details><summary>경험마다 원고 만들기</summary><p class="wnote">경험 하나를 처음부터 끝까지 이어 쓴 글입니다. 경험 카드의 \'경험 원고 보기\'에 들어가요.</p><div class="wact"><button class="btn primary" data-act="narr">원고 만들기</button></div></details>'+
       '<details><summary>다른 기업·문항으로 다시 분석하기</summary><p class="wnote">정리한 경험은 그대로 두고 항목 분석만 새로 합니다. 문항을 비우면 기본 항목으로 분석해요.</p>'+modesMini()+'<div class="wgrid">'+fld("company","기업","")+fld("job","직무","")+fld("industry","산업","")+'</div>'+fld("questions","자소서 문항 (한 줄에 하나)","",3,1)+'<div class="wact"><button class="btn primary" data-act="refinish">다시 분석</button></div></details>'+
+      '<details><summary>이력서 만들기</summary><p class="wnote">정리한 경험을 채용 사이트 이력서 칸(경력·프로젝트·학내외활동·교육·수상)에 붙여넣을 수 있게 항목별로 써 드려요. 경험마다 핵심 역량 → 한 일 → 성과 → 직무 적용 순서예요. 회사명·날짜·학점 같은 사실은 지어내지 않고 [확인]으로 남겨요.</p>'+'<div class="wgrid">'+fld("rs_company","지원 기업",(D0.meta&&D0.meta.company&&D0.meta.company!=="미정")?D0.meta.company:"예: OO전자")+fld("rs_job","지원 직무",(D0.meta&&D0.meta.job)||"예: 공정 엔지니어")+fld("rs_industry","산업",(D0.meta&&D0.meta.industry)||"예: 반도체")+'</div>'+fld("rs_info","산업·기업·직무 정보와 자료","채용공고, 직무기술서, 인재상, 기업·산업 분석 메모 등. 비워두면 처음에 넣은 분석 자료를 써요.",4,1)+fld("rs_extra","경험 정리에 없는 이력 (학력, 자격증, 어학, 교육, 수상, 경력)","예) OO대학교 신소재공학부 2022.03~2027.02 졸업예정, 3.9/4.5\n예) SQLD 2025.09 한국데이터산업진흥원\n예) 데이터분석 입문 교육 16시간 2026.03~2026.08",4,1)+'<div class="wact"><button class="btn primary" data-act="mkres">'+(D0.resume?'이력서 다시 만들기':'이력서 만들기')+'</button>'+(D0.resume?'<a class="btn" href="#resume">만든 이력서 보기</a>':'<span class="wnote">1~2분쯤 걸려요.</span>')+'</div></details>'+
       '<details><summary>경험 더 추가하기</summary>'+fld("nraw","새 경험","떠오르는 대로 적어주세요",4,1)+'<div class="wact"><button class="btn primary" data-act="addexp">추가하고 질문 받기</button></div></details>'+
     '</div><div class="wact"><button class="btn" data-act="back">← 경험 다시 보기</button><button class="btn ghost" data-act="reset">전체 초기화</button></div></div>';
 }
@@ -2124,6 +2373,7 @@ function onWorkClick(ev){
   if(a==="next")return nextFromExp(e);
   if(a==="drop"){confirmBox("「"+e.alias+"」 경험을 빼고 넘어갈까요?","빼기").then(function(y){if(y)dropExp(e);});return;}
   if(a==="draft")return doDraft();
+  if(a==="mkres")return doResume();
   if(a==="narr")return doNarrAll();
   if(a==="addexp"){var r=String(inp().nraw||"").trim();if(!r)return toast("새 경험을 적어주세요");inp().nraw="";return addExp(r);}
   if(a==="reset")return wipeAll();
@@ -2164,7 +2414,7 @@ function render(){
   if(claude&&step!=="done")hasE=false;
   var top=hasE?hero():intro();
   var w=(claude?(step==="done"&&hasE?"":work()):(hasE?"":work()));
-  app.innerHTML=top+w+(hasE?setups()+(hasI?flowMap()+board():'<section id="map"><p class="eyebrow">01 · 연결 지도</p><h2>지도를 그릴 항목 매칭이 없어요</h2><p class="lead">붙여넣은 데이터에 자소서 항목 매칭(items)이 비어 있습니다. 사용한 AI에게 <b>"STEP 4 항목 매칭까지 하고 내보내기 ②번 데이터를 다시 줘"</b>라고 요청한 뒤 다시 붙여넣어 주세요.</p></section>')+experiences()+plan()+(claude&&step==="done"?work():"")+saveBar():"")+'<footer>SPARK 경험 지도 · 정리 시점의 스냅샷입니다.</footer>';
+  app.innerHTML=top+w+(hasE?setups()+(hasI?flowMap()+board():'<section id="map"><p class="eyebrow">01 · 연결 지도</p><h2>지도를 그릴 항목 매칭이 없어요</h2><p class="lead">붙여넣은 데이터에 자소서 항목 매칭(items)이 비어 있습니다. 사용한 AI에게 <b>"STEP 4 항목 매칭까지 하고 내보내기 ②번 데이터를 다시 줘"</b>라고 요청한 뒤 다시 붙여넣어 주세요.</p></section>')+experiences()+plan()+resumeSec()+(claude&&step==="done"?work():"")+saveBar():"")+'<footer>SPARK 경험 지도 · 정리 시점의 스냅샷입니다.</footer>';
   if(document.getElementById("flow"))bindMap();if(document.getElementById("btnSave"))bindChecks();updBadge();
   document.querySelectorAll("#nav a").forEach(function(a){a.hidden=!document.getElementById(a.getAttribute("href").slice(1));});
   var wb=document.getElementById("btnWipe");if(wb){wb.hidden=(EMB&&AI.state!=="claude")||!(arr(D0.experiences).length||String(inp().raw||"").trim());wb.onclick=wipeAll;}
