@@ -1,6 +1,6 @@
-// 좋아요: 영상·도구·프롬프트(콘텐츠 DB)와 블로그 글(블로그 DB)의 '좋아요' 숫자를 올리고 내립니다.
+// 좋아요: 영상·도구·프롬프트·블로그 글(모두 사이트 콘텐츠 DB)의 '좋아요' 숫자를 올리고 내립니다.
 //   GET  /api/like?ids=a,b,c           → 이 브라우저가 이미 누른 글 목록
-//   POST /api/like {id, kind, like}    → { likes, liked }
+//   POST /api/like {id, kind, like}    → { likes, liked }   (kind: item=영상·도구·프롬프트, post=블로그)
 const { notion } = require("./_notion");
 const { isEnabled, short, readLiked, likedCookie, normalizeId, MAX_LIKES } = require("./_like");
 
@@ -40,9 +40,10 @@ module.exports = async function handler(req, res) {
     const p = page.properties;
     // 이 사이트의 DB에 있는 공개된 글만 허용
     const dbId = normalizeId(page.parent?.database_id);
-    const expected = normalizeId(b.kind === "post" ? process.env.NOTION_DATABASE_ID : process.env.NOTION_CONTENT_DB_ID);
+    // 블로그 글도 사이트 콘텐츠 DB에 있습니다(유형=블로그)
+    const expected = normalizeId(process.env.NOTION_CONTENT_DB_ID);
     const status = p["상태"]?.select?.name || p["상태"]?.status?.name || null;
-    const typeOk = b.kind === "post" ? true : ITEM_TYPES.includes(p["유형"]?.select?.name);
+    const typeOk = b.kind === "post" ? p["유형"]?.select?.name === "블로그" : ITEM_TYPES.includes(p["유형"]?.select?.name);
     if (!dbId || dbId !== expected || !typeOk || status !== "발행") {
       res.status(404).json({ error: "찾을 수 없는 글입니다." });
       return;

@@ -147,8 +147,8 @@ async function renderBlocks(blocks) {
 function pageMeta(page) {
   const props = page.properties;
   const titleProp = Object.values(props).find((p) => p.type === "title");
-  const dateProp = props["날짜"]?.date?.start || page.created_time.slice(0, 10);
-  const summary = (props["요약"]?.rich_text || []).map((t) => t.plain_text).join("");
+  const dateProp = props["게시일"]?.date?.start || props["날짜"]?.date?.start || page.created_time.slice(0, 10);
+  const summary = (props["설명"]?.rich_text || props["요약"]?.rich_text || []).map((t) => t.plain_text).join("");
   const category = props["카테고리"]?.select?.name || "";
   const status = props["상태"]?.select?.name || props["상태"]?.status?.name || null;
   return {
