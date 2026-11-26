@@ -2005,8 +2005,19 @@ function doResume(){
   }).catch(fail);
 }
 function saveBar(){
-  return '<section id="save" style="padding-top:8px"><div class="panel savebar2"><p>이 결과를 파일로 남기거나, 데이터를 복사해 채팅에 붙여넣고 이어서 고칠 수 있습니다.</p><button class="btn" id="btnCopy">데이터 복사</button><button class="btn primary" id="btnSave">HTML로 저장</button></div></section>';
+  return '<section id="save" style="padding-top:8px"><div class="panel savebar2"><p>이 결과를 파일로 남기거나, 데이터를 복사해 채팅에 붙여넣고 이어서 고칠 수 있습니다.</p><button class="btn" id="btnCopy">데이터 복사</button><button class="btn" id="btnSave">HTML로 저장</button><button class="btn primary" type="button" data-cover>자기소개서 작성하기 →</button></div></section>'+
+    '<button class="btn primary" type="button" data-cover id="coverFab">자기소개서 작성하기 →</button><style>#coverFab{position:fixed;right:18px;bottom:18px;z-index:40;box-shadow:0 8px 24px rgba(15,23,42,.28)}@media print{#coverFab{display:none}}</style>';
 }
+/* 자소서 작성 도구로 넘기기: 수정 반영된 데이터(D)를 저장하고 새 창으로 엽니다. */
+document.addEventListener("click",function(ev){
+  if(!(ev.target.closest&&ev.target.closest("[data-cover]")))return;
+  var json=JSON.stringify(D),web=/^https?:$/.test(location.protocol)&&!window.claude;
+  if(web){
+    store("coverletter:handoff",json);
+    if(store("coverletter:handoff")===json){if(!window.open("tools/cover-letter.html","coverletter"))toast("새 창이 차단되었습니다. 팝업을 허용한 뒤 다시 눌러주세요");return;}
+  }
+  copyText(json,"자동으로 넘길 수 없어 데이터를 복사했습니다. 자기소개서 작성 도구의 [경험 데이터 불러오기]에 붙여넣어 주세요");
+});
 /* ---------- W. AI 작업실 (Claude 자동 / 복붙 겸용) ---------- */
 var EXPORT_REQ=`지금까지 대화에서 정리한 내용을 'SPARK 경험 지도' 페이지에 붙여넣을 데이터로 만들어주세요.
 반드시 아래 JSON 형식과 키 이름을 그대로 지켜, 설명 없이 \`\`\`json 코드 블록 하나로만 답해주세요. 키 이름을 바꾸거나 빼지 마세요.
