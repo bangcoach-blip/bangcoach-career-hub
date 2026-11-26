@@ -51,6 +51,16 @@ module.exports = async function handler(req, res) {
     } while (cursor);
 
     const list = posts.filter((p) => p.title).sort((a, b) => (a.date < b.date ? 1 : -1));
+    // 표지가 없는 글은 본문의 첫 이미지를 목록 썸네일로 씁니다.
+    await Promise.all(
+      list.filter((p) => !p.cover).map(async (p) => {
+        try {
+          const data = await notion(`/blocks/${p.id}/children?page_size=10`);
+          const img = (data.results || []).find((b) => b.type === "image");
+          if (img) p.cover = img.image.type === "external" ? img.image.external.url : img.image.file.url;
+        } catch (_) {}
+      })
+    );
     res.status(200).json({ configured: true, posts: list });
   } catch (e) {
     // 없는 글 주소는 오류 대신 404로 안내
