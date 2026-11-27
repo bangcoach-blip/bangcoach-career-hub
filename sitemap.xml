@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://bangcoach-ai-career-site.vercel.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/spark-map.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/tools/cover-letter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/tools/self-intro.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/tools/personality-interview.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/tools/experience-interview.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/tools/situational-interview.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bangcoach-ai-career-site.vercel.app/tools/pt-interview.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
