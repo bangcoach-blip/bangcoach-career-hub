@@ -654,7 +654,7 @@ function renderHome() {
   const isSample = SRC.startsWith('sample:'), own = jget('pt3:bank', null);
   app.append(h('header', { class: 'doc-head' },
     h('div', { class: 'doc-top' }, h('span', {}, '방코치 PT면접 연습'), h('span', {}, '문제 은행 · 시험지 · 해설')),
-    h('h1', {}, 'PT면접 시험지 메이커'),
+    h('h1', {}, 'PT면접 연습'),
     h('p', { class: 'sub' }, '내가 쓰는 AI로 영역별 PT 문제를 만들고, 골라서 풀고, 해설과 첨삭까지 받는 연습장입니다.'),
     h('table', { class: 'steps-t' }, h('tbody', {},
       [['1', '아래 ‘프롬프트 복사’를 눌러 ChatGPT·Claude·Gemini 등 내 AI의 새 채팅에 붙여 넣고 보냅니다.'],
@@ -713,7 +713,7 @@ function renderHome() {
      ['내 답안은 어디에 저장되나요?', '이 브라우저에만 저장됩니다. 다른 기기에서는 보이지 않으니, 시험지의 ‘다운로드’로 MD·Word·PDF 파일을 남겨 두세요.']
     ].map(([q, a]) => h('details', { class: 'faq' }, h('summary', {}, q), h('p', {}, a))),
     h('details', { class: 'pv', 'data-noexport': '' }, h('summary', {}, '프롬프트 전문 보기 (' + PROMPT.length.toLocaleString() + '자)'), h('pre', {}, PROMPT))));
-  app.append(h('footer', {}, '방코치 PT면접 시험지 메이커 · 연습용 도구입니다.'));
+  app.append(h('footer', {}, '방코치 PT면접 연습 · 연습용 도구입니다.'));
 }
 
 /* ======================= 시험지 ======================= */

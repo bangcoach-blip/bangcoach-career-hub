@@ -420,3 +420,62 @@
 @media (max-width: 560px) {
   #requestOverlay .request-form .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ── 준비 순서 흐름도 ───────────────────────────────────── */
+#tab-prompts #toolFlow { --fb: #1c60ef; --fb-tint: #eef4ff; --fb-line: #c9d8fb; --fb-rule: #e6eaf2; }
+#tab-prompts .flow-panel.hidden { display: none; }
+
+/* 갈래 선택: 알약 모양 토글 */
+#tab-prompts .flow-tabs { display: inline-flex; gap: 4px; padding: 5px; margin-bottom: 28px; background: #eef1f6; border-radius: 999px; }
+#tab-prompts .flow-tabs button { font: inherit; font-size: 15px; font-weight: 800; letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border: 0; border-radius: 999px; background: none; color: var(--muted); cursor: pointer; transition: background .2s, color .2s, box-shadow .2s; }
+#tab-prompts .flow-tabs button small { font-size: 12px; font-weight: 700; color: #94a3b8; }
+#tab-prompts .flow-tabs button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 4px 14px rgba(15,23,42,.08); }
+#tab-prompts .flow-tabs button[aria-pressed="true"] small { color: var(--fb); }
+#tab-prompts .flow-tabs button:focus-visible { outline: 2px solid var(--fb); outline-offset: 2px; }
+
+/* 단계: 가로로 이어지는 카드, 사이에 화살표 */
+#tab-prompts .flow-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 32px; }
+#tab-prompts .flow-step { position: relative; display: flex; }
+#tab-prompts .flow-step:not(:last-child)::after { content: "→"; position: absolute; top: 34px; right: -26px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--fb); background: var(--fb-tint); border-radius: 50%; }
+#tab-prompts .flow-card { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 22px 22px 18px; background: #fff; border: 1px solid var(--fb-rule); border-radius: 18px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+#tab-prompts .flow-card:hover { transform: translateY(-3px); border-color: var(--fb-line); box-shadow: 0 14px 32px -16px rgba(28,96,239,.35); }
+#tab-prompts .flow-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+#tab-prompts .flow-num { font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--fb); background: var(--fb-tint); border-radius: 8px; padding: 3px 8px; }
+#tab-prompts .flow-label { font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .01em; }
+#tab-prompts .flow-title { margin: 6px 0 0; font-size: 18px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.35; color: var(--ink); word-break: keep-all; }
+#tab-prompts .flow-desc { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); word-break: keep-all; }
+#tab-prompts .flow-next { margin: 2px 0 0; padding: 8px 12px; font-size: 13px; font-weight: 700; line-height: 1.5; color: var(--fb); background: var(--fb-tint); border-radius: 10px; word-break: keep-all; }
+#tab-prompts .flow-card .ai-tool-samples { margin: 0; }
+#tab-prompts .flow-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid #f1f4f9; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+#tab-prompts .flow-go { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 800; color: var(--fb); text-decoration: none; }
+#tab-prompts .flow-go span { transition: transform .2s ease; }
+#tab-prompts .flow-card:hover .flow-go span { transform: translateX(4px); }
+#tab-prompts .flow-sub { font-size: 13px; font-weight: 700; color: var(--muted); text-decoration: none; }
+#tab-prompts .flow-sub:hover { color: var(--fb); }
+#tab-prompts .flow-like { margin-left: auto; }
+#tab-prompts .flow-go:focus-visible, #tab-prompts .flow-sub:focus-visible { outline: 2px solid var(--fb); outline-offset: 3px; border-radius: 4px; }
+
+/* 다음 갈래로 이어가기 */
+#tab-prompts .flow-jump { font: inherit; width: 100%; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; text-align: left; color: #fff; background: linear-gradient(120deg, #1c60ef, #4f86f7); border: 0; border-radius: 16px; cursor: pointer; transition: box-shadow .2s ease; }
+#tab-prompts .flow-jump:hover { box-shadow: 0 14px 30px -14px rgba(28,96,239,.6); }
+#tab-prompts .flow-jump span { display: flex; flex-direction: column; font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+#tab-prompts .flow-jump small { font-size: 12.5px; font-weight: 600; color: #dbe8fe; }
+#tab-prompts .flow-jump i { font-style: normal; font-size: 20px; font-weight: 800; transition: transform .2s ease; }
+#tab-prompts .flow-jump:hover i { transform: translateX(4px); }
+#tab-prompts .flow-others { margin: 40px 0 14px; font-size: 18px; }
+
+/* 단계가 많으면 좁은 화면에서 세로 타임라인으로 */
+@media (max-width: 1100px) {
+  #tab-prompts .flow-list:not([style*="--n:2"]) { grid-template-columns: 1fr; gap: 14px; }
+  #tab-prompts .flow-list:not([style*="--n:2"]) .flow-step::after { top: auto; bottom: -15px; right: auto; left: 30px; content: "↓"; }
+}
+@media (max-width: 720px) {
+  #tab-prompts .flow-tabs { display: flex; }
+  #tab-prompts .flow-tabs button { flex: 1; justify-content: center; padding: 10px 12px; }
+  #tab-prompts .flow-list { grid-template-columns: 1fr; gap: 14px; }
+  #tab-prompts .flow-step::after { top: auto !important; bottom: -15px; right: auto !important; left: 30px; content: "↓" !important; }
+  #tab-prompts .flow-card { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #tab-prompts .flow-card, #tab-prompts .flow-go span, #tab-prompts .flow-jump i { transition: none; }
+}
